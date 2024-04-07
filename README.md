@@ -22,22 +22,6 @@ Diagrama relacional
 
 #### Descripcion base de datos
 
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        text-align: center; /* Centrar el contenido de toda la tabla */
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        text-align: center; /* Centrar el contenido de la primera y segunda columna */
-    }
-</style>
-
 <table>
     <tr>
         <th colspan = "3" text-align: center> Tablas </th>
