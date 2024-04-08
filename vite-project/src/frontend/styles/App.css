@@ -1,42 +1,39 @@
+@import './colors.css';
+
 #root {
-  max-width: 1280px;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--kelly-green);
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+.background {
+  width: 50%;
+  height: auto;
+  background-color: white;
+  border: 0.2vw solid var(--timberwolf);
+  box-shadow: 0.2vw 0.2vw var(--timberwolf);
+  border-radius: 1vw;
+  padding: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  @media screen and (max-width: 100px){
+    width: 90%;
   }
 }
 
-.card {
-  padding: 2em;
-}
+#mainLogo {
+  width: 30%;
 
-.read-the-docs {
-  color: #888;
+  @media (max-width: 800px) {
+    width: 50%;
+  }
 }
