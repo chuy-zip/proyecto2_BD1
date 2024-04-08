@@ -8,13 +8,13 @@ Proyecto 2 de base de datos 1. Desarrollo del sistema de un restaurante
 - npm install pg
 - npm install cors
 
-### Para correr el backend se debe hacer
+## Para correr el backend se debe hacer
 
 - docker compose up (pude correrse en detached)
 - npm start
 
-
 ## Base de datos
+
 Diagrama lógico
 
 ![Diagrama de base de datos relacional](resources/logico.png)
@@ -23,7 +23,7 @@ Diagrama relacional
 
 ![Diagrama de base de datos relacional](resources/relacional.png)
 
-#### Descripcion base de datos
+### Descripcion base de datos
 
 <table>
     <tr>
@@ -213,7 +213,7 @@ Diagrama relacional
     </tr>
 </table>
 
-...
+..
 
 <table>
     <tr>

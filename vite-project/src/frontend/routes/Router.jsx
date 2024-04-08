@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Dashboard from './Dashboard'
-import Report from './Report'  
+import Dashboard from '../views/Dashboard'
+import Report from '../views/Report'  
 
 function Router(){
     const [page, setPage] = useState("dashboard")
