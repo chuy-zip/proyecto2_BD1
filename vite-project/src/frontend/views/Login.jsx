@@ -2,12 +2,12 @@ import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 
-function Login({setScreen}) {
+function Login({navigator}) {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
     const goToSignup = () => {
-        setScreen('signup')
+        navigator("signup")
     }
 
     const getName = (event) => {

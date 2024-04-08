@@ -2,14 +2,14 @@ import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 
-function Signup({setScreen}) {
+function Signup({navigator}) {
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [verifyPassword, setVerify] = useState("")
     const [role, setRole] = useState("")
 
     const goToLogin = () => {
-        setScreen("login")
+        navigator("login")
     }
 
     const getPassword = (event) => {
@@ -37,7 +37,7 @@ function Signup({setScreen}) {
     }
 
     const loginButton = (event) => {
-        if (email != "" && password != "" && role != "" && verifyPassword === password && verifyPassword != "") {
+        if (name != "" && password != "" && role != "" && verifyPassword === password && verifyPassword != "") {
             console.log("Éxito")
             return
         

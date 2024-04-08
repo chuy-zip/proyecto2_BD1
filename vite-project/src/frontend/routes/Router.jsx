@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import Dashboard from '../views/Dashboard'
 import Report from '../views/Report'  
+import Login from '../views/Login'
+import Signup from '../views/Signup'
 
 function Router(){
-    const [page, setPage] = useState("dashboard")
+    const [page, setPage] = useState("login")
 
     const navegar = (enlace) => {
         setPage(enlace)
@@ -12,11 +14,19 @@ function Router(){
     let contenido;
     switch (page) {
         case "dashboard":
-            contenido = <Dashboard/>
+            contenido = <Dashboard />
             break;
         
         case "reporte":
-            contenido = <Report/>
+            contenido = <Report />
+            break;
+
+        case "login":
+            contenido = <Login navigator={navegar}/>
+            break;
+
+        case "signup":
+            contenido = <Signup navigator={navegar}/>
             break;
     
         default:
@@ -24,15 +34,15 @@ function Router(){
     }
 
     return(
-        <div>
-            <nav>
+        <>
+            {contenido}
+        </>
+
+            /* <nav>
                 <a href="javascript:void(0);" onClick={() => navegar("dashboard")}>Dashboard </a> |
                 <a href="javascript:void(0);" onClick={() => navegar("reporte")}> Reporte</a>
-            </nav>
+            </nav> */
 
-            {contenido}
-
-        </div>
     )
 }
 
