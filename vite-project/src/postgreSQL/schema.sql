@@ -101,7 +101,7 @@ ALTER TABLE contenido_orden ADD CONSTRAINT fk_orden FOREIGN KEY (id_orden) REFER
 ALTER TABLE contenido_orden ADD CONSTRAINT fk_producto_en_orden FOREIGN KEY (id_producto) REFERENCES producto(id);
 ALTER TABLE factura ADD CONSTRAINT fk_orden_en_factura FOREIGN KEY (id_orden) REFERENCES orden(id);
 ALTER TABLE pago_factura ADD CONSTRAINT fk_factura_pago_factura FOREIGN KEY (id_factura) REFERENCES factura(id);
-ALTER TABLE producto ADD CONSTRAINT fk_id_tipo FOREIGN KEY (tipo) REFERENCES tipo_producto(id_tipo)
+ALTER TABLE producto ADD CONSTRAINT fk_id_tipo FOREIGN KEY (tipo) REFERENCES tipo_producto(id_tipo);
 
 --Inserts
 -- Insertar tipos de producto
