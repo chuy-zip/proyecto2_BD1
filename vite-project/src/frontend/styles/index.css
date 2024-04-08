@@ -27,6 +27,7 @@ h1 {
   color: black;
   font-size: 1.5em;
   line-height: 1.1;
+  align-self: flex-start;
 
   @media (max-width: 800px) {
     font-size: 1em;
@@ -44,7 +45,7 @@ input {
   outline: none;
 
   @media (min-width: 200px) {
-    width: 90%;
+    width: 100%;
   }
 }
 
@@ -72,6 +73,7 @@ button {
   outline: none;
   text-decoration: none;
 }
+
 button:hover {
   background-color: var(--gold);
   color: black;

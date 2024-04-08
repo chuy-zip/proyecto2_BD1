@@ -19,21 +19,45 @@
   border: 0.2vw solid var(--timberwolf);
   box-shadow: 0.2vw 0.2vw var(--timberwolf);
   border-radius: 1vw;
-  padding: 8%;
+  padding: 4%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 100px){
+  @media screen and (max-width: 350px) {
     width: 90%;
   }
 }
 
+#signupBack {
+  padding: 4%;
+}
+
+.imageBack {
+  padding: 5%;
+  border-radius: 1vw;
+  border: 0.1vw solid var(--timberwolf);
+  margin: 0 0 5% 0;
+}
+
+.forgetBack {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgetButtons {
+  background-color: transparent;
+  color: var(--office-green);
+}
+
 #mainLogo {
-  width: 30%;
+  height: 4em;
 
   @media (max-width: 800px) {
-    width: 50%;
+    height: 2em;
   }
 }
