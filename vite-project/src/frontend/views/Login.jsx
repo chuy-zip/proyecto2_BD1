@@ -24,7 +24,8 @@ function Login({navigator}) {
 
     const loginButton = (event) => {
         if (name != "" && password != "") {
-            console.log("éxito")
+            console.log("Éxito")
+            navigator("dashboard")
             return
         
         } else {

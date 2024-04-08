@@ -35,13 +35,17 @@ function Router(){
 
     return(
         <>
+            {page != "login" && page != "signup" && (
+                <nav>
+                <a href="javascript:void(0);" onClick={() => navegar("dashboard")}>Dashboard </a> |
+                <a href="javascript:void(0);" onClick={() => navegar("reporte")}> Reporte </a> |
+                <a href="javascript:void(0);" onClick={() => navegar("login")}> Cerrar sesión</a>
+                </nav>)
+            }
+            
             {contenido}
         </>
 
-            /* <nav>
-                <a href="javascript:void(0);" onClick={() => navegar("dashboard")}>Dashboard </a> |
-                <a href="javascript:void(0);" onClick={() => navegar("reporte")}> Reporte</a>
-            </nav> */
 
     )
 }
