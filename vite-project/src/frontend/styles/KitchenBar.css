@@ -1,0 +1,57 @@
+@import './colors.css';
+
+.kitbar {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+}
+
+.ordersContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-radius: 1vw;
+    height: 80%;
+    width: 100%;
+    overflow-x: scroll;
+    align-items: flex-start;
+}
+
+
+.ordersContainer::-webkit-scrollbar {
+    width: 5px;
+    height: 10px; /* Set the height to 5px for horizontal scrollbar */
+}
+
+.ordersContainer::-webkit-scrollbar-track {
+    background: #38b000ff;
+    border-radius: 5px;
+}
+
+.ordersContainer::-webkit-scrollbar-thumb {
+    background: #d7d7d7;
+    border-radius: 5px;
+}
+
+.ordersContainer::-webkit-scrollbar-thumb:hover {
+    background: #ffd82cff;
+}
+
+.order {
+    background-color: white;
+    border-radius: 1vw;
+    border: 0.2vw solid var(--timberwolf);
+    box-shadow: 0.2vw 0.2vw var(--timberwolf);
+    min-width: 180px;
+    margin-right: 40px;
+    min-height: 270px;
+}
+
+.orderCompleteButton {
+    width: 20%;
+    background-color:   #d7d7d7;
+    color: black;
+}

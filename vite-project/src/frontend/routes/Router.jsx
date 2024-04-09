@@ -3,6 +3,7 @@ import Dashboard from '../views/Dashboard'
 import Report from '../views/Report'  
 import Login from '../views/Login'
 import Signup from '../views/Signup'
+import Kitchen from '../views/Kitchen'
 
 function Router(){
     const [page, setPage] = useState("login")
@@ -28,25 +29,19 @@ function Router(){
         case "signup":
             contenido = <Signup navigator={navegar}/>
             break;
+
+        case "kitchen":
+            contenido = <Kitchen navigator={navegar}/>
+            break;
     
         default:
             break;
     }
 
     return(
-        <>
-            {page != "login" && page != "signup" && (
-                <nav>
-                <a href="javascript:void(0);" onClick={() => navegar("dashboard")}>Dashboard </a> |
-                <a href="javascript:void(0);" onClick={() => navegar("reporte")}> Reporte </a> |
-                <a href="javascript:void(0);" onClick={() => navegar("login")}> Cerrar sesión</a>
-                </nav>)
-            }
-            
+        <> 
             {contenido}
         </>
-
-
     )
 }
 
