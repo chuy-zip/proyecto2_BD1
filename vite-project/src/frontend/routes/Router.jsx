@@ -6,7 +6,7 @@ import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 
 function Router(){
-    const [page, setPage] = useState("login")
+    const [page, setPage] = useState("kitchen")
 
     const navegar = (enlace) => {
         setPage(enlace)

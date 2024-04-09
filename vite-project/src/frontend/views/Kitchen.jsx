@@ -1,77 +1,71 @@
-import { useState } from "react"
-import '../styles/KitchenBar.css'
+import { useState, useEffect } from "react";
+import '../styles/KitchenBar.css';
+import { getDishesOrders } from '../../controller/kitbarController.js';
 
-function Order({ orderKey, dishes }) {
+function Order({ orderKey, products }) {
+    const parsedString = orderKey.split("-");
+
     return (
         <div className="order">
-            <h1 style={{color:"black"}}>{orderKey}</h1>
+            <h1><span>{parsedString[0]}</span></h1>
+            <h3><span>Mesa: {parsedString[1]}</span></h3>
+
+            <table style={{ margin: 'auto', textAlign: 'center', paddingTop: '10px' }}>
+                <thead>
+                    <tr >
+                        <th style={{ fontSize: '12px', color: 'black' }}>Platillo</th>
+                        <th style={{ fontSize: '12px', color: 'black' }}>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((value, index) => (
+                        <tr key={index}>
+                            <td style={{ color: 'black' }}>{value.product}</td>
+                            <td style={{ color: 'black' }}>{value.quantity}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
-    )
+    );
 }
 
 function Orders({ orders }) {
     return (
         <div className="ordersContainer">
-            
             {Object.keys(orders).map((key, index) => (
-                <Order orderKey={key} dishes={orders[key]} />
+                <Order key={key} orderKey={key} products={orders[key]} />
             ))}
         </div>
-    )
+    );
 }
 
 function Kitchen({ navigator }) {
-    const kit_orders = [
-        {
-            "order_id": 123,
-            "table": 5,
-            "dish": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "dish": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "dish": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 230,
-            "table": 7,
-            "dish": "wings",
-            "quantity": 1
-        }
-    ];
+    const [orders, setOrders] = useState({}); 
 
-    const groupedOrders = {};
+    useEffect(() => {
+        
+        const initialOrders = JSON.parse(getDishesOrders());
+        setOrders(initialOrders);
+    }, []);
 
-    kit_orders.forEach((value, index) => {
-        const key = `${value.order_id}-${value.table}`;
-
-        if (!groupedOrders[key]) {
-            groupedOrders[key] = [];
-        }
-
-        groupedOrders[key].push({
-            dish: value.dish,
-            quantity: value.quantity
-        });
-    });
-
-    console.log(groupedOrders);
+    const handleCompleteDish = () => {
+        
+        const updatedOrders = { ...orders };
+        delete updatedOrders[Object.keys(updatedOrders)[0]]; 
+        setOrders(updatedOrders);
+    };
 
     return (
         <div className='kitbar'>
-            {/* Pass groupedOrders as the orders prop */}
-            <Orders orders={groupedOrders} />
-            <button className='orderCompleteButton'>Platillo completado</button>
+            <h1 style={{ fontSize: '30px', color: 'white'}}>Cocina</h1>
+            
+            <Orders orders={orders} />
+            
+            <button className='orderCompleteButton' onClick={handleCompleteDish}>Platillo completado</button>
+        
         </div>
-    )
+    );
 }
 
-export default Kitchen
+export default Kitchen;

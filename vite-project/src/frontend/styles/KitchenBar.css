@@ -17,6 +17,7 @@
     height: 80%;
     width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     align-items: flex-start;
 }
 
@@ -47,11 +48,42 @@
     box-shadow: 0.2vw 0.2vw var(--timberwolf);
     min-width: 180px;
     margin-right: 40px;
-    min-height: 270px;
+    min-height: 270px; /* Adjust the height as needed */
+    max-height: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.order::-webkit-scrollbar {
+    width: 5px;
+    height: 10px; /* Set the height to 5px for horizontal scrollbar */
+}
+
+.order::-webkit-scrollbar-track {
+    background: #38b000ff;
+    border-radius: 5px;
+}
+
+.order::-webkit-scrollbar-thumb {
+    background: #d7d7d7;
+    border-radius: 5px;
+}
+
+.order::-webkit-scrollbar-thumb:hover {
+    background: #ffd82cff;
 }
 
 .orderCompleteButton {
     width: 20%;
     background-color:   #d7d7d7;
+    color: black;
+}
+
+h1 span {
+    border-bottom: 1px solid #38b000ff;
+    padding-bottom: 5px;
+}
+
+h3 span {
+    text-align: left;
     color: black;
 }
