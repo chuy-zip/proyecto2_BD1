@@ -4,6 +4,7 @@ import Report from '../views/Report'
 import Login from '../views/Login'
 import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
+import Bar from '../views/Bar'
 
 function Router(){
     const [page, setPage] = useState("kitchen")
@@ -32,6 +33,10 @@ function Router(){
 
         case "kitchen":
             contenido = <Kitchen navigator={navegar}/>
+            break;
+
+        case "bar":
+            contenido = <Bar navigator={navegar}/>
             break;
     
         default:

@@ -43,6 +43,10 @@ function Orders({ orders }) {
 function Kitchen({ navigator }) {
     const [orders, setOrders] = useState({}); 
 
+    const goToBar = () =>{
+        navigator("bar")
+    }
+    
     useEffect(() => {
         
         const initialOrders = JSON.parse(getDishesOrders());
@@ -61,8 +65,11 @@ function Kitchen({ navigator }) {
             <h1 style={{ fontSize: '30px', color: 'white'}}>Cocina</h1>
             
             <Orders orders={orders} />
-            
-            <button className='orderCompleteButton' onClick={handleCompleteDish}>Platillo completado</button>
+
+            <div className="buttonContainer">
+                <button className='orderCompleteButton' onClick={handleCompleteDish}>Platillo completado</button>
+                <button className='orderCompleteButton' onClick={goToBar}>Ir al Bar</button>
+            </div>
         
         </div>
     );

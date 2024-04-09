@@ -14,11 +14,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     border-radius: 1vw;
-    height: 80%;
+    height: 90%;
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
     align-items: flex-start;
+    background: #000;
 }
 
 
@@ -86,4 +87,10 @@ h1 span {
 h3 span {
     text-align: left;
     color: black;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
