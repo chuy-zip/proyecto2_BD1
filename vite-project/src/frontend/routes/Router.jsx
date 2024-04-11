@@ -8,7 +8,7 @@ import Bar from '../views/Bar'
 import TableOrder from '../views/TableOrder'
 
 function Router(){
-    const [page, setPage] = useState("login")
+    const [page, setPage] = useState("tableOrder")
 
     const navegar = (enlace) => {
         setPage(enlace)
