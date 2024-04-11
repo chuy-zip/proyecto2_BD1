@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-
+import SinglePayment from "./SinglePayment";
+import DividedPayment from "./DividedPayment";
 
 function Order({ orderKey, nombre, nit, address, products }) {
     const parsedString = orderKey.split("-");
     
-    const sum = products.reduce((total, dish) => total + dish.price, 0); // Initialize total with 0
+    const sum = products.reduce((total, dish) => total + dish.quantity * dish.price  , 0); // Initialize total with 0
     
 
     return (
@@ -47,6 +48,7 @@ function Bill({ navigator, params }){
 
     const [bill, setBill] = useState({})
     const [billNumber, setBillNumber] = useState("");
+    const [paymentStyle, setPaymentStyle] = useState("")
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
 
@@ -54,9 +56,7 @@ function Bill({ navigator, params }){
         try {
             const initialOrders = params.order;
             
-            // Check if initialOrders is an object
             if (typeof initialOrders === 'object' && initialOrders !== null) {
-                console.log("parmssss",  params)
                 setBill(initialOrders);
                 setBillNumber(Object.keys(initialOrders)[0]);
                 setLoading(false); // Update loading status
@@ -68,6 +68,14 @@ function Bill({ navigator, params }){
             setError(error); // Update error state
         }
     }, []);
+
+    const handleRegularPayment = () => {
+        setPaymentStyle("regular");
+    };
+
+    const handleSeparatedPayment = () => {
+        setPaymentStyle("separated");
+    };
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -82,12 +90,37 @@ function Bill({ navigator, params }){
             <div className='kitbar'>
                 <h1 className='viewTittle'>Factura</h1>
 
-                <Order orderKey={billNumber} products={bill[billNumber]} />
+                <Order 
+                    orderKey={billNumber} 
+                    products={bill[billNumber]} 
+                    nombre={params.name}
+                    nit={params.nit}
+                    address={params.address}
+                    />
                 
                 <div className="buttonContainer">
-                    <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}}>Pago regular</button>
-                    <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}}>Pago separado</button>
+                    <button  
+                        className='orderCompleteButton' 
+                        style={{margin: 'auto', marginTop: '20px'}}
+                        onClick={handleRegularPayment}>Pago regular</button>
+
+                    <button  
+                        className='orderCompleteButton' 
+                        style={{margin: 'auto', marginTop: '20px'}} 
+                        onClick={handleSeparatedPayment}>Pago separado</button>
                 </div>
+
+                {paymentStyle === "regular" && (
+                    // Render components for regular payment method
+                    <SinglePayment />
+                )}
+
+                {paymentStyle === "separated" && (
+                    // Render components for separated payment method
+                    <DividedPayment />
+                )}
+
+
             </div>
         </>
     )
