@@ -34,21 +34,21 @@ function Order({ orderKey, products }) {
 function TableOrder({ navigator }) {
     const [order, setOrder] = useState({}); 
     const [tableOrder, setTableOrder] = useState("");
-    const [clientName, setClientName] = useState("")
+    const [clientName, setClientName] = useState("");
     const [nit, setNit] = useState("");
     const [address, setAddress] = useState("");
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null); 
 
-    const goToBill = () =>{
+    const goToBill = () => {
         const params = { 
             'order': order,
-            'name': "Pablo Carrera",
-            'nit': 1241241234,
-            'address': "Colonia Fontana zona 4"
-        }
-        navigator("bill", params)
-    }
+            'name': clientName,
+            'nit': nit,
+            'address': address
+        };
+        navigator("bill", params);
+    };
     
     useEffect(() => {
         try {
@@ -69,6 +69,18 @@ function TableOrder({ navigator }) {
         }
     }, []);
 
+    const clientChange = (event) => {
+        setClientName(event.target.value);
+    };
+
+    const nitChange = (event) => {
+        setNit(event.target.value);
+    };
+
+    const addressChange = (event) => {
+        setAddress(event.target.value);
+    };
+    
     if (error) {
         return <div>Error: {error.message}</div>;
     }
@@ -83,16 +95,15 @@ function TableOrder({ navigator }) {
             
             <Order orderKey={tableOrder} products={order[tableOrder]} />
 
-            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Cliente'/>
-            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Nit'/>
-            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Direccion'/>
+            <input className="tableOrderInput" type="text" placeholder='Cliente' value={clientName} onChange={clientChange} />
+            <input className="tableOrderInput" type="text" placeholder='Nit' value={nit} onChange={nitChange} />
+            <input className="tableOrderInput" type="text" placeholder='Direccion' value={address} onChange={addressChange} />
             
             <div className="buttonContainer">
-                <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}} onClick={goToBill}>Generar factura</button>
+                <button className='orderCompleteButton' style={{ margin: 'auto', marginTop: '20px' }} onClick={goToBill}>Cerrar orden y generar factura</button>
             </div>
         </div>
     );
 }
-
 
 export default TableOrder;
