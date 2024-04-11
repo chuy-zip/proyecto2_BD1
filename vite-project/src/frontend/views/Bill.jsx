@@ -2,11 +2,8 @@ import { useState, useEffect } from "react";
 import SinglePayment from "./SinglePayment";
 import DividedPayment from "./DividedPayment";
 
-function Order({ orderKey, nombre, nit, address, products }) {
+function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
     const parsedString = orderKey.split("-");
-    
-    const sum = products.reduce((total, dish) => total + dish.quantity * dish.price  , 0); // Initialize total with 0
-    
 
     return (
         <div className="order" style={{width: '700px', margin:'auto'}}>
@@ -35,7 +32,7 @@ function Order({ orderKey, nombre, nit, address, products }) {
                     <tr>
                         <td className="tableOrderTh" style={{ fontWeight: 'bold'}}>Total</td>
                         <td></td>
-                        <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}>Q.{sum}</td>
+                        <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}>Q.{orderTotal}</td>
 
                     </tr>
                 </tbody>
@@ -51,14 +48,22 @@ function Bill({ navigator, params }){
     const [paymentStyle, setPaymentStyle] = useState("")
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
+    const [orderTotal, setOrderTotal] = useState(0)
 
     useEffect(() => {
         try {
             const initialOrders = params.order;
+            const initialOrdNum = Object.keys(initialOrders)[0]
+            console.log("aaaaaaaaaaaaa", initialOrders)
+
+            const sum = initialOrders[initialOrdNum].reduce(
+                (total, dish) => total + dish.quantity * dish.price  , 0
+            ); // Initialize total with 0
             
             if (typeof initialOrders === 'object' && initialOrders !== null) {
                 setBill(initialOrders);
-                setBillNumber(Object.keys(initialOrders)[0]);
+                setBillNumber(initialOrdNum);
+                setOrderTotal(sum)
                 setLoading(false); // Update loading status
             } else {
                 throw new Error('Invalid data format');
@@ -96,23 +101,26 @@ function Bill({ navigator, params }){
                     nombre={params.name}
                     nit={params.nit}
                     address={params.address}
+                    orderTotal={orderTotal}
                     />
                 
+                // When a button is pressed it should create the bill So then ID can be passed //
+                // to the payment functions
                 <div className="buttonContainer">
                     <button  
                         className='orderCompleteButton' 
                         style={{margin: 'auto', marginTop: '20px'}}
-                        onClick={handleRegularPayment}>Pago regular</button>
+                        onClick={() => handleRegularPayment()}>Pago regular</button>
 
                     <button  
                         className='orderCompleteButton' 
                         style={{margin: 'auto', marginTop: '20px'}} 
-                        onClick={handleSeparatedPayment}>Pago separado</button>
+                        onClick={() => handleSeparatedPayment()}>Pago separado</button>
                 </div>
 
                 {paymentStyle === "regular" && (
-                    // Render components for regular payment method
-                    <SinglePayment />
+                    // Here i use a hardcoded ID
+                    <SinglePayment billID={"102"} orderTotal={orderTotal}/>
                 )}
 
                 {paymentStyle === "separated" && (
