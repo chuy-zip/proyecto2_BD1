@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { getBillData } from "../../controller/billController";
 
-function Order({ orderKey, products }) {
+
+function Order({ orderKey, nombre, nit, address, products }) {
     const parsedString = orderKey.split("-");
-    console.log(products)
+    
     const sum = products.reduce((total, dish) => total + dish.price, 0); // Initialize total with 0
-    console.log(sum);
+    
 
     return (
         <div className="order" style={{width: '700px', margin:'auto'}}>
             <h1><span style={{fontSize: '100px'}}>Orden: {parsedString[0]}</span></h1>
-            <h3><span style={{fontSize: '25px'}}>Mesa: {parsedString[1]} Nombre: {parsedString[2]}</span></h3>
-            <h3><span style={{fontSize: '25px'}}>Nit: {parsedString[3]}</span></h3>
-            <h3><span style={{fontSize: '25px'}}>Direccion: {parsedString[4]}</span></h3>
+            <h3><span style={{fontSize: '25px'}}>Mesa: {parsedString[1]} Nombre: {nombre}</span></h3>
+            <h3><span style={{fontSize: '25px'}}>Nit: {nit}</span></h3>
+            <h3><span style={{fontSize: '25px'}}>Direccion: {address}</span></h3>
 
             <table style={{ margin: 'auto', paddingTop: '10px', borderCollapse: 'collapse'}}>
                 <thead>
@@ -27,14 +27,14 @@ function Order({ orderKey, products }) {
                         <tr key={index}>
                             <td style={{ color: 'black', textAlign: 'left', fontSize: '20px'}}><span>{value.product}</span></td>
                             <td style={{ color: 'black', textAlign: 'center', fontSize: '20px'}}><span>{value.quantity}</span></td>
-                            <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}><span>{value.price}</span></td>
+                            <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}><span>Q.{value.price}</span></td>
                         </tr>
                     ))}
 
                     <tr>
                         <td className="tableOrderTh" style={{ fontWeight: 'bold'}}>Total</td>
                         <td></td>
-                        <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}>{sum}</td>
+                        <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}>Q.{sum}</td>
 
                     </tr>
                 </tbody>
@@ -43,7 +43,7 @@ function Order({ orderKey, products }) {
     );
 }
 
-function Bill({ navigator }){
+function Bill({ navigator, params }){
 
     const [bill, setBill] = useState({})
     const [billNumber, setBillNumber] = useState("");
@@ -52,11 +52,11 @@ function Bill({ navigator }){
 
     useEffect(() => {
         try {
-            const initialOrders = JSON.parse(getBillData());
-            console.log("Initial Orders:", initialOrders);
+            const initialOrders = params.order;
             
             // Check if initialOrders is an object
             if (typeof initialOrders === 'object' && initialOrders !== null) {
+                console.log("parmssss",  params)
                 setBill(initialOrders);
                 setBillNumber(Object.keys(initialOrders)[0]);
                 setLoading(false); // Update loading status
@@ -89,8 +89,6 @@ function Bill({ navigator }){
                     <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}}>Pago separado</button>
                 </div>
             </div>
-            
-
         </>
     )
 

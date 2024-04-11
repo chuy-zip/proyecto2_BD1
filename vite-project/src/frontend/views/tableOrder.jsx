@@ -34,11 +34,20 @@ function Order({ orderKey, products }) {
 function TableOrder({ navigator }) {
     const [order, setOrder] = useState({}); 
     const [tableOrder, setTableOrder] = useState("");
-    const [loading, setLoading] = useState(true); // State to track loading status
-    const [error, setError] = useState(null); // State to track errors
+    const [clientName, setClientName] = useState("")
+    const [nit, setNit] = useState("");
+    const [address, setAddress] = useState("");
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     const goToBill = () =>{
-        navigator("bill")
+        const params = { 
+            'order': order,
+            'name': "Pablo Carrera",
+            'nit': 1241241234,
+            'address': "Colonia Fontana zona 4"
+        }
+        navigator("bill", params)
     }
     
     useEffect(() => {
@@ -73,6 +82,10 @@ function TableOrder({ navigator }) {
             <h1 className="viewTittle">Revision de la orden</h1>
             
             <Order orderKey={tableOrder} products={order[tableOrder]} />
+
+            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Cliente'/>
+            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Nit'/>
+            <input style={{width: '60%', margin: 'auto', marginTop: '30px'}} type="text" placeholder='Direccion'/>
             
             <div className="buttonContainer">
                 <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}} onClick={goToBill}>Generar factura</button>

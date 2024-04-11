@@ -9,10 +9,12 @@ import TableOrder from '../views/TableOrder'
 import Bill from '../views/Bill'
 
 function Router(){
-    const [page, setPage] = useState("bill")
+    const [page, setPage] = useState("tableOrder")
+    const [params, setParams] = useState(null)
 
-    const navegar = (enlace) => {
+    const navegar = (enlace, parametros) => {
         setPage(enlace)
+        setParams(parametros)
     }
 
     let contenido;
@@ -46,7 +48,7 @@ function Router(){
             break;
         
         case "bill":
-            contenido = <Bill navigator={navegar}/>
+            contenido = <Bill navigator={navegar} params={params}/>
     
         default:
             break;
