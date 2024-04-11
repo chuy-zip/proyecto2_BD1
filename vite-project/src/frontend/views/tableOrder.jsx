@@ -37,8 +37,8 @@ function TableOrder({ navigator }) {
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
 
-    const goToKitchen = () =>{
-        navigator("kitchen")
+    const goToBill = () =>{
+        navigator("bill")
     }
     
     useEffect(() => {
@@ -75,7 +75,7 @@ function TableOrder({ navigator }) {
             <Order orderKey={tableOrder} products={order[tableOrder]} />
             
             <div className="buttonContainer">
-                <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}} onClick={goToKitchen}>Ir a cocina</button>
+                <button  className='orderCompleteButton' style={{margin: 'auto', marginTop: '20px'}} onClick={goToBill}>Generar factura</button>
             </div>
         </div>
     );
