@@ -5,10 +5,10 @@ import Login from '../views/Login'
 import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
-import TableOrder from '../views/tableOrder'
+import TableOrder from '../views/TableOrder'
 
 function Router(){
-    const [page, setPage] = useState("tableOrder")
+    const [page, setPage] = useState("login")
 
     const navegar = (enlace) => {
         setPage(enlace)
