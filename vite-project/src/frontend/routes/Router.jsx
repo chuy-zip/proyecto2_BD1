@@ -6,9 +6,10 @@ import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
 import TableOrder from '../views/TableOrder'
+import Bill from '../views/Bill'
 
 function Router(){
-    const [page, setPage] = useState("tableOrder")
+    const [page, setPage] = useState("bill")
 
     const navegar = (enlace) => {
         setPage(enlace)
@@ -43,6 +44,9 @@ function Router(){
         case "tableOrder":
             contenido = <TableOrder navigator={navegar}/>
             break;
+        
+        case "bill":
+            contenido = <Bill navigator={navegar}/>
     
         default:
             break;
