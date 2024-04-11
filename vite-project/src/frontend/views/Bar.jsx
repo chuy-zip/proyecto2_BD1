@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getDishesOrders, getDrinksOrders } from '../../controller/kitbarController.js';
+import { getDrinksOrders } from '../../controller/kitbarController.js';
 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
@@ -62,7 +62,7 @@ function Bar({ navigator }) {
 
     return (
         <div className='kitbar'>
-            <h1 style={{ fontSize: '30px', color: 'white'}}>Bar</h1>
+            <h1 className="viewTittle">Bar</h1>
             
             <Orders orders={orders} />
 

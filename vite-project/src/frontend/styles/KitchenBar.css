@@ -94,3 +94,10 @@ h3 span {
     flex-direction: row;
     justify-content: space-between;
 }
+
+.viewTittle {
+    font-size: 30px;
+    color: white; 
+    margin: auto;
+    padding-bottom: 20px;
+}

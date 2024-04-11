@@ -39,7 +39,25 @@ function getOrderProducts(){
         {
             "order_id": 123,
             "table": 5,
-            "product": "chicken",
+            "product": "Vino",
+            "quantity": 1
+        },
+        {
+            "order_id": 123,
+            "table": 5,
+            "product": "nuggets",
+            "quantity": 5
+        },
+        {
+            "order_id": 123,
+            "table": 5,
+            "product": "Jugo de naranja",
+            "quantity": 2
+        },
+        {
+            "order_id": 123,
+            "table": 5,
+            "product": "coca",
             "quantity": 5
         },
         {
@@ -51,25 +69,7 @@ function getOrderProducts(){
         {
             "order_id": 123,
             "table": 5,
-            "product": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "wings",
+            "product": "pepsi",
             "quantity": 2
         },
         {
@@ -93,7 +93,7 @@ function getOrderProducts(){
         {
             "order_id": 123,
             "table": 5,
-            "product": "wings",
+            "product": "Sangria",
             "quantity": 1
         },
         {
