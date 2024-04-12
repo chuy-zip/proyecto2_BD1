@@ -44,7 +44,7 @@ function Login({navigator}) {
             <ImageCard source={logo} alternative={"Logo del restaurante"}/>
             <h1>Iniciar Sesión</h1>
             <input type="text" placeholder='Nombre' value={name} onChange={getName} onKeyDown={enterPress}/>
-            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword}onKeyDown={enterPress}/>
+            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword} onKeyDown={enterPress}/>
             <button onClick={loginButton}>Confirmar</button>
             <div className='forgetBack'>
                 <button className='forgetButtons' onClick={goToSignup}>Registrarse</button>

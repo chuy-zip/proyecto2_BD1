@@ -5,6 +5,7 @@ import Login from '../views/Login'
 import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
+import Menu from '../views/Menu'
 import TableOrder from '../views/tableOrder'
 import Bill from '../views/Bill'
 import DividedPayment from '../views/DividedPayment'
@@ -43,6 +44,10 @@ function Router(){
 
         case "bar":
             contenido = <Bar navigator={navegar}/>
+            break;
+    
+        case "menu":
+            contenido = <Menu navigator={navegar}/>
             break;
 
         case "tableOrder":
