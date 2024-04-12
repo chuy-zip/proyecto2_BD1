@@ -1,0 +1,31 @@
+nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+  
+a {
+  float: left;
+}
+  
+a {
+  
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+  
+a:hover {
+  background-color: #111;
+}
+
+.button-containerDash {
+  position: fixed; /* Position the container relative to the viewport */
+  bottom: 0; /* Align the container to the bottom of the viewport */
+  left: 0; /* Align the container to the left of the viewport */
+  z-index: 9999; /* Ensure the container is above other elements */
+  padding: 20px; /* Add padding to the container if needed */
+}
