@@ -1,0 +1,31 @@
+.tableOrderTh  {
+    font-size: 25px; 
+    color: black;
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+.tableOrderInput {
+    width: 60%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+td {
+    border-bottom: 1px solid rgb(0, 0, 0);
+    padding-bottom: 5px;
+}
+
+.dropdown {
+    margin: 10px;
+}
+
+.dropdown-select {
+    background-color: #d7d7d7;
+    border: 1px solid #38b000ff;
+    color: #000000;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+}
