@@ -11,7 +11,7 @@ import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
 
 function Router(){
-    const [page, setPage] = useState("searchOrder")
+    const [page, setPage] = useState("dashboard")
     const [params, setParams] = useState(null)
 
     const navegar = (enlace, parametros) => {
@@ -22,7 +22,7 @@ function Router(){
     let contenido;
     switch (page) {
         case "dashboard":
-            contenido = <Dashboard />
+            contenido = <Dashboard navigate={navegar}/>
             break;
         
         case "reporte":
