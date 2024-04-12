@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS tipo_producto(
 CREATE TABLE IF NOT EXISTS orden (
     id SERIAL PRIMARY KEY,
     id_mesa INTEGER NOT NULL,
-    estado VARCHAR(10) NOT NULL -- abierto o cerrado
+    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL -- abierto o cerrado
 );
 
 CREATE TABLE IF NOT EXISTS contenido_orden (
@@ -78,7 +78,8 @@ CREATE TABLE IF NOT EXISTS factura (
     id SERIAL PRIMARY KEY,
     nombre_cliente VARCHAR(250) NOT NULL,
     nit VARCHAR(15) NOT NULL,
-    id_orden INTEGER NOT NULL
+    id_orden INTEGER NOT NULL,
+    direccion TEXT DEFAULT 'This Restaurant'
 );
 
 CREATE TABLE IF NOT EXISTS pago_factura (
