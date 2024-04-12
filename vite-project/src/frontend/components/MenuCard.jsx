@@ -1,12 +1,14 @@
 import { useState } from "react"
 
-function menuCard({key, name, description, price, addDishes}) {
+function MenuCard({ key, name, description, price, addDishes }) {
+    const [quantity, setQuantity] = useState(1);
 
-    const [newDishes, setNewDishes] = useState(1)
+    const handleQuantityChange = (event) => {
+        setQuantity(parseInt(event.target.value));
+    }
 
-    const addNewDishes = (event) => {
-        console.log(newDishes)
-        setNewDishes(event.target.value)
+    const handleAddDish = () => {
+        addDishes(quantity, { name, price, quantity });
     }
 
     return (
@@ -17,14 +19,21 @@ function menuCard({key, name, description, price, addDishes}) {
                 <p className="priceP">Q {price}</p>
             </div>
             <div>
-                <div style={{display:"flex", justifyContent:"center"}}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                     <p>Cantidad</p>
-                    <input type="number" min={"1"} step={"1"} onChange={addNewDishes} value={newDishes} id="dishNumber"/>
+                    <input
+                        type="number"
+                        min={1}
+                        step={1}
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                        id="dishNumber"
+                    />
                 </div>
-                <button onClick={() => addDishes(parseInt(newDishes))}>Añadir</button>
+                <button onClick={handleAddDish}>Añadir</button>
             </div>
         </div>
     )
 }
 
-export default menuCard
+export default MenuCard;
