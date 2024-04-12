@@ -6,12 +6,18 @@ import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
 import Menu from '../views/Menu'
+import TableOrder from '../views/tableOrder'
+import Bill from '../views/Bill'
+import DividedPayment from '../views/DividedPayment'
+import SearchOrder from '../components/SearchOrder'
 
 function Router(){
-    const [page, setPage] = useState("menu")
+    const [page, setPage] = useState("searchOrder")
+    const [params, setParams] = useState(null)
 
-    const navegar = (enlace) => {
+    const navegar = (enlace, parametros) => {
         setPage(enlace)
+        setParams(parametros)
     }
 
     let contenido;
@@ -42,6 +48,21 @@ function Router(){
     
         case "menu":
             contenido = <Menu navigator={navegar}/>
+
+        case "tableOrder":
+            contenido = <TableOrder navigator={navegar} params={params}/>
+            break;
+        
+        case "bill":
+            contenido = <Bill navigator={navegar} params={params}/>
+            break;
+        
+        case "dividedBill":
+            contenido = <DividedPayment params={params}/>
+            break;
+
+        case "searchOrder":
+            contenido = <SearchOrder navigator={navegar}/>
             break;
 
         default:

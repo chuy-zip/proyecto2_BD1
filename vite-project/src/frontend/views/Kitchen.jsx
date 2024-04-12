@@ -62,7 +62,7 @@ function Kitchen({ navigator }) {
 
     return (
         <div className='kitbar'>
-            <h1 style={{ fontSize: '30px', color: 'white'}}>Cocina</h1>
+            <h1 className="viewTittle">Cocina</h1>
             
             <Orders orders={orders} />
 
