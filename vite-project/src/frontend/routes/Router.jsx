@@ -8,9 +8,10 @@ import Bar from '../views/Bar'
 import TableOrder from '../views/TableOrder'
 import Bill from '../views/Bill'
 import DividedPayment from '../views/DividedPayment'
+import SearchOrder from '../components/SearchOrder'
 
 function Router(){
-    const [page, setPage] = useState("tableOrder")
+    const [page, setPage] = useState("searchOrder")
     const [params, setParams] = useState(null)
 
     const navegar = (enlace, parametros) => {
@@ -45,7 +46,7 @@ function Router(){
             break;
 
         case "tableOrder":
-            contenido = <TableOrder navigator={navegar}/>
+            contenido = <TableOrder navigator={navegar} params={params}/>
             break;
         
         case "bill":
@@ -55,7 +56,11 @@ function Router(){
         case "dividedBill":
             contenido = <DividedPayment params={params}/>
             break;
-    
+
+        case "searchOrder":
+            contenido = <SearchOrder navigator={navegar}/>
+            break;
+
         default:
             break;
     }

@@ -13,8 +13,6 @@ function SeparatedPayment({payment}){
         </>
 
     )
-    
-
 }
 
 function DividedPayment({params}){

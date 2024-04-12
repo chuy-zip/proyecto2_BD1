@@ -31,7 +31,7 @@ function Order({ orderKey, products }) {
     );
 }
 
-function TableOrder({ navigator }) {
+function TableOrder({ navigator, params }) {
     const [order, setOrder] = useState({}); 
     const [tableOrder, setTableOrder] = useState("");
     const [clientName, setClientName] = useState("");
@@ -54,6 +54,8 @@ function TableOrder({ navigator }) {
         try {
             const initialOrders = JSON.parse(getOrderProducts());
             console.log("Initial Orders:", initialOrders);
+
+            console.log("Orden recibida: ", params.order)
             
             // Check if initialOrders is an object
             if (typeof initialOrders === 'object' && initialOrders !== null) {
