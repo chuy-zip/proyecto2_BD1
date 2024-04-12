@@ -5,7 +5,7 @@ const client = getClient();
 export async function getUsers() {
     try {
         const query = {
-            text: 'SELECT * FROM users',
+            text: 'SELECT * FROM users'
         }
 
         const result = await client.query(query)
@@ -22,7 +22,7 @@ export async function registerUser(username, password, rol) {
     try {
         const query = {
             text: 'INSERT INTO users (username, password, rol) VALUES ($1, $2, $3)',
-            values: [username, password, rol],
+            values: [username, password, rol]
         };
     
         const result = await client.query(query);
@@ -39,7 +39,7 @@ export async function verifyUser(username, password) {
     try {
         const query = {
             text: 'SELECT * FROM users WHERE username = $1 AND password = $2',
-            values: [username, password],
+            values: [username, password]
         };
     
         const result = await client.query(query);
@@ -80,7 +80,7 @@ export async function assignWaiterToArea(idUser, idArea) {
     try {
         const query = {
             text: 'INSERT INTO mesero (id_user, id_area_asignada) VALUES ($1, $2)',
-            values: [idUser, idArea],
+            values: [idUser, idArea]
         };
     
         const result = await client.query(query);
@@ -97,7 +97,7 @@ export async function getAreasForWaiter(userId) {
     try {
         const query = {
             text: 'SELECT area.* FROM area JOIN mesero ON area.id = mesero.id_area_asignada WHERE mesero.id_user = $1',
-            values: [userId],
+            values: [userId]
         };
     
         const result = await client.query(query);
@@ -114,7 +114,7 @@ export async function removeWaiterFromArea(userId, areaId) {
     try {
         const query = {
             text: 'DELETE FROM mesero WHERE id_user = $1 AND id_area_asignada = $2',
-            values: [userId, areaId],
+            values: [userId, areaId]
         };
     
         const result = await client.query(query);
@@ -131,7 +131,7 @@ export async function removeWaiterFromArea(userId, areaId) {
 export async function listAllAreas() {
     try {
         const query = {
-            text: 'SELECT * FROM area',
+            text: 'SELECT * FROM area'
         };
     
         const result = await client.query(query);
@@ -148,7 +148,7 @@ export async function createArea(nombre, fumadores) {
     try {
         const query = {
             text: 'INSERT INTO area (nombre, fumadores) VALUES ($1, $2)',
-            values: [nombre, fumadores],
+            values: [nombre, fumadores]
         };
     
         const result = await client.query(query);
@@ -165,7 +165,7 @@ export async function deleteArea(areaId) {
     try {
         const query = {
         text: 'DELETE FROM area WHERE id = $1',
-        values: [areaId],
+        values: [areaId]
         };
   
         const result = await client.query(query);
@@ -181,7 +181,7 @@ export async function deleteArea(areaId) {
 export async function listAllTables() {
     try {
         const query = {
-        text: 'SELECT * FROM mesa',
+        text: 'SELECT * FROM mesa'
         };
 
         const result = await client.query(query);
@@ -198,7 +198,7 @@ export async function createTable(capacidad, movible) {
     try {
         const query = {
             text: 'INSERT INTO mesa (capacidad, movible) VALUES ($1, $2)',
-            values: [capacidad, movible],
+            values: [capacidad, movible]
         };
         const result = await client.query(query);
     
@@ -214,7 +214,7 @@ export async function deleteTable(tableId) {
     try {
         const query = {
             text: 'DELETE FROM mesa WHERE id = $1',
-            values: [tableId],
+            values: [tableId]
         };
         const result = await client.query(query);
     
@@ -230,7 +230,7 @@ export async function assignTableToArea(tableId, areaId) {
     try {
         const query = {
             text: 'UPDATE mesa SET id_area_asignada = $1 WHERE id = $2',
-            values: [areaId, tableId],
+            values: [areaId, tableId]
         };
         const result = await client.query(query);
     
@@ -246,7 +246,7 @@ export async function removeTableFromArea(tableId) {
     try {
         const query = {
             text: 'UPDATE mesa SET id_area_asignada = NULL WHERE id = $1',
-            values: [tableId],
+            values: [tableId]
         };
     
         const result = await client.query(query);
@@ -263,7 +263,7 @@ export async function listTablesInArea(areaId) {
     try {
         const query = {
             text: 'SELECT * FROM mesa WHERE id_area_asignada = $1',
-            values: [areaId],
+            values: [areaId]
         };
         const result = await client.query(query);
     
@@ -279,7 +279,7 @@ export async function addRatingToWaiter(waiterId, amabilidad, exactitud) {
     try {
         const query = {
             text: 'INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES ($1, $2, $3)',
-            values: [waiterId, amabilidad, exactitud],
+            values: [waiterId, amabilidad, exactitud]
         };
         const result = await client.query(query);
     
@@ -297,7 +297,7 @@ export async function addEmployeeDishComplaint(employeeId, dishId, motivo, sever
     try {
         const query = {
             text: 'INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES ($1, $2, $3, $4)',
-            values: [motivo, severidad, employeeId, dishId],
+            values: [motivo, severidad, employeeId, dishId]
         };
         const result = await client.query(query);
     
@@ -313,7 +313,7 @@ export async function addProduct(nombre, descripcion, precio, tipo) {
     try {
         const query = {
             text: 'INSERT INTO producto (nombre, descripcion, precio, tipo) VALUES ($1, $2, $3, $4)',
-            values: [nombre, descripcion, precio, tipo],
+            values: [nombre, descripcion, precio, tipo]
         };
         const result = await client.query(query);
     
@@ -329,7 +329,7 @@ export async function deleteProduct(productId) {
     try {
       const query = {
         text: 'DELETE FROM producto WHERE id = $1',
-        values: [productId],
+        values: [productId]
       };
       const result = await client.query(query);
   
@@ -344,7 +344,7 @@ export async function deleteProduct(productId) {
 export async function listAllProducts() {
     try {
         const query = {
-            text: 'SELECT * FROM producto',
+            text: 'SELECT * FROM producto'
         };
         const result = await client.query(query);
     
@@ -361,7 +361,7 @@ export async function addProductType(nombreTipo) {
     try {
         const query = {
             text: 'INSERT INTO tipo_producto (nombre) VALUES ($1)',
-            values: [nombreTipo],
+            values: [nombreTipo]
         };
         const result = await client.query(query);
     
@@ -377,7 +377,7 @@ export async function deleteProductType(typeId) {
     try {
         const query = {
             text: 'DELETE FROM tipo_producto WHERE id_tipo = $1',
-            values: [typeId],
+            values: [typeId]
         };
         const result = await client.query(query);
     
@@ -392,7 +392,7 @@ export async function deleteProductType(typeId) {
 export async function listAllProductTypes() {
     try {
         const query = {
-            text: 'SELECT * FROM tipo_producto',
+            text: 'SELECT * FROM tipo_producto'
         };
         const result = await client.query(query);
     
@@ -410,7 +410,7 @@ export async function createOrder(mesaId) {
         // Consulta para insertar un nuevo registro en la tabla orden con un estado predeterminado y obtener su ID
         const query = {
         text: 'INSERT INTO orden (id_mesa) VALUES ($1) RETURNING id',
-        values: [mesaId],
+        values: [mesaId]
         };
         const result = await client.query(query);
 
@@ -435,7 +435,7 @@ export async function closeOrder(orderId) {
     try {
         const query = {
             text: 'UPDATE orden SET estado = $1 WHERE id = $2',
-            values: ['cerrado', orderId],
+            values: ['cerrado', orderId]
         };
     
         await client.query(query);
@@ -452,7 +452,7 @@ export async function listOpenOrders() {
     try {
       const query = {
         text: 'SELECT * FROM orden WHERE estado = $1',
-        values: ['abierto'],
+        values: ['abierto']
       };
   
       const result = await client.query(query);
@@ -469,7 +469,7 @@ export async function addOrderContent(orderId, cantidadProducto, productId) {
     try {
       const query = {
         text: 'INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto) VALUES ($1, $2, $3)',
-        values: [orderId, cantidadProducto, productId],
+        values: [orderId, cantidadProducto, productId]
       };
       const result = await client.query(query);
   
@@ -486,7 +486,7 @@ export async function markProductCompleted(orderId, productId) {
     try {
       const query = {
         text: 'UPDATE contenido_orden SET completado = true WHERE id_orden = $1 AND id_producto = $2',
-        values: [orderId, productId],
+        values: [orderId, productId]
       };
       const result = await client.query(query);
   
@@ -511,7 +511,7 @@ export async function createInvoice(nombreCliente, nit, orderId, direccion) {
         // Paso 1: Crear el registro de la factura
         const createInvoiceQuery = {
             text: 'INSERT INTO factura (nombre_cliente, nit, id_orden, direccion) VALUES ($1, $2, $3, $4) RETURNING id',
-            values: [nombreCliente, nit, orderId, direccion],
+            values: [nombreCliente, nit, orderId, direccion]
         };
         const createInvoiceResult = await client.query(createInvoiceQuery);
         const invoiceId = createInvoiceResult.rows[0].id;
@@ -527,7 +527,7 @@ export async function createInvoice(nombreCliente, nit, orderId, direccion) {
                 AND o.estado = 'cerrado'
                 AND co.completado = true
                 GROUP BY f.id`,
-            values: [invoiceId],
+            values: [invoiceId]
         };
         const getTotalResult = await client.query(getTotalQuery);
         const total = getTotalResult.rows[0].total;
@@ -535,16 +535,14 @@ export async function createInvoice(nombreCliente, nit, orderId, direccion) {
         // Paso 3: Actualizar el registro de la factura con el total obtenido
         const updateTotalQuery = {
             text: 'UPDATE factura SET total = $1 WHERE id = $2',
-            values: [total, invoiceId],
+            values: [total, invoiceId]
         };
         await client.query(updateTotalQuery);
-    
-        console.log('Factura creada exitosamente.');
 
         // Paso 4: Obtener la factura actualizada
         const getInvoiceQuery = {
             text: 'SELECT * FROM factura WHERE id = $1',
-            values: [invoiceId],
+            values: [invoiceId]
         };
         const getInvoiceResult = await client.query(getInvoiceQuery);
         const updatedInvoice = getInvoiceResult.rows[0];
@@ -570,7 +568,7 @@ export async function showInvoiceContentsAndTotal(facturaId) {
                 WHERE f.id = $1
                 AND o.estado = 'cerrado'
                 AND co.completado = true`,
-            values: [facturaId],
+            values: [facturaId]
         };
     
         const result = await client.query(query);
@@ -652,7 +650,7 @@ export async function getOrderWithProducts(orderId) {
                 JOIN contenido_orden co ON o.id = co.id_orden
                 JOIN producto p ON co.id_producto = p.id
                 WHERE o.id = $1`,
-            values: [orderId],
+            values: [orderId]
         };
   
         const result = await client.query(query);
@@ -668,7 +666,7 @@ export async function getInvoiceByOrderId(orderId) {
     try {
         const query = {
             text: `SELECT * FROM factura WHERE id_orden = $1`,
-            values: [orderId],
+            values: [orderId]
         };
 
         const result = await client.query(query);
