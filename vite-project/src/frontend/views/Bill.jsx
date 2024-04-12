@@ -82,6 +82,14 @@ function Bill({ navigator, params }){
         setPaymentStyle("separated");
     };
 
+    const goToDividedPayment = () => {
+        const params = { 
+            'billID': 123,
+            'orderTotal': orderTotal
+        };
+        navigator("dividedBill", params);
+    };
+
     if (error) {
         return <div>Error: {error.message}</div>;
     }
@@ -115,17 +123,12 @@ function Bill({ navigator, params }){
                     <button  
                         className='orderCompleteButton' 
                         style={{margin: 'auto', marginTop: '20px'}} 
-                        onClick={() => handleSeparatedPayment()}>Pago separado</button>
+                        onClick={() => goToDividedPayment()}>Pago separado</button>
                 </div>
 
                 {paymentStyle === "regular" && (
                     // Here i use a hardcoded ID
                     <SinglePayment billID={"102"} orderTotal={orderTotal}/>
-                )}
-
-                {paymentStyle === "separated" && (
-                    // Render components for separated payment method
-                    <DividedPayment />
                 )}
 
 

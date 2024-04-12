@@ -1,22 +1,5 @@
 import { useState, useEffect } from "react";
-
-function DropdownMenu({selectedOption, handleOptionChange}) {
-    
-
-    return (
-        <div className="dropdown">
-            <select 
-                value={selectedOption} 
-                onChange={handleOptionChange} 
-                className="dropdown-select" // Apply the dropdown-select class
-            >
-                <option value="">Seleccionar método de pago</option>
-                <option value="tarjeta">Tarjeta</option>
-                <option value="efectivo">Efectivo</option>
-            </select>
-        </div>
-    );
-}
+import PaymentDropDown from "../components/PaymentDropDown";
 
 function SinglePayment({billID, orderTotal}){
     const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
@@ -32,7 +15,7 @@ function SinglePayment({billID, orderTotal}){
 
                 <h1 className="viewTittle">Pago regular</h1>
 
-                <DropdownMenu selectedOption={selectedOption} handleOptionChange={handleOptionChange}/>
+                <PaymentDropDown selectedOption={selectedOption} handleOptionChange={handleOptionChange}/>
 
                 <button 
                     className='orderCompleteButton' 
@@ -41,9 +24,6 @@ function SinglePayment({billID, orderTotal}){
                 >
                     Hacer pago
                 </button>
-
-                
-
             </div>
         </>
     )

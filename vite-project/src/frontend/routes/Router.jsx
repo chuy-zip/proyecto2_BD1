@@ -7,6 +7,7 @@ import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
 import TableOrder from '../views/TableOrder'
 import Bill from '../views/Bill'
+import DividedPayment from '../views/DividedPayment'
 
 function Router(){
     const [page, setPage] = useState("tableOrder")
@@ -49,6 +50,11 @@ function Router(){
         
         case "bill":
             contenido = <Bill navigator={navegar} params={params}/>
+            break;
+        
+        case "dividedBill":
+            contenido = <DividedPayment params={params}/>
+            break;
     
         default:
             break;
