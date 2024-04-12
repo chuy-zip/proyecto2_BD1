@@ -4,6 +4,12 @@ import getDishes from '../../controller/menuController'
 
 function Menu({navigator}) {
     const [dishes, setDishes] = useState([]);
+    const [orderNumber, setOrderNumber] = useState(0)
+    const [orderDishes, setOrderDishes] = useState(0)
+
+    const addDishes = (newDishes) => {
+        setOrderDishes(dishes + newDishes)
+    }
 
     useEffect(() => {
         async function fetchDishes() {
@@ -16,9 +22,9 @@ function Menu({navigator}) {
     return (
         <>
             <header>
-                <div style={{display: "flex"}}>
-                    <h1>Orden</h1>
-                    <p>0</p>
+                <div id="orderHeaderDiv">
+                    <h1 style={{padding:"0 50% 0 0"}}>Orden #xxx</h1>
+                    <h1>0</h1>
                 </div>
             </header>
             <div className="background" id="menuBack">
