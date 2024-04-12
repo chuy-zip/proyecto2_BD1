@@ -100,7 +100,7 @@ function DividedPayment({params}){
                         className='orderCompleteButton' 
                         style={{ margin: 'auto', marginTop: '20px' }} 
                         onClick={() => console.log(params.billID, params.orderTotal)}
-                    > {/* Aqui hay que hacer que en el boton de terminar pago se asocien todos los pagos a una factura */}
+                    > {/* Aqui hay que hacer que en el boton de terminar pago se asocien todos los pagos a una factura usando el objeto payments*/}
                         Terminar pago
                     </button>
                 </div>

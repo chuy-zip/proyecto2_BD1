@@ -111,7 +111,7 @@ function Bill({ navigator, params }){
                     orderTotal={orderTotal}
                     />
                 
-                // When a button is pressed it should create the bill So then ID can be passed //
+                // When a button is pressed (or screen is redendered) it should get the bill So then ID can be passed //
                 // to the payment functions
                 <div className="buttonContainer">
                     <button  
@@ -127,7 +127,7 @@ function Bill({ navigator, params }){
 
                 {paymentStyle === "regular" && (
                     // Here i use a hardcoded ID
-                    <SinglePayment billID={"102"} orderTotal={orderTotal}/>
+                    <SinglePayment billID={"102"} orderTotal={orderTotal} name={params.name}/>
                 )}
 
 

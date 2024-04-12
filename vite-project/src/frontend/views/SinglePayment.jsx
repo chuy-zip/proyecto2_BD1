@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PaymentDropDown from "../components/PaymentDropDown";
 
-function SinglePayment({billID, orderTotal}){
+function SinglePayment({billID, orderTotal, name}){
     const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
 
     const handleOptionChange = (event) => {
@@ -20,7 +20,7 @@ function SinglePayment({billID, orderTotal}){
                 <button 
                     className='orderCompleteButton' 
                     style={{ margin: 'auto', marginTop: '20px' }} 
-                    onClick={() => console.log(selectedOption, billID, orderTotal)}
+                    onClick={() => console.log(selectedOption, billID, orderTotal, name)}
                 >
                     Hacer pago
                 </button>

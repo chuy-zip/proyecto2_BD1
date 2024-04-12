@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
 import {getOrderProducts} from '../../controller/tableOrderController.js'
 import '../styles/tableOrder.css';
-
+// Order number can be parsed from hook tableOrder 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
 
