@@ -8,7 +8,7 @@ function Menu({navigator}) {
     const [orderDishes, setOrderDishes] = useState(0)
 
     const addDishes = (newDishes) => {
-        setOrderDishes(dishes + newDishes)
+        setOrderDishes(orderDishes + newDishes)
     }
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function Menu({navigator}) {
             <header>
                 <div id="orderHeaderDiv">
                     <h1 style={{padding:"0 50% 0 0"}}>Orden #xxx</h1>
-                    <h1>0</h1>
+                    <h1>{orderDishes}</h1>
                 </div>
             </header>
             <div className="background" id="menuBack">
@@ -32,7 +32,8 @@ function Menu({navigator}) {
                     <h1>Nuestros Platillos</h1>
                 </div>
                 {dishes.map((dish, index) => (
-                    MenuCard(index, dish.nombre, dish.descripcion, dish.precio)
+                    // MenuCard(index, dish.nombre, dish.descripcion, dish.precio)
+                    <MenuCard key={index} name={dish.nombre} description={dish.descripcion} price={dish.precio} addDishes={addDishes}/>
                 ))}
             </div>
         </>
