@@ -67,7 +67,17 @@ function Router(){
 
     return(
         <> 
+            
             {contenido}
+
+            <button
+                className="orderCompleteButton"
+                style={{ margin: "auto", marginTop: "20px", width: '150px'}}
+                onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
+            >
+                DashBoard
+            </button>
+
         </>
     )
 }
