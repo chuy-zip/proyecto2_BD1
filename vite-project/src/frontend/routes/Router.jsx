@@ -5,9 +5,10 @@ import Login from '../views/Login'
 import Signup from '../views/Signup'
 import Kitchen from '../views/Kitchen'
 import Bar from '../views/Bar'
+import Menu from '../views/Menu'
 
 function Router(){
-    const [page, setPage] = useState("kitchen")
+    const [page, setPage] = useState("menu")
 
     const navegar = (enlace) => {
         setPage(enlace)
@@ -39,6 +40,10 @@ function Router(){
             contenido = <Bar navigator={navegar}/>
             break;
     
+        case "menu":
+            contenido = <Menu navigator={navegar}/>
+            break;
+
         default:
             break;
     }

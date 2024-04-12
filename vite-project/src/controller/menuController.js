@@ -37,5 +37,8 @@ async function getDishes() {
 
     ]
 
+    return dishesExample
     
 }
+
+export default getDishes
