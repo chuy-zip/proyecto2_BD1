@@ -1,12 +1,15 @@
 import { useState, useEffect, useTransition } from "react";
 import PaymentDropDown from "../components/PaymentDropDown";
 
-function SeparatedPayment({method, name, amount}){
-    console.log(method, name, amount)
+function SeparatedPayment({payment}){
 
     return(
         <>
-            
+          <div className="order">
+            <h3><span>Nombre: {payment.name}</span></h3>
+            <h3><span>Metodo: {payment.method}</span></h3>
+            <h3><span>Cantidad: {payment.amount}</span></h3>
+          </div>
         </>
 
     )
@@ -44,9 +47,13 @@ function DividedPayment({params}){
             }
         }));
 
-        console.log(payments)
         setPaymentID(paymentID + 1);
+
     };
+
+    useEffect(() => {
+        console.log(payments);
+    }, [payments]);
     
 
     
@@ -76,8 +83,11 @@ function DividedPayment({params}){
                 <PaymentDropDown selectedOption={selectedOption} handleOptionChange={handleOptionChange}/>
 
                 <div className="ordersContainer">
-                    Hola
+                    {Object.keys(payments).map((key, index) => (
+                        <SeparatedPayment key={key} payment={payments[key]} />
+                    ))}
                 </div>
+
                 <div className="buttonContainer">
                     <button 
                         className='orderCompleteButton' 
@@ -92,7 +102,7 @@ function DividedPayment({params}){
                         className='orderCompleteButton' 
                         style={{ margin: 'auto', marginTop: '20px' }} 
                         onClick={() => console.log(params.billID, params.orderTotal)}
-                    >
+                    > {/* Aqui hay que hacer que en el boton de terminar pago se asocien todos los pagos a una factura */}
                         Terminar pago
                     </button>
                 </div>
