@@ -12,7 +12,7 @@ import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
 
 function Router(){
-    const [page, setPage] = useState("searchOrder")
+    const [page, setPage] = useState("menu")
     const [params, setParams] = useState(null)
 
     const navegar = (enlace, parametros) => {
@@ -48,6 +48,7 @@ function Router(){
     
         case "menu":
             contenido = <Menu navigator={navegar}/>
+            break
 
         case "tableOrder":
             contenido = <TableOrder navigator={navegar} params={params}/>
