@@ -1,98 +1,140 @@
 import { useState, useEffect } from "react";
-import PaymentDropDown from "../components/PaymentDropDown";
+import SinglePayment from "./SinglePayment";
+import DividedPayment from "./DividedPayment";
 
-function SeparatedPayment({method, name, amount}) {
-    console.log(method, name, amount);
+function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
+    const parsedString = orderKey.split("-");
 
     return (
-        <>
-            
-        </>
+        <div className="order" style={{width: '700px', margin:'auto'}}>
+            <h1><span style={{fontSize: '100px'}}>Orden: {parsedString[0]}</span></h1>
+            <h3><span style={{fontSize: '25px'}}>Mesa: {parsedString[1]} Nombre: {nombre}</span></h3>
+            <h3><span style={{fontSize: '25px'}}>Nit: {nit}</span></h3>
+            <h3><span style={{fontSize: '25px'}}>Direccion: {address}</span></h3>
+
+            <table style={{ margin: 'auto', paddingTop: '10px', borderCollapse: 'collapse'}}>
+                <thead>
+                    <tr >
+                        <th className="tableOrderTh" > <span style={{paddingRight: '110px'}}>Platillo:</span></th>
+                        <th className="tableOrderTh"> <span >Cantidad:</span></th>
+                        <th className="tableOrderTh"> <span style={{paddingLeft: '110px'}}>Precio:</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((value, index) => (
+                        <tr key={index}>
+                            <td style={{ color: 'black', textAlign: 'left', fontSize: '20px'}}><span>{value.product}</span></td>
+                            <td style={{ color: 'black', textAlign: 'center', fontSize: '20px'}}><span>{value.quantity}</span></td>
+                            <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}><span>Q.{value.price}</span></td>
+                        </tr>
+                    ))}
+
+                    <tr>
+                        <td className="tableOrderTh" style={{ fontWeight: 'bold'}}>Total</td>
+                        <td></td>
+                        <td style={{ color: 'black', textAlign: 'right', fontSize: '20px'}}>Q.{orderTotal}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     );
 }
 
-function DividedPayment({params}) {
-    const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
-    const [clientName, setClientName] = useState("");
-    const [paymentAmount, setPaymentAmount] = useState(0);
-    const [paymentID, setPaymentID] = useState(0);
-    const [payments, setPayments] = useState({});
+function Bill({ navigator, params }){
 
-    const clientChange = (event) => {
-        setClientName(event.target.value);
-    };
-
-    const paymentAmountChange = (event) => {
-        setPaymentAmount(event.target.value);
-    };
-
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);     
-    };
-
-    const addPayment = () => {
-        setPayments(prevPayments => ({
-            ...prevPayments,
-            [paymentID]: {
-                name: clientName,
-                method: selectedOption,
-                amount: paymentAmount
-            }
-        }));
-
-        setPaymentID(paymentID + 1);
-    };
+    const [bill, setBill] = useState({})
+    const [billNumber, setBillNumber] = useState("");
+    const [paymentStyle, setPaymentStyle] = useState("")
+    const [loading, setLoading] = useState(true); // State to track loading status
+    const [error, setError] = useState(null); // State to track errors
+    const [orderTotal, setOrderTotal] = useState(0)
 
     useEffect(() => {
-        console.log(payments);
-    }, [payments]);
+        try {
+            const initialOrders = params.order;
+            const initialOrdNum = Object.keys(initialOrders)[0]
+
+            const sum = initialOrders[initialOrdNum].reduce(
+                (total, dish) => total + dish.quantity * dish.price  , 0
+            ); // Initialize total with 0
+            
+            if (typeof initialOrders === 'object' && initialOrders !== null) {
+                setBill(initialOrders);
+                setBillNumber(initialOrdNum);
+                setOrderTotal(sum)
+                setLoading(false); // Update loading status
+            } else {
+                throw new Error('Invalid data format');
+            }
+        } catch (error) {
+            console.error("Error retrieving order products:", error);
+            setError(error); // Update error state
+        }
+    }, []);
+
+    const handleRegularPayment = () => {
+        setPaymentStyle("regular");
+    };
+
+    const handleSeparatedPayment = () => {
+        setPaymentStyle("separated");
+    };
+
+    const goToDividedPayment = () => {
+        const params = { 
+            'billID': 123,
+            'orderTotal': orderTotal
+        };
+        navigator("dividedBill", params);
+    };
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    if (loading || !bill[billNumber]) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
-            <div className='kitbar' style={{color:'black',}}>
-                <h1 className="viewTittle">Pago separado</h1>
+            <div className='kitbar'>
+                <h1 className='viewTittle'>Factura</h1>
 
-                <input 
-                    className="tableOrderInput" 
-                    type="text" placeholder='Cliente' 
-                    value={clientName} 
-                    onChange={clientChange} 
-                    style={{ width: '30%'}}/>
-                <input 
-                    className="tableOrderInput" 
-                    type="number" 
-                    placeholder='Cantidad' 
-                    step="0.01" 
-                    min="0" 
-                    value={paymentAmount} 
-                    onChange={paymentAmountChange}
-                    style={{ width: '30%'}}/>
-
-                <PaymentDropDown selectedOption={selectedOption} handleOptionChange={handleOptionChange}/>
-
-                <div className="ordersContainer">
-                    Hola
-                </div>
+                <Order 
+                    orderKey={billNumber} 
+                    products={bill[billNumber]} 
+                    nombre={params.name}
+                    nit={params.nit}
+                    address={params.address}
+                    orderTotal={orderTotal}
+                    />
+                
+                // When a button is pressed it should create the bill So then ID can be passed //
+                // to the payment functions
                 <div className="buttonContainer">
-                    <button 
+                    <button  
                         className='orderCompleteButton' 
-                        style={{ margin: 'auto', marginTop: '20px' }} 
-                        onClick={addPayment}
-                    >
-                        Agregar pago
-                    </button>
+                        style={{margin: 'auto', marginTop: '20px'}}
+                        onClick={() => handleRegularPayment()}>Pago regular</button>
 
-                    <button 
+                    <button  
                         className='orderCompleteButton' 
-                        style={{ margin: 'auto', marginTop: '20px' }} 
-                        onClick={() => console.log(params.billID, params.orderTotal)}
-                    >
-                        Terminar pago
-                    </button>
+                        style={{margin: 'auto', marginTop: '20px'}} 
+                        onClick={() => goToDividedPayment()}>Pago separado</button>
                 </div>
+
+                {paymentStyle === "regular" && (
+                    // Here i use a hardcoded ID
+                    <SinglePayment billID={"102"} orderTotal={orderTotal}/>
+                )}
+
+
             </div>
         </>
-    );
+    )
+
 }
 
-export default DividedPayment;
+export default Bill
