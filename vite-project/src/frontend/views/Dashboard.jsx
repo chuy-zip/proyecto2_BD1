@@ -1,28 +1,36 @@
+import { useState } from 'react';
 import '../styles/Dashboard.css'
 import { logOut } from "./Login"
         
 function DashBoard({navigator, setLoggedIn}){
-        const handleLogOut = () => {
-                logOut();
-                setLoggedIn(false)
-                console.log(localStorage.getItem("sessionState"))
-            }
 
-        const goToKitchen = () => {
-            navigator("kitchen")
-        }
+    const[selectedOption, setSelectedOption] = useState("")
 
-        const goToBar = () => {
-            navigator("bar")
-        }
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.targe.value)
+    }
+
+    const handleLogOut = () => {
+        logOut();
+        setLoggedIn(false)
+        console.log(localStorage.getItem("sessionState"))
+    }
+
+    const goToKitchen = () => {
+        navigator("kitchen")
+    }
+
+    const goToBar = () => {
+        navigator("bar")
+    }
         
-        const goToOrder = () => {
-            navigator("searchOrder")
-        }
+    const goToOrder = () => {
+        navigator("searchOrder")
+    }
 
-        const goToMenu = () => {
-            navigator("menu")
-        }
+    const goToMenu = () => {
+        navigator("menu")
+    }
 
     return (
             <div className='dashboard-Container'>
@@ -43,6 +51,8 @@ function DashBoard({navigator, setLoggedIn}){
                     <div className="dropDown">
                         <select
                             className="dropdown-select"
+                            value={selectedOption}
+                            onChange={handleOptionChange}
                             style={{width: '20%'}}
                         >
                             <option value="">Elegir un reporte</option>
