@@ -11,6 +11,7 @@ import Bill from '../views/Bill'
 import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
 import EmptyState from '../components/EmptyState'
+import SatisfactionSurvey from '../views/SatisfactionSurvey'
 
 function Router(){
     const [page, setPage] = useState("x")
@@ -77,6 +78,10 @@ function Router(){
 
         case "searchOrder":
             contenido = <SearchOrder navigator={navegar}/>
+            break;
+        
+        case "survey":
+            contenido = <SatisfactionSurvey/>
             break;
 
         default:

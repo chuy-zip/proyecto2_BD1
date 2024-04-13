@@ -32,13 +32,18 @@ function DashBoard({navigator, setLoggedIn}){
         navigator("menu")
     }
 
+    const goToSurvey = () => {
+        navigator("survey")
+    }
+
     return (
             <div className='dashboard-Container'>
                 <nav>
                     <a href="javascript:void(0);" onClick={goToKitchen}>Cocina</a>
                     <a href="javascript:void(0);" onClick={goToBar}>Bar</a>
                     <a href="javascript:void(0);" onClick={goToOrder}>Buscar Orden</a>
-                    <a href="javascript:void(0);" onClick={goToMenu}>Menú</a>                                     
+                    <a href="javascript:void(0);" onClick={goToMenu}>Menú</a>
+                    <a href="javascript:void(0);" onClick={goToSurvey}>Encuesta satisfacción</a>                                       
                     <a href="javascript:void(0);" onClick={handleLogOut}>Salir</a>
                 </nav>
                 <div>
