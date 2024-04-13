@@ -7,7 +7,7 @@ function DashBoard({navigator, setLoggedIn}){
     const[selectedOption, setSelectedOption] = useState("")
 
     const handleOptionChange = (event) => {
-        setSelectedOption(event.targe.value)
+        setSelectedOption(event.target.value)
     }
 
     const handleLogOut = () => {
