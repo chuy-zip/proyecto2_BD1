@@ -5,7 +5,7 @@ const dbConfig = {
     user: 'postgres',
     password: 'pass1234',
     host: 'localhost',
-    port: '5432',
+    port: '5127',
     database: 'restaurant',
 };
 
