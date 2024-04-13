@@ -23,14 +23,14 @@ export async function registerUser(username, password, rol) {
         const query = {
             text: 'INSERT INTO users (username, password, rol) VALUES ($1, $2, $3)',
             values: [username, password, rol]
-        };
+        }
     
-        const result = await client.query(query);
+        const result = await client.query(query)
     
         return result.rowCount === 1;
     } catch (error) {
-        console.error('Error registering users', error);
-        throw error;
+        console.error('Error registering users', error)
+        throw error
     }
 }
 
@@ -40,7 +40,7 @@ export async function verifyUser(username, password) {
         const query = {
             text: 'SELECT * FROM users WHERE username = $1 AND password = $2',
             values: [username, password]
-        };
+        }
     
         const result = await client.query(query);
     
@@ -665,7 +665,7 @@ export async function getOrderWithProducts(orderId) {
 export async function getInvoiceByOrderId(orderId) {
     try {
         const query = {
-            text: `SELECT * FROM factura WHERE id_orden = $1`,
+            text: `SELECT id FROM factura WHERE id_orden = $1`,
             values: [orderId]
         };
 
