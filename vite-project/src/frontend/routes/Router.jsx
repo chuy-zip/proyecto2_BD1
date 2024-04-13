@@ -12,6 +12,12 @@ import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
 import EmptyState from '../components/EmptyState'
 import SatisfactionSurvey from '../views/SatisfactionSurvey'
+import AvgEatingTime from '../views/Reports/AvgEatingTime'
+import BusierSchedule from '../views/Reports/BusierSchedule'
+import ButlerEfficiency from '../views/Reports/ButlerEfficiency'
+import DishesComplaints from '../views/Reports/DishesComplaints'
+import EmployeeComplaints from '../views/Reports/EmployeeComplaints'
+import FamouseDishes from '../views/Reports/FamousDishes'
 
 function Router(){
     const [page, setPage] = useState("x")
@@ -82,6 +88,30 @@ function Router(){
         
         case "survey":
             contenido = <SatisfactionSurvey/>
+            break;
+        
+        case "avgEatTime":
+            contenido = <AvgEatingTime/>
+            break;
+
+        case "busierSchedule":
+            contenido = <BusierSchedule/>
+            break;
+        
+        case "butlerEfficiency":
+            contenido = <ButlerEfficiency/>
+            break;
+        
+        case "dishesComplaints":
+            contenido = <DishesComplaints/>
+            break;
+        
+        case "EmployeeComplaints":
+            contenido = <EmployeeComplaints/>
+            break;
+        
+        case "FamousDishes":
+            contenido = <FamouseDishes/>
             break;
 
         default:
