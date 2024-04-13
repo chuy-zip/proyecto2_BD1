@@ -101,3 +101,12 @@ h3 span {
     margin: auto;
     padding-bottom: 20px;
 }
+
+.viewTittle2 {
+    font-size: 20px;
+    color: white; 
+    margin: auto;
+    padding-top: 20px;
+    padding-left: 25px;
+
+}
