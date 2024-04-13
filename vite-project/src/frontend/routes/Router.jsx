@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dashboard from '../views/Dashboard'
 import Report from '../views/Report'  
 import Login from '../views/Login'
@@ -12,8 +12,9 @@ import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
 
 function Router(){
-    const [page, setPage] = useState("menu")
+    const [page, setPage] = useState("dashboard")
     const [params, setParams] = useState(null)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     const navegar = (enlace, parametros) => {
         setPage(enlace)
@@ -21,9 +22,20 @@ function Router(){
     }
 
     let contenido;
+
+    useEffect(() => {
+        if (localStorage.getItem("sessionState") === "true") {
+            setLoggedIn(true)
+        }
+    }, [localStorage.getItem("sessionState")])
+    
+    if (!loggedIn && page != "signup") {
+        return <Login navigator={navegar} />
+    }
+    
     switch (page) {
         case "dashboard":
-            contenido = <Dashboard />
+            contenido = <Dashboard navigator={navegar} setLoggedIn={setLoggedIn}/>
             break;
         
         case "reporte":
@@ -67,6 +79,7 @@ function Router(){
             break;
 
         default:
+            contenido = <EmptyState navigator={navegar} />
             break;
     }
 

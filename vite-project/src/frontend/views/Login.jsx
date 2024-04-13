@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 
-function Login({navigator}) {
+function Login({navigator }) {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
@@ -26,6 +26,7 @@ function Login({navigator}) {
         if (name != "" && password != "") {
             console.log("Éxito")
             navigator("dashboard")
+            localStorage.setItem("sessionState", "true")
             return
         
         } else {
@@ -52,6 +53,10 @@ function Login({navigator}) {
             </div>
         </div>
     )
+}
+
+export function logOut() {
+    localStorage.setItem("sessionState", "false")
 }
 
 export default Login
