@@ -15,11 +15,20 @@ function SatisfactionSurvey() {
 
     return (
         <div>
-            <h1 className='viewTittle'>Satisfaction Survey</h1>
+            <h1 className='viewTittle' style={{textAlign:'center', paddingLeft:'20px'}}>Satisfaction Survey</h1>
+            
             <form>
+                
+
+                <h2 className='viewTittle2'>ID Mesero:</h2>
+
                 <label>
-                    Waiter ID:
-                    <input type="text" value={waiterId} onChange={(e) => setWaiterId(e.target.value)} />
+                
+                    <input 
+                        type="text" 
+                        value={waiterId} 
+                        onChange={(e) => setWaiterId(e.target.value)} 
+                        style={{textAlign:'center'}}/>
                 </label>
                 <h2 className='viewTittle2'>Friendliness Rating:</h2>
                 <label>
@@ -32,7 +41,7 @@ function SatisfactionSurvey() {
                                 name="friendliness" 
                                 value={rating} 
                                 onChange={(e) => setFriendlinessRating(e.target.value)}/>
-                                    <div style={{paddingLeft:'13px'}}>{rating}</div>
+                                    <div style={{paddingLeft:'20px'}}>{rating}</div>
                         </label>
                     ))}
                 </label>
@@ -48,14 +57,18 @@ function SatisfactionSurvey() {
                                 name="accuracy" 
                                 value={rating} 
                                 onChange={(e) => setAccuracyRating(e.target.value)}/>
-                                    <div style={{paddingLeft:'13px'}}>{rating}</div>
+                                    <div style={{paddingLeft:'20px'}}>{rating}</div>
                         </label>
                     ))}
                 </label>
                 
             </form>
 
-            <button type="submit" onClick={handleSubmit}>Submit</button>
+            <button 
+                className="orderCompleteButton"
+                style={{width:'40%', marginLeft:'23px'}}
+                type="submit" 
+                onClick={handleSubmit}>Submit</button>
         </div>
     );
 }
