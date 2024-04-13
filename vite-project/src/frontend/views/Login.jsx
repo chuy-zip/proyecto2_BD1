@@ -27,7 +27,6 @@ function Login({navigator }) {
             console.log("Éxito")
             navigator("dashboard")
             localStorage.setItem("sessionState", "true")
-            return
         
         } else {
             console.log("F")

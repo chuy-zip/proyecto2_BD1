@@ -10,9 +10,10 @@ import TableOrder from '../views/tableOrder'
 import Bill from '../views/Bill'
 import DividedPayment from '../views/DividedPayment'
 import SearchOrder from '../components/SearchOrder'
+import EmptyState from '../components/EmptyState'
 
 function Router(){
-    const [page, setPage] = useState("dashboard")
+    const [page, setPage] = useState("x")
     const [params, setParams] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 

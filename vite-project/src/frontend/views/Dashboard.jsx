@@ -1,31 +1,37 @@
-
-// function DashBoard({navigator, setLoggedIn}){
-    
-    //     return (
-        //         <>
-        //             <div>
-        //                 <h1>DashBoard</h1>
-        //                 <p>Prueba de navegacion</p>
-        //                 <button onClick={() => navigator("menu")}>Menu</button>
-        //                 <button onClick={handleLogOut}>Cerrar Sesión</button>
 import '../styles/Dashboard.css'
 import { logOut } from "./Login"
         
-function DashBoard({navigate, setLoggedIn}){
+function DashBoard({navigator, setLoggedIn}){
         const handleLogOut = () => {
                 logOut();
                 setLoggedIn(false)
                 console.log(localStorage.getItem("sessionState"))
             }
 
+        const goToKitchen = () => {
+            navigator("kitchen")
+        }
+
+        const goToBar = () => {
+            navigator("bar")
+        }
+        
+        const goToOrder = () => {
+            navigator("searchOrder")
+        }
+
+        const goToMenu = () => {
+            navigator("menu")
+        }
+
     return (
             <div className='dashboard-Container'>
                 <nav>
-                    <a href="javascript:void(0);" onClick={ () => navigate("kitchen")}>Cocina</a>
-                    <a href="javascript:void(0);" onClick={ () => navigate("bar")}> Bar</a>
-                    <a href="javascript:void(0);" onClick={ () => navigate("searchOrder")}> Buscar Orden</a>
-                    <a href="javascript:void(0);" onClick={ () => navigate("menu")}> Menu</a>                                     
-                    <a href="javascript:void(0);" onClick={handleLogOut} >Salir</a> {/* Aqui es donde esta el boton para salir*/}
+                    <a href="javascript:void(0);" onClick={goToKitchen}>Cocina</a>
+                    <a href="javascript:void(0);" onClick={goToBar}>Bar</a>
+                    <a href="javascript:void(0);" onClick={goToOrder}>Buscar Orden</a>
+                    <a href="javascript:void(0);" onClick={goToMenu}>Menú</a>                                     
+                    <a href="javascript:void(0);" onClick={handleLogOut}>Salir</a>
                 </nav>
                 <div>
                     <div>
