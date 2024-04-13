@@ -67,8 +67,8 @@ function Bar({ navigator }) {
             <Orders orders={orders} />
 
             <div className="buttonContainer">
-                <button className='orderCompleteButton' onClick={handleCompleteDish}>Platillo completado</button>
-                <button className='orderCompleteButton' onClick={goToKitchen}>Ir a cocina</button>
+                <button className='orderCompleteButton' onClick={handleCompleteDish} style={{marginRight:'10px'}}>Platillo completado</button>
+                <button className='orderCompleteButton' onClick={goToKitchen} style={{marginLeft:'10px'}}>Ir a cocina</button>
             </div>
             
         </div>

@@ -3,6 +3,7 @@ function DashBoard({navigate}){
     return (
             <div className='dashboard-Container'>
                 <nav>
+                    <a href="javascript:void(0);" onClick={ () => navigate("login")}>Salir</a> {/* Aqui es donde esta el boton para salir*/}
                     <a href="javascript:void(0);" onClick={ () => navigate("kitchen")}>Cocina</a>
                     <a href="javascript:void(0);" onClick={ () => navigate("bar")}> Bar</a>
                     <a href="javascript:void(0);" onClick={ () => navigate("searchOrder")}> Buscar Orden</a>
@@ -10,16 +11,15 @@ function DashBoard({navigate}){
                 </nav>
                 <div>
                     <div>
-                        
-                        
+                    
                         <h1 className="viewTittle">Bienvenido</h1>
                         
-
                     </div>
 
                     <div className="dropDown">
                         <select
                             className="dropdown-select"
+                            style={{width: '20%'}}
                         >
                             <option value="">Elegir un reporte</option>
                             <option value="reporte1">Platos mas pedidos</option>
