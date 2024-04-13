@@ -2,7 +2,7 @@ function FamouseDishes(){
     return (
     
         <div> 
-
+            rep1
         </div>
     )
 }

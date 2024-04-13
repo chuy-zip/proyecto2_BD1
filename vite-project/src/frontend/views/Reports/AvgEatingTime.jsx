@@ -2,7 +2,7 @@ function AvgEatingTime(){
     return (
     
         <div> 
-
+            rep3
         </div>
     )
 }

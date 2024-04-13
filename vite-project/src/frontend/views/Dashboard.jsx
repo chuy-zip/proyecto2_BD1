@@ -36,6 +36,39 @@ function DashBoard({navigator, setLoggedIn}){
         navigator("survey")
     }
 
+    const goToReport = () => {
+
+        switch (selectedOption) {
+            case "reporte1":
+                navigator("FamousDishes")
+                break;
+
+            case "reporte2":
+                navigator("busierSchedule")
+                break;
+
+            case "reporte3":
+                navigator("avgEatTime")
+                break;
+
+            case "reporte4":
+                navigator("EmployeeComplaints")
+                break;
+        
+            case "reporte5":
+                navigator("dishesComplaints")
+                break;
+
+            case "reporte6":
+                navigator("butlerEfficiency")
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     return (
             <div className='dashboard-Container'>
                 <nav>
@@ -76,13 +109,12 @@ function DashBoard({navigator, setLoggedIn}){
                         className='orderCompleteButton' 
                         style={{ margin: 'auto', marginTop: '20px' }} 
 
-                        onClick={() => 
-                            console.log("Test for search button")
-                        }
+                        onClick={goToReport}
                         > Obtener reporte
                     </button>
 
                 </div>
+                
             </div>
     )
 }
