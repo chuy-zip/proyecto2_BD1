@@ -60,7 +60,7 @@ function Router(){
     
         case "menu":
             contenido = <Menu navigator={navegar}/>
-            break
+            break;
 
         case "tableOrder":
             contenido = <TableOrder navigator={navegar} params={params}/>
@@ -85,7 +85,18 @@ function Router(){
 
     return(
         <> 
+            
             {contenido}
+
+            <div className='button-containerDash'>
+                <button
+                    className="orderCompleteButton"
+                    style={{ margin: "auto", marginTop: "20px", width: '150px', zIndex:'2'}}
+                    onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
+                >DashBoard
+                </button>
+            </div>
+
         </>
     )
 }
