@@ -18,6 +18,7 @@ import ButlerEfficiency from '../views/Reports/ButlerEfficiency'
 import DishesComplaints from '../views/Reports/DishesComplaints'
 import EmployeeComplaints from '../views/Reports/EmployeeComplaints'
 import FamouseDishes from '../views/Reports/FamousDishes'
+import Complaints from '../views/Complaints'
 
 function Router(){
     const [page, setPage] = useState("x")
@@ -112,6 +113,10 @@ function Router(){
         
         case "FamousDishes":
             contenido = <FamouseDishes/>
+            break;
+        
+        case "complaints":
+            contenido = <Complaints/>
             break;
 
         default:

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styles/Dashboard.css'
 import { logOut } from "./Login"
+import Complaints from './Complaints';
         
 function DashBoard({navigator, setLoggedIn}){
 
@@ -34,6 +35,10 @@ function DashBoard({navigator, setLoggedIn}){
 
     const goToSurvey = () => {
         navigator("survey")
+    }
+
+    const goToComplaints = () => {
+        navigator("complaints")
     }
 
     const goToReport = () => {
@@ -77,6 +82,7 @@ function DashBoard({navigator, setLoggedIn}){
                     <a href="javascript:void(0);" onClick={goToOrder}>Buscar Orden</a>
                     <a href="javascript:void(0);" onClick={goToMenu}>Menú</a>
                     <a href="javascript:void(0);" onClick={goToSurvey}>Encuesta satisfacción</a>                                       
+                    <a href="javascript:void(0);" onClick={goToComplaints}>Quejas</a>
                     <a href="javascript:void(0);" onClick={handleLogOut}>Salir</a>
                 </nav>
                 <div>
