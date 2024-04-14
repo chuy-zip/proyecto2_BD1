@@ -665,3 +665,140 @@ export async function getInvoiceByOrderId(orderId) {
         throw error;
     }
 }
+
+//REPORTES
+//Reporte 1
+// Función para obtener los productos más pedidos dentro de un rango de fechas
+export async function getMostOrderedProducts(startDate, endDate) { //se pasan strings formato YYYY-MM-DD
+    try {
+        const query = {
+            text: `SELECT co.id_producto, pr.nombre, COUNT(co.id_producto) AS cantP
+                FROM contenido_orden co
+                JOIN producto pr ON pr.id = co.id_producto
+                JOIN orden o ON o.id = co.id_orden
+                WHERE o.fecha BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
+                GROUP BY co.id_producto, pr.nombre
+                ORDER BY cantP DESC`,
+            values: [startDate, endDate]
+        };
+    
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting most ordered products', error);
+        throw error;
+    }
+}
+
+// Reporte 2
+// Función para obtener el horario con más pedidos dentro de un rango de fechas
+//envia los primeros 2 horarios en donde entran mas ordenes, en caso de que solo se quiera una de las 2 horas o si son muy separadas ej: 9pm y 10am
+export async function getPeakOrderHours(startDate, endDate) {
+    try {
+        const query = {
+            text: `SELECT EXTRACT(HOUR FROM co.tiempo) AS horario, COUNT(EXTRACT(HOUR FROM co.tiempo)) AS cantidad
+                FROM contenido_orden co
+                JOIN orden o ON o.id = co.id_orden
+                WHERE o.fecha BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
+                GROUP BY horario
+                ORDER BY cantidad DESC
+                LIMIT 2`,
+            values: [startDate, endDate]
+        };
+    
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting peak order hours', error);
+        throw error;
+    }
+}
+
+// Reporte 3
+// Función para obtener el promedio de tiempo que tardan los clientes en comer
+export async function getAverageEatingTime(startDate, endDate) {
+    try {
+        const query = {
+            text: `SELECT cantidad_comensales,
+                    EXTRACT(HOUR FROM AVG(f.fecha - o.fecha)) AS promedio_horas,
+                    EXTRACT(MINUTE FROM AVG(f.fecha - o.fecha)) AS promedio_minutos
+                FROM orden o
+                JOIN factura f ON o.id = f.id_orden
+                WHERE o.fecha BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
+                GROUP BY cantidad_comensales`,
+            values: [startDate, endDate]
+        };
+  
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting average eating time', error);
+        throw error;
+    }
+}
+
+// Reporte 4
+// Función para obtener el reporte de quejas agrupadas por empleado
+export async function getEmployeeComplaintsReport(startDate, endDate) {
+    try {
+        const query = {
+            text: `SELECT qj.id_empleado, us.username, us.rol, qj.motivo, qj.severidad, DATE(qj.fecha_hora) AS fecha
+                FROM queja qj
+                JOIN users us ON us.id = qj.id_empleado
+                WHERE qj.fecha_hora BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
+                AND qj.id_empleado IS NOT NULL
+                ORDER BY qj.id_empleado`,
+            values: [startDate, endDate]
+        };
+    
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting employee complaints report', error);
+        throw error;
+    }
+  }
+
+// Reporte 5
+// Función para obtener el reporte de quejas agrupadas por producto
+export async function getProductComplaintsReport(startDate, endDate) {
+    try {
+        const query = {
+            text: `SELECT qj.id_producto, pr.nombre, qj.motivo, qj.severidad, DATE(qj.fecha_hora) AS fecha
+                FROM queja qj
+                JOIN producto pr ON qj.id_producto = pr.id
+                WHERE qj.fecha_hora BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
+                AND qj.id_producto IS NOT NULL
+                ORDER BY qj.id_producto`,
+            values: [startDate, endDate]
+        };
+    
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting product complaints report', error);
+        throw error;
+    }
+}
+
+// Reporte 6
+export async function getWaiterEfficiencyReport() {
+    try {
+      const query = {
+        text: `SELECT id_mesero,
+                    EXTRACT(MONTH FROM fecha_hora) AS mes,
+                    ROUND(AVG(amabilidad), 2) AS promedio_amabilidad,
+                    ROUND(AVG(exactitud), 2) AS promedio_exactitud
+                FROM calificacion_mesero
+                WHERE fecha_hora >= CURRENT_DATE - INTERVAL '6 months'
+                GROUP BY id_mesero, EXTRACT(MONTH FROM fecha_hora)
+                ORDER BY id_mesero, mes;`
+      };
+  
+      const result = await client.query(query);
+      return result.rows;
+    } catch (error) {
+      console.error('Error getting waiter efficiency report', error);
+      throw error;
+    }
+  }
