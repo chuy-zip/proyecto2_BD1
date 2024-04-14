@@ -13,10 +13,12 @@ function Complaints(){
 
     const handlePersonalComplaint = () => {
         setComplaintType("personal")
+        setProductID("")
     }
 
     const handleProductComplaint = () => {
         setComplaintType("product")
+        setPersonalID("")
     }
 
     const reasonChange = (event) => {
@@ -55,8 +57,21 @@ function Complaints(){
 
             </div>
 
-            <input className="tableOrderInput" type="text" placeholder='Cliente' value={clientName} onChange={clientChange} />
-            <input className="tableOrderInput" type="text" placeholder='Motivo de la queja' value={reason} onChange={reasonChange} />
+            <input 
+                className="tableOrderInput" 
+                type="text" placeholder='Cliente' 
+                value={clientName} 
+                onChange={clientChange} 
+                style={{width:'43%'}}/>
+            <br/>
+            <input 
+                className="tableOrderInput" 
+                type="text" 
+                placeholder='Motivo de la queja' 
+                value={reason} 
+                onChange={reasonChange}
+                style={{width:'43%'}}/>
+            <br/>
 
             <h2 style={{color:'white', marginTop:'30px'}}>Gravedad (Siendo 5 muy grave)</h2>
 
@@ -76,20 +91,33 @@ function Complaints(){
             <br/>
 
             {complaintType === "personal" && (
-                <input className="tableOrderInput" type="text" placeholder='Ingrese el ID del trabajador' value={personalID} onChange={personalIDChange} />
+                <input 
+                    className="tableOrderInput" 
+                    type="text" 
+                    placeholder='Ingrese el ID del trabajador' 
+                    value={personalID} 
+                    onChange={personalIDChange}
+                    style={{width:'43%'}} />
             
             )}
 
             {complaintType === "product" && (
-                <input className="tableOrderInput" type="text" placeholder='Ingrese el ID del producto' value={productID} onChange={productIDChange} />
+                <input 
+                    className="tableOrderInput" 
+                    type="text" 
+                    placeholder='Ingrese el ID del producto' 
+                    value={productID} 
+                    onChange={productIDChange}
+                    style={{width:'43%'}} />
             
             )}
+            <br/>
             
             <button 
                 className="orderCompleteButton"
-                style={{width:'40%', marginLeft:'23px'}}
+                style={{width:'25%', marginLeft:'23px'}}
                 type="submit" 
-                onClick={()=>console.log(complaintType, clientName, reason, severity, )}>Enviar</button>
+                onClick={()=>console.log(complaintType, clientName, reason, severity,"prod:", productID,"personal:" ,personalID)}>Enviar</button>
         
         </div>
     )
