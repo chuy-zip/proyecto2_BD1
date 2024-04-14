@@ -38,6 +38,10 @@ function Router(){
             setLoggedIn(true)
         }
     }, [localStorage.getItem("sessionState")])
+
+    useEffect(() => {
+        localStorage.getItem("userData")
+    })
     
     if (!loggedIn && page != "signup") {
         return <Login navigator={navegar} />
@@ -127,7 +131,6 @@ function Router(){
 
     return(
         <> 
-            
             {contenido}
 
             <div className='button-containerDash'>

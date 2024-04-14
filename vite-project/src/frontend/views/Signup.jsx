@@ -16,25 +16,25 @@ function Signup({navigator}) {
         navigator("login")
     }
 
-    const getPassword = (event) => {
+    const handlePasswordChange = (event) => {
         let password = event.target.value
             setPassword(password)
             console.log(password)       
     }
 
-    const getName = (event) => {
+    const handleNameChange = (event) => {
         let name = event.target.value
             setName(name)
             console.log(name)       
     }
 
-    const getVerify = (event) => {
+    const handleVerifyChange = (event) => {
         let verify = event.target.value
             setVerify(verify)
             console.log(verify)       
     }
 
-    const getRole = (event) => {
+    const handleRoleChange = (event) => {
         let role = event.target.value
             setRole(role)
             console.log(role)       
@@ -93,16 +93,18 @@ function Signup({navigator}) {
 
     return (
         <div className='background' id='signupBack'>
-            <ImageCard source={logo} alternative={"Logo del restaurante"}/>
+            <ImageCard source={logo} alternative={"Logo del restaurante"} />
             <h1>Registrarse</h1>
-            <input type="text" placeholder='Nombre' value={name} onChange={getName} onKeyDown={enterPress}/>
-            <input type="text" placeholder='Rol' value={role} onChange={getRole} onKeyDown={enterPress}/>
-            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword}onKeyDown={enterPress}/>
-            <input type="password" placeholder='Verificar contraseña' value={verifyPassword} onChange={getVerify}onKeyDown={enterPress}/>
-            <button onClick={signupButton}>Confirmar</button>
-            <div className='forgetBack'>
-                <button className='forgetButtons' onClick={goToLogin}>Iniciar sesión</button>
-            </div>
+            <input type="text" placeholder='Nombre' value={name} onChange={handleNameChange} onKeyDown={enterPress} />
+            <label htmlFor="roles">Seleccionar el rol:</label>
+            <select name="roles" id="roles" value={role} onChange={handleRoleChange}>
+                <option value="chef">Chef</option>
+                <option value="bartender">Bartender</option>
+                <option value="mesero">Mesero</option>
+            </select>
+            <input type="password" placeholder='Contraseña' value={password} onChange={handlePasswordChange} onKeyDown={enterPress} />
+            <input type="password" placeholder='Verificar contraseña' value={verifyPassword} onChange={handleVerifyChange} onKeyDown={enterPress} />
+            <button onClick={signupButton}></button>
         </div>
     )
 }
