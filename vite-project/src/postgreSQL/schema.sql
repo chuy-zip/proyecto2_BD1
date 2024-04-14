@@ -183,3 +183,6 @@ INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES
     ('Servicio lento', 3, 1, 1),
     ('Producto defectuoso', 2, 2, 2),
     ('Mesa sucia', 4, 3, NULL);
+INSERT INTO queja(fecha_hora, motivo,severidad,id_empleado)VALUES 	
+    ('2024-04-10 15:20:00', 'higiene', 4, 3),
+    ('2024-04-10 15:00:00', 'trajo comida equivocada y luego lo puso en otra mesa', 3, 2);
