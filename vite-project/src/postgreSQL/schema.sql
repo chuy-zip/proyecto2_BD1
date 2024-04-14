@@ -152,20 +152,20 @@ INSERT INTO orden (id_mesa, estado) VALUES
     (2, 'cerrado');
 
 -- Insertar contenido de órdenes
-INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto) VALUES
-    (1, 2, 1),  -- Orden 1: 2 platillos 1
-    (1, 1, 2),  -- Orden 1: 1 bebida 1
-    (2, 3, 1);  -- Orden 2: 3 platillos 1
+INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto, completado) VALUES
+    (1, 2, 1, true),  -- Orden 1: 2 platillos 1
+    (1, 1, 2, true),  -- Orden 1: 1 bebida 1
+    (2, 3, 1, true);  -- Orden 2: 3 platillos 1
 
 -- Insertar facturas
-INSERT INTO factura (nombre_cliente, nit, id_orden) VALUES
-    ('Cliente 1', '123456-7', 1),
-    ('Cliente 2', '765432-1', 2);
+--INSERT INTO factura (nombre_cliente, nit, id_orden) VALUES
+    --('Cliente 1', '123456-7', 1),
+    --('Cliente 2', '765432-1', 2);
 
 -- Insertar pagos de facturas
-INSERT INTO pago_factura (id_factura, forma_pago, cantidad_pago) VALUES
-    (1, 1, 25.50),
-    (2, 2, 30.00);
+--INSERT INTO pago_factura (id_factura, forma_pago, cantidad_pago) VALUES
+    --(1, 1, 25.50),
+    --(2, 2, 30.00);
 
 -- Insertar calificaciones de meseros
 INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES

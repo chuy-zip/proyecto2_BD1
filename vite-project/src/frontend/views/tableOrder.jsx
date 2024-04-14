@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import {getProductsWithOrder} from '../../controller/tableOrderController.js'
+import {closeOrder, getProductsWithOrder, submitBill} from '../../controller/tableOrderController.js'
 import '../styles/tableOrder.css';
 // Order number can be parsed from hook tableOrder 
 function Order({ orderKey, products }) {
@@ -32,6 +32,7 @@ function Order({ orderKey, products }) {
 }
 
 function TableOrder({ navigator, params }) {
+    const [orderNum, setOrderNum] = useState("")
     const [order, setOrder] = useState({}); 
     const [tableOrder, setTableOrder] = useState("");
     const [clientName, setClientName] = useState("");
@@ -40,15 +41,27 @@ function TableOrder({ navigator, params }) {
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null); 
 
-    const goToBill = () => {
-        const params = { 
-            'order': order,
-            'name': clientName,
-            'nit': nit,
-            'address': address
-        };
-        navigator("bill", params);
+    const goToBill = async () => {
+        try {
+
+            
+
+            const parsedOrder = tableOrder.split("-")
+            
+            await closeOrder(parsedOrder[0])
+            await submitBill(parsedOrder[0], nit, clientName, address);
+            const params = { 
+                'order': order,
+                'name': clientName,
+                'nit': nit,
+                'address': address
+            };
+            navigator("bill", params);
+        } catch (error) {
+            console.error("Error submitting bill:", error);
+        }
     };
+    
     
     useEffect(() => {
         const fetchOrderProducts = async () => {
@@ -108,7 +121,10 @@ function TableOrder({ navigator, params }) {
             <input className="tableOrderInput" type="text" placeholder='Direccion' value={address} onChange={addressChange} />
             
             <div className="buttonContainer">
-                <button className='orderCompleteButton' style={{ margin: 'auto', marginTop: '20px' }} onClick={goToBill}>Cerrar orden y generar factura</button>
+                <button 
+                    className='orderCompleteButton' 
+                    style={{ margin: 'auto', marginTop: '20px' }} 
+                    onClick={goToBill}>Cerrar orden y generar factura</button>
             </div>
         </div>
     );

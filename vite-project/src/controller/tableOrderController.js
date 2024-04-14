@@ -33,4 +33,49 @@ async function getProductsWithOrder(order){
     }
 }
 
-export {getProductsWithOrder}
+async function closeOrder(orderId) {
+    try {
+        const response = await fetch(`http://localhost:3000/orders/${orderId}/close`, {
+            method: 'PUT',
+        });
+        if (!response.ok) {
+            throw new Error('Failed to close order');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error('Error closing order: ' + error.message);
+    }
+}
+
+
+async function submitBill(order, nit, name, address){
+    try {
+        const data = {
+            "nombreCliente": name,
+            "nit": nit,
+            "orderId": order,
+            "direccion": address 
+        };
+
+        const response = await fetch('http://localhost:3000/invoices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('There was an error on the response');
+        }
+
+        const responseData = await response.json();
+        console.log('Factura guardada:', responseData);
+    } catch (error) {
+        console.error('No se pudo crear la factura:', error);
+    }
+}
+
+
+export {getProductsWithOrder, submitBill, closeOrder}

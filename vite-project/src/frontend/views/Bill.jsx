@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import SinglePayment from "./SinglePayment";
-import DividedPayment from "./DividedPayment";
 
 function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
     const parsedString = orderKey.split("-");
