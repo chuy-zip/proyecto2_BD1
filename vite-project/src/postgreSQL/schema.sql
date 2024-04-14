@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS tipo_producto(
 CREATE TABLE IF NOT EXISTS orden (
     id SERIAL PRIMARY KEY,
     id_mesa INTEGER NOT NULL,
-    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL -- abierto o cerrado
+    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL, -- abierto o cerrado
+    fecha DATE NOT NULL DEFAULT CURRENT_DATE -- yy-mm-dd format
 );
 
 CREATE TABLE IF NOT EXISTS contenido_orden (
