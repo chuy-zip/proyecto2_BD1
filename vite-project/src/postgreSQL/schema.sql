@@ -177,6 +177,11 @@ INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES
     (1, 4, 5),
     (2, 3, 4),
     (3, 5, 4);
+insert into calificacion_mesero(id_mesero,amabilidad,exactitud, fecha_hora) values
+	(1, 3, 4, '2023-10-25 00:00:00'),
+	(2, 4, 5, '2023-11-25 00:00:00'),
+    (1, 5, 4, '2023-10-25 00:00:00'),
+	(1, 3, 5, '2023-09-25 00:00:00')
 
 -- Insertar quejas
 INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES
