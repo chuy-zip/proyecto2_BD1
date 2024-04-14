@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import CryptoJS from 'crypto-js'
 import Dashboard from '../views/Dashboard'
 import Report from '../views/Report'  
 import Login from '../views/Login'
@@ -21,7 +22,7 @@ import FamouseDishes from '../views/Reports/FamousDishes'
 import Complaints from '../views/Complaints'
 
 function Router(){
-    const [page, setPage] = useState("x")
+    const [page, setPage] = useState("dashboard")
     const [params, setParams] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 

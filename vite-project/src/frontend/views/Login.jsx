@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
+import CryptoJS from 'crypto-js'
 
 function Login({navigator }) {
+
+    const apiUrl = "http://127.0.0.1:8080/users/login"
+
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
@@ -23,15 +27,40 @@ function Login({navigator }) {
     }
 
     const loginButton = (event) => {
-        if (name != "" && password != "") {
-            console.log("Éxito")
-            navigator("dashboard")
+        async function apiLogin() {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: name,
+                    password: (password)
+                })
+            })
+
+            if (!response.ok) {
+                alert("Usuario inválido, inténtalo nuevamente.")
+                return
+            }
+
+            const user = await response.json()
+
+            setName("")
+            setPassword("")
+
+            localStorage.setItem("userData", JSON.stringify(user))
+            
             localStorage.setItem("sessionState", "true")
-        
-        } else {
-            console.log("F")
+
+            console.log("Éxito")
+
+            navigator("dashboard")
         }
-    }
+
+        apiLogin()
+        
+    } 
 
     const enterPress = (event) => {
         if (event.key === 'Enter') {
@@ -54,8 +83,15 @@ function Login({navigator }) {
     )
 }
 
-export function logOut() {
+export function logOut(navigator) {
+    localStorage.removeItem("userData")
     localStorage.setItem("sessionState", "false")
+    navigator("login")
+}
+
+export function getUserData() {
+    const userObject = JSON.parse(localStorage.getItem("userData"))
+    return userObject
 }
 
 export default Login
