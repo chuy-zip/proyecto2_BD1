@@ -37,6 +37,11 @@ import {
     getUnservedDrinks,
     getOrderWithProducts,
     getInvoiceByOrderId,
+    getPeakOrderHours,
+    getAverageEatingTime,
+    getEmployeeComplaintsReport,
+    getProductComplaintsReport,
+    getWaiterEfficiencyReport
   } from './db.js';
 
 const app = express()
@@ -533,6 +538,60 @@ app.get('/invoices/by-order/:orderId', async (req, res) => {
     try {
         const invoice = await getInvoiceByOrderId(orderId);
         res.status(200).json(invoice);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener el horario con más pedidos dentro de un rango de fechas (Reporte 2)
+app.get('/reports/peak-order-hours', async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        const peakOrderHours = await getPeakOrderHours(startDate, endDate);
+        res.status(200).json(peakOrderHours);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener el promedio de tiempo que tardan los clientes en comer (Reporte 3)
+app.get('/reports/average-eating-time', async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        const averageEatingTime = await getAverageEatingTime(startDate, endDate);
+        res.status(200).json(averageEatingTime);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener el reporte de quejas agrupadas por empleado (Reporte 4)
+app.get('/reports/employee-complaints', async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        const employeeComplaintsReport = await getEmployeeComplaintsReport(startDate, endDate);
+        res.status(200).json(employeeComplaintsReport);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener el reporte de quejas agrupadas por producto (Reporte 5)
+app.get('/reports/product-complaints', async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        const productComplaintsReport = await getProductComplaintsReport(startDate, endDate);
+        res.status(200).json(productComplaintsReport);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener el reporte de eficiencia de meseros (Reporte 6)
+app.get('/reports/waiter-efficiency', async (req, res) => {
+    try {
+        const waiterEfficiencyReport = await getWaiterEfficiencyReport();
+        res.status(200).json(waiterEfficiencyReport);
     } catch (error) {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
