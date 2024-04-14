@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 
-function Login({navigator}) {
+function Login({navigator }) {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
@@ -26,7 +26,7 @@ function Login({navigator}) {
         if (name != "" && password != "") {
             console.log("Éxito")
             navigator("dashboard")
-            return
+            localStorage.setItem("sessionState", "true")
         
         } else {
             console.log("F")
@@ -44,7 +44,7 @@ function Login({navigator}) {
             <ImageCard source={logo} alternative={"Logo del restaurante"}/>
             <h1>Iniciar Sesión</h1>
             <input type="text" placeholder='Nombre' value={name} onChange={getName} onKeyDown={enterPress}/>
-            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword}onKeyDown={enterPress}/>
+            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword} onKeyDown={enterPress}/>
             <button onClick={loginButton}>Confirmar</button>
             <div className='forgetBack'>
                 <button className='forgetButtons' onClick={goToSignup}>Registrarse</button>
@@ -52,6 +52,10 @@ function Login({navigator}) {
             </div>
         </div>
     )
+}
+
+export function logOut() {
+    localStorage.setItem("sessionState", "false")
 }
 
 export default Login

@@ -92,7 +92,7 @@ h3 span {
 .buttonContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .viewTittle {
@@ -100,4 +100,13 @@ h3 span {
     color: white; 
     margin: auto;
     padding-bottom: 20px;
+}
+
+.viewTittle2 {
+    font-size: 20px;
+    color: white; 
+    margin: auto;
+    padding-top: 20px;
+    padding-left: 25px;
+
 }
