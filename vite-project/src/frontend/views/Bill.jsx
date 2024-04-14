@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SinglePayment from "./SinglePayment";
 import { getInvoiceByOrder } from "../../controller/tableOrderController";
 
+
 function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
     const parsedString = orderKey.split("-");
 
@@ -46,8 +47,8 @@ function Bill({ navigator, params }){
     const [bill, setBill] = useState({})
     const [tableOrderNumber, settableOrderNumber] = useState("");
     const [paymentStyle, setPaymentStyle] = useState("")
-    const [loading, setLoading] = useState(true); // State to track loading status
-    const [error, setError] = useState(null); // State to track errors
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
     const [orderTotal, setOrderTotal] = useState(0)
     const [billNumber, setBillNumber] = useState(0)
 

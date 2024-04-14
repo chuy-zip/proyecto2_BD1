@@ -1,5 +1,6 @@
 import { useState, useEffect, useTransition } from "react";
 import PaymentDropDown from "../components/PaymentDropDown";
+import { addPaymentToBill } from "../../controller/tableOrderController";
 
 function SeparatedPayment({payment}){
 
@@ -16,7 +17,7 @@ function SeparatedPayment({payment}){
 }
 
 function DividedPayment({params}){
-    const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
+    const [selectedOption, setSelectedOption] = useState(""); 
     const [clientName, setClientName] = useState("");
     const [paymentAmount, setPaymentAmount] = useState(0)
     const [paymentID, setPaymentID] = useState(0)
@@ -52,8 +53,17 @@ function DividedPayment({params}){
     useEffect(() => {
         console.log(payments);
     }, [payments]);
-    
 
+    const submitPayments = async () => {
+        try {
+            for (const key of Object.keys(payments)) {
+                await addPaymentToBill(params.billID, payments[key].method, payments[key].amount);
+            }
+            console.log("All payments added successfully");
+        } catch (error) {
+            console.error("Error adding payments:", error);
+        }
+    };
     
 
     return (
@@ -99,7 +109,7 @@ function DividedPayment({params}){
                     <button 
                         className='orderCompleteButton' 
                         style={{ margin: 'auto', marginTop: '20px' }} 
-                        onClick={() => console.log(params.billID, params.orderTotal)}
+                        onClick={submitPayments}
                     > {/* Aqui hay que hacer que en el boton de terminar pago se asocien todos los pagos a una factura usando el objeto payments*/}
                         Terminar pago
                     </button>
