@@ -12,7 +12,7 @@ function DashBoard({navigator, setLoggedIn}){
     }
 
     const handleLogOut = () => {
-        logOut();
+        logOut(navigator);
         setLoggedIn(false)
         console.log(localStorage.getItem("sessionState"))
     }
