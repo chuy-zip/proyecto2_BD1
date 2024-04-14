@@ -33,13 +33,14 @@ CREATE TABLE IF NOT EXISTS calificacion_mesero (
     id_mesero INTEGER NOT NULL,
     amabilidad NUMERIC(1) NOT NULL,
     exactitud NUMERIC(1) NOT NULL,
+    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     CONSTRAINT CHK_amabilidad_calificacion CHECK (amabilidad>=0 AND amabilidad<=5),
     CONSTRAINT CHK_exactitud_calificacion CHECK (exactitud>=0 AND exactitud<=5)
 );
 
 CREATE TABLE IF NOT EXISTS queja(
     id SERIAL PRIMARY KEY,
-    fecha_hora TIMESTAMP DEFAULT NOW(), -- if there is not time and hour added in the entry, it takes the system timestamp
+    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- if there is not time and hour added in the entry, it takes the system timestamp
     motivo TEXT NOT NULL,
     severidad NUMERIC(1) NOT NULL,
     id_empleado INTEGER,
@@ -64,14 +65,17 @@ CREATE TABLE IF NOT EXISTS tipo_producto(
 CREATE TABLE IF NOT EXISTS orden (
     id SERIAL PRIMARY KEY,
     id_mesa INTEGER NOT NULL,
-    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL -- abierto o cerrado
+    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL, -- abierto o cerrado
+    fecha TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_DATE, -- yy-mm-dd format
+    cantidad_comensales NUMERIC(4) DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS contenido_orden (
     id_orden INTEGER NOT NULL,
     cantidad_producto NUMERIC(4) NOT NULL,
     id_producto INTEGER NOT NULL,
-    completado BOOLEAN DEFAULT FALSE NOT NULL 
+    completado BOOLEAN DEFAULT FALSE NOT NULL, 
+    tiempo TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS factura (
@@ -80,13 +84,14 @@ CREATE TABLE IF NOT EXISTS factura (
     nit VARCHAR(15) NOT NULL,
     id_orden INTEGER NOT NULL,
     direccion TEXT,
-    total NUMERIC(10,2) DEFAULT 0
+    total NUMERIC(10,2) DEFAULT 0,
+    fecha TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS pago_factura (
 	id SERIAL PRIMARY KEY,
     id_factura INTEGER NOT NULL,
-    forma_pago NUMERIC(3) NOT NULL,
+    forma_pago VARCHAR(25) NOT NULL,
     cantidad_pago NUMERIC(10,2) NOT NULL,
     CONSTRAINT CHK_cantidad_pago CHECK (cantidad_pago>=0.00)
 );
@@ -172,9 +177,17 @@ INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES
     (1, 4, 5),
     (2, 3, 4),
     (3, 5, 4);
+insert into calificacion_mesero(id_mesero,amabilidad,exactitud, fecha_hora) values
+	(1, 3, 4, '2023-10-25 00:00:00'),
+	(2, 4, 5, '2023-11-25 00:00:00'),
+    (1, 5, 4, '2023-10-25 00:00:00'),
+	(1, 3, 5, '2023-09-25 00:00:00');
 
 -- Insertar quejas
 INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES
     ('Servicio lento', 3, 1, 1),
     ('Producto defectuoso', 2, 2, 2),
     ('Mesa sucia', 4, 3, NULL);
+INSERT INTO queja(fecha_hora, motivo,severidad,id_empleado)VALUES 	
+    ('2024-04-10 15:20:00', 'higiene', 4, 3),
+    ('2024-04-10 15:00:00', 'trajo comida equivocada y luego lo puso en otra mesa', 3, 2);
