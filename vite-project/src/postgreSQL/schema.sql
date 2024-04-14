@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS calificacion_mesero (
     id_mesero INTEGER NOT NULL,
     amabilidad NUMERIC(1) NOT NULL,
     exactitud NUMERIC(1) NOT NULL,
-    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     CONSTRAINT CHK_amabilidad_calificacion CHECK (amabilidad>=0 AND amabilidad<=5),
     CONSTRAINT CHK_exactitud_calificacion CHECK (exactitud>=0 AND exactitud<=5)
 );
