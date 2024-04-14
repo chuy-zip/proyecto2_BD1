@@ -3,7 +3,7 @@ import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 import CryptoJS from 'crypto-js'
 
-function Login({navigator }) {
+function Login({ navigator }) {
 
     const apiUrl = "http://127.0.0.1:8080/users/login"
 
