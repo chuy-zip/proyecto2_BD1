@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS factura (
 CREATE TABLE IF NOT EXISTS pago_factura (
 	id SERIAL PRIMARY KEY,
     id_factura INTEGER NOT NULL,
-    forma_pago NUMERIC(3) NOT NULL,
+    forma_pago VARCHAR(25) NOT NULL,
     cantidad_pago NUMERIC(10,2) NOT NULL,
     CONSTRAINT CHK_cantidad_pago CHECK (cantidad_pago>=0.00)
 );
