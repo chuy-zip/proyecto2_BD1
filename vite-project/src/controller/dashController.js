@@ -54,6 +54,43 @@ async function addComplaint(employeeId, dishId, motivo, severidad) {
     }
 }
 
+async function getOpenOrders() {
+    try {
+        let response = await fetch('http://localhost:3000/kitchen/unserved-dishes');
+        if (!response.ok) {
+            throw new Error('Failed to fetch open orders');
+        }
+        const orders = await response.json();
 
-export {addSurveyToWaiter, addComplaint}
+        const groupedOrders = {};
+
+        orders.forEach((value, index) => {
+            const key = `${value.order_id}-${value.id_mesa}`;
+
+            if (!groupedOrders[key]) {
+                groupedOrders[key] = [];
+            }
+
+            groupedOrders[key].push({
+                product: value.producto, 
+                quantity: value.cantidad_producto, 
+
+            });
+        });
+
+        console.log(JSON.stringify(groupedOrders));
+
+        return JSON.stringify(groupedOrders)
+
+
+        console.log(orders); // Log the orders data
+        return orders;
+    } catch (error) {
+        console.error('Error fetching open orders:', error);
+        throw error; // Rethrow the error to handle it in the caller function
+    }
+}
+
+
+export {addSurveyToWaiter, addComplaint, getOpenOrders}
 

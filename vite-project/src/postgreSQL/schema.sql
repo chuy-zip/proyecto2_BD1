@@ -153,9 +153,9 @@ INSERT INTO orden (id_mesa, estado) VALUES
 
 -- Insertar contenido de órdenes
 INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto, completado) VALUES
-    (1, 2, 1, true),  -- Orden 1: 2 platillos 1
-    (1, 1, 2, true),  -- Orden 1: 1 bebida 1
-    (2, 3, 1, true);  -- Orden 2: 3 platillos 1
+    (1, 2, 1, false),  -- Orden 1: 2 platillos 1
+    (1, 1, 2, false),  -- Orden 1: 1 bebida 1
+    (2, 3, 1, false);  -- Orden 2: 3 platillos 1
 
 -- Insertar facturas
 --INSERT INTO factura (nombre_cliente, nit, id_orden) VALUES

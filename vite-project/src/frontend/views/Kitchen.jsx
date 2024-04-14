@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getDishesOrders } from '../../controller/kitbarController.js';
+import { getOpenOrders } from "../../controller/dashController.js";
 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
@@ -48,10 +48,21 @@ function Kitchen({ navigator }) {
     }
     
     useEffect(() => {
-        
-        const initialOrders = JSON.parse(getDishesOrders());
-        setOrders(initialOrders);
+        const fetchOrders = async () => {
+            try {
+                let initialOrders = await getOpenOrders();
+                initialOrders = JSON.parse(initialOrders)
+                console.log(initialOrders);
+                setOrders(initialOrders);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                // Handle error appropriately, e.g., show an error message to the user
+            }
+        };
+    
+        fetchOrders();
     }, []);
+    
 
     const handleCompleteDish = () => {
         
