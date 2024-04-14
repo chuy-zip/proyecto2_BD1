@@ -64,27 +64,28 @@ CREATE TABLE IF NOT EXISTS tipo_producto(
 CREATE TABLE IF NOT EXISTS orden (
     id SERIAL PRIMARY KEY,
     id_mesa INTEGER NOT NULL,
-    estado VARCHAR(10) NOT NULL -- abierto o cerrado
+    estado VARCHAR(10) DEFAULT 'abierto' NOT NULL -- abierto o cerrado
 );
 
 CREATE TABLE IF NOT EXISTS contenido_orden (
     id_orden INTEGER NOT NULL,
     cantidad_producto NUMERIC(4) NOT NULL,
     id_producto INTEGER NOT NULL,
-    completado BOOLEAN NOT NULL 
+    completado BOOLEAN DEFAULT FALSE NOT NULL 
 );
 
 CREATE TABLE IF NOT EXISTS factura (
     id SERIAL PRIMARY KEY,
     nombre_cliente VARCHAR(250) NOT NULL,
     nit VARCHAR(15) NOT NULL,
-    id_orden INTEGER NOT NULL
+    id_orden INTEGER NOT NULL,
+    direccion TEXT,
+    total NUMERIC(10,2) DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS pago_factura (
 	id SERIAL PRIMARY KEY,
     id_factura INTEGER NOT NULL,
-	nombre VARCHAR(100),
     forma_pago NUMERIC(3) NOT NULL,
     cantidad_pago NUMERIC(10,2) NOT NULL,
     CONSTRAINT CHK_cantidad_pago CHECK (cantidad_pago>=0.00)
@@ -162,9 +163,9 @@ INSERT INTO factura (nombre_cliente, nit, id_orden) VALUES
     ('Cliente 2', '765432-1', 2);
 
 -- Insertar pagos de facturas
-INSERT INTO pago_factura (id_factura, nombre, forma_pago, cantidad_pago) VALUES
-    (1, 'Pago 1', 1, 25.50),
-    (2, 'Pago 2', 2, 30.00);
+INSERT INTO pago_factura (id_factura, forma_pago, cantidad_pago) VALUES
+    (1, 1, 25.50),
+    (2, 2, 30.00);
 
 -- Insertar calificaciones de meseros
 INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES
@@ -177,4 +178,3 @@ INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES
     ('Servicio lento', 3, 1, 1),
     ('Producto defectuoso', 2, 2, 2),
     ('Mesa sucia', 4, 3, NULL);
-					 
