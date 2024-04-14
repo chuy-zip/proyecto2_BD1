@@ -35,7 +35,7 @@ function Login({navigator }) {
                 },
                 body: JSON.stringify({
                     username: name,
-                    password: (password)
+                    password: CryptoJS.MD5(password)
                 })
             })
 
