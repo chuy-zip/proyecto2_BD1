@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getOpenOrders } from "../../controller/dashController.js";
+import { getOpenOrders } from "../../controller/kitbarController.js";
+import { markProductAsCompleted } from "../../controller/kitbarController.js";
 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
@@ -64,7 +65,26 @@ function Kitchen({ navigator }) {
     }, []);
     
 
-    const handleCompleteDish = () => {
+    const handleCompleteDish = async () => {
+
+        let orderKey = Object.keys(orders)[0]
+
+        let parsedKey = orderKey.split("-")
+
+        let products = Object.values(orders)[0]
+
+        console.log(orderKey)
+        console.log(products)
+
+        try {
+            for (const key of Object.keys(products)){
+                await markProductAsCompleted(parsedKey[0], products[key].prodID)
+                console.log("Succesfully updated dishes")
+            }
+        } catch (error) {
+            console.error("Error while marking dishes as complete")
+        }
+        
         
         const updatedOrders = { ...orders };
         delete updatedOrders[Object.keys(updatedOrders)[0]]; 

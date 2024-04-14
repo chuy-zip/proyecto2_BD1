@@ -1,128 +1,39 @@
-function getDishesOrders(){
-    const kit_orders = [
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 5
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "wings",
-            "quantity": 2
-        },
-        {
-            "order_id": 230,
-            "table": 7,
-            "product": "wings",
-            "quantity": 1
-        },
-        {
-            "order_id": 231,
-            "table": 8,
-            "product": "wings",
-            "quantity": 1
-        },
-        {
-            "order_id": 231,
-            "table": 8,
-            "product": "wings",
-            "quantity": 1
-        },
-        {
-            "order_id": 232,
-            "table": 9,
-            "product": "wings",
-            "quantity": 1
-        },
-        {
-            "order_id": 233,
-            "table": 10,
-            "product": "wings",
-            "quantity": 1
+async function getOpenOrders() {
+    try {
+        let response = await fetch('http://localhost:3000/kitchen/unserved-dishes');
+        if (!response.ok) {
+            throw new Error('Failed to fetch open orders');
         }
-    ];
+        const orders = await response.json();
 
+        const groupedOrders = {};
 
-    const groupedOrders = {};
+        orders.forEach((value, index) => {
+            const key = `${value.order_id}-${value.id_mesa}`;
 
-    kit_orders.forEach((value, index) => {
-        const key = `${value.order_id}-${value.table}`;
+            if (!groupedOrders[key]) {
+                groupedOrders[key] = [];
+            }
 
-        if (!groupedOrders[key]) {
-            groupedOrders[key] = [];
-        }
+            groupedOrders[key].push({
+                prodID: value.prod_id,
+                product: value.producto, 
+                quantity: value.cantidad_producto, 
 
-        groupedOrders[key].push({
-            product: value.product,
-            quantity: value.quantity
+            });
         });
-    });
 
-    console.log(JSON.stringify(groupedOrders));
+        console.log(JSON.stringify(groupedOrders));
 
-    return JSON.stringify(groupedOrders)
+        return JSON.stringify(groupedOrders)
+
+
+        console.log(orders); // Log the orders data
+        return orders;
+    } catch (error) {
+        console.error('Error fetching open orders:', error);
+        throw error; // Rethrow the error to handle it in the caller function
+    }
 }
 
 function getDrinksOrders(){
@@ -182,4 +93,25 @@ function getDrinksOrders(){
     return JSON.stringify(groupedOrders)
 }
 
-export {getDishesOrders, getDrinksOrders}
+async function markProductAsCompleted(orderId, productId) {
+    try {
+        const response = await fetch(`http://localhost:3000/orders/${orderId}/products/${productId}/completed`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to mark product as completed');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error('Failed to mark product as completed: ' + error.message);
+    }
+}
+
+
+export {getOpenOrders, getDrinksOrders, markProductAsCompleted}
