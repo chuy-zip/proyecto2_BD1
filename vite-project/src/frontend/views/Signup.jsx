@@ -55,7 +55,7 @@ function Signup({navigator}) {
             })
 
             if (!response.ok) {
-                alert("Error registrando al usuario. Intente de nuevo.")
+                alert("Error registrando al usuario. Intenta de nuevo.")
                 return
             }
 
@@ -71,17 +71,20 @@ function Signup({navigator}) {
             navigator("login")
         }
 
-        if (password === verifyPassword) {
-            apiSignup()
+        if(name != "" || role != "" ||password != "" || verifyPassword != "") {
+            if (password === verifyPassword) {
+                apiSignup()
 
-        } else {
-            alert("Las contraseñas no coinciden.")
-        }
-
+            } else {
+                alert("Las contraseñas no coinciden.")
+            }
         
-    } 
+        } else {
+            alert("Asegúrate de llenar todos los campos.")
+        } 
     
-
+    }
+    
     const enterPress = (event) => {
         if (event.key === 'Enter') {
             signupButton();
