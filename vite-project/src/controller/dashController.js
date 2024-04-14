@@ -26,4 +26,34 @@ async function addSurveyToWaiter(waiterId, amabilidad, exactitud) {
     }
 }
 
-export {addSurveyToWaiter}
+async function addComplaint(employeeId, dishId, motivo, severidad) {
+    const data = {
+        motivo,
+        severidad
+    };
+
+    try {
+        const response = await fetch(`http://localhost:3000/employee/${employeeId}/dish/${dishId}/complaint`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add complaint');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData);
+        return responseData;
+    } catch (error) {
+        console.error('Error adding complaint:', error);
+        throw error; 
+    }
+}
+
+
+export {addSurveyToWaiter, addComplaint}
+
