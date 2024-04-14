@@ -77,5 +77,19 @@ async function submitBill(order, nit, name, address){
     }
 }
 
+async function getInvoiceByOrder(orderId) {
+    try {
+        const response = await fetch(`http://localhost:3000/invoices/by-order/${orderId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch invoice');
+        }
+        const invoice = await response.json();
+        return invoice;
+    } catch (error) {
+        throw new Error('Error fetching invoice: ' + error.message);
+    }
+}
 
-export {getProductsWithOrder, submitBill, closeOrder}
+
+
+export {getProductsWithOrder, submitBill, closeOrder, getInvoiceByOrder}

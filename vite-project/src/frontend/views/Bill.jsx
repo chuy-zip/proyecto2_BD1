@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import SinglePayment from "./SinglePayment";
+import { getInvoiceByOrder } from "../../controller/tableOrderController";
 
 function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
     const parsedString = orderKey.split("-");
@@ -43,46 +44,50 @@ function Order({ orderKey, nombre, nit, address, products, orderTotal }) {
 function Bill({ navigator, params }){
 
     const [bill, setBill] = useState({})
-    const [billNumber, setBillNumber] = useState("");
+    const [tableOrderNumber, settableOrderNumber] = useState("");
     const [paymentStyle, setPaymentStyle] = useState("")
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
     const [orderTotal, setOrderTotal] = useState(0)
+    const [billNumber, setBillNumber] = useState(0)
 
     useEffect(() => {
-        try {
-            const initialOrders = params.order;
-            const initialOrdNum = Object.keys(initialOrders)[0]
+        const fetchInvoice = async () => {
+            try {
+                const initialOrders = params.order;
+                const initialOrdNum = Object.keys(initialOrders)[0];
+                
+                settableOrderNumber(initialOrdNum);
 
-            const sum = initialOrders[initialOrdNum].reduce(
-                (total, dish) => total + dish.quantity * dish.price  , 0
-            ); // Initialize total with 0
-            
-            if (typeof initialOrders === 'object' && initialOrders !== null) {
+                const sum = initialOrders[initialOrdNum].reduce(
+                    (total, dish) => total + dish.quantity * dish.price,
+                    0
+                );
+                setOrderTotal(sum);
+
+                const parsedOrdNum = initialOrdNum.split("-")
+                const invoice = await getInvoiceByOrder(parsedOrdNum[0]);
+                
+                setBillNumber(invoice[0].id); // Assuming the bill ID is stored in the 'id' property
                 setBill(initialOrders);
-                setBillNumber(initialOrdNum);
-                setOrderTotal(sum)
-                setLoading(false); // Update loading status
-            } else {
-                throw new Error('Invalid data format');
+                setLoading(false);
+                console.log(billNumber)
+            } catch (error) {
+                console.error("Error retrieving invoice:", error);
+                setError(error);
             }
-        } catch (error) {
-            console.error("Error retrieving order products:", error);
-            setError(error); // Update error state
-        }
-    }, []);
+        };
+
+        fetchInvoice();
+    }, [params.order]);
 
     const handleRegularPayment = () => {
         setPaymentStyle("regular");
     };
 
-    const handleSeparatedPayment = () => {
-        setPaymentStyle("separated");
-    };
-
     const goToDividedPayment = () => {
         const params = { 
-            'billID': 123,
+            'billID': billNumber,
             'orderTotal': orderTotal
         };
         navigator("dividedBill", params);
@@ -92,7 +97,7 @@ function Bill({ navigator, params }){
         return <div>Error: {error.message}</div>;
     }
 
-    if (loading || !bill[billNumber]) {
+    if (loading || !bill[tableOrderNumber]) {
         return <div>Loading...</div>;
     }
 
@@ -102,8 +107,8 @@ function Bill({ navigator, params }){
                 <h1 className='viewTittle'>Factura</h1>
 
                 <Order 
-                    orderKey={billNumber} 
-                    products={bill[billNumber]} 
+                    orderKey={tableOrderNumber} 
+                    products={bill[tableOrderNumber]} 
                     nombre={params.name}
                     nit={params.nit}
                     address={params.address}
