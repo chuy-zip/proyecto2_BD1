@@ -1,15 +1,20 @@
 import { useState } from 'react';
+import { addSurveyToWaiter } from '../../controller/dashController';
+
 
 function SatisfactionSurvey() {
     const [waiterId, setWaiterId] = useState('');
     const [friendlinessRating, setFriendlinessRating] = useState('');
     const [accuracyRating, setAccuracyRating] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Waiter ID:', waiterId);
         console.log('Friendliness Rating:', friendlinessRating);
         console.log('Accuracy Rating:', accuracyRating);
+        await addSurveyToWaiter(waiterId, friendlinessRating, accuracyRating)
+
+
     };
 
     return (
