@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import {getOrderProducts} from '../../controller/tableOrderController.js'
+import {getProductsWithOrder} from '../../controller/tableOrderController.js'
 import '../styles/tableOrder.css';
 // Order number can be parsed from hook tableOrder 
 function Order({ orderKey, products }) {
@@ -51,25 +51,31 @@ function TableOrder({ navigator, params }) {
     };
     
     useEffect(() => {
-        try {
-            const initialOrders = JSON.parse(getOrderProducts());
-            console.log("Initial Orders:", initialOrders);
+        const fetchOrderProducts = async () => {
+            try {
+                let initialOrders = await getProductsWithOrder(params.order);
+                initialOrders = JSON.parse(initialOrders)
 
-            console.log("Orden recibida: ", params.order)
-            
-            // Check if initialOrders is an object
-            if (typeof initialOrders === 'object' && initialOrders !== null) {
-                setOrder(initialOrders);
-                setTableOrder(Object.keys(initialOrders)[0]);
-                setLoading(false); // Update loading status
-            } else {
-                throw new Error('Invalid data format');
+    
+                console.log("Initial Orders:", initialOrders);
+    
+                // Check if initialOrders is an object
+                if (typeof initialOrders === 'object' && initialOrders !== null) {
+                    setOrder(initialOrders);
+                    setTableOrder(Object.keys(initialOrders)[0]);
+                    setLoading(false); // Update loading status
+                } else {
+                    throw new Error('Invalid data format');
+                }
+            } catch (error) {
+                console.error("Error retrieving order products:", error);
+                setError(error); // Update error state
             }
-        } catch (error) {
-            console.error("Error retrieving order products:", error);
-            setError(error); // Update error state
-        }
-    }, []);
+        };
+    
+        fetchOrderProducts();
+    }, [params.order]);
+    
 
     const clientChange = (event) => {
         setClientName(event.target.value);
