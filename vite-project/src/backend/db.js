@@ -1,3 +1,4 @@
+import { text } from "express";
 import getClient from "./postgreConn.js"
 
 const client = getClient();
@@ -59,15 +60,14 @@ export async function verifyUser(username, password) {
 //delete user
 
 //informacion de usario en especifico
-export async function getUserById(
-    id
-){
+export async function getUserById(id){
     try {
-        const [result] = await client.query(
-            'SELECT * FROM users WHERE id = ?',
-            [id]
-        )
-        return result.length?rows[0]:null
+        const query = {
+            text: 'SELECT * FROM users WHERE id = $1',
+            values: [id]
+        }
+        const result = await client.query(query)
+        return result.rows
 
     } catch (error) {
         console.error('Error getting users', error)
@@ -290,8 +290,6 @@ export async function addRatingToWaiter(waiterId, amabilidad, exactitud) {
     }
 }
 
-// MAYBE: DELETE RATING
-
 // queja
 export async function addEmployeeDishComplaint(employeeId, dishId, motivo, severidad) {
     try {
@@ -420,15 +418,6 @@ export async function createOrder(mesaId) {
         throw error;
     }
 }
-
-/*const mesaIdd = 1; // ID de la mesa
-
-try {
-  const orderId = await createOrder(mesaIdd);
-  console.log('ID de la orden creada:', orderId);
-} catch (error) {
-  console.error('Error creando orden', error);
-}*/
 
 // cambiar estado de orden a cerrado
 export async function closeOrder(orderId) {
