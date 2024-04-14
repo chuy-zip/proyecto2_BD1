@@ -90,6 +90,27 @@ async function getInvoiceByOrder(orderId) {
     }
 }
 
+async function addPaymentToBill(invoiceId, formaPago, cantidadPago) {
+    try {
+        const response = await fetch(`http://localhost:3000/invoices/${invoiceId}/payments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ formaPago, cantidadPago })
+        });
 
+        if (!response.ok) {
+            throw new Error('Failed to add payment to invoice');
+        }
 
-export {getProductsWithOrder, submitBill, closeOrder, getInvoiceByOrder}
+        const data = await response.json();
+        console.log('Payment added successfully:', data.message);
+        return data;
+    } catch (error) {
+        console.error('Error adding payment to invoice:', error.message);
+        throw error;
+    }
+}
+
+export {getProductsWithOrder, submitBill, closeOrder, getInvoiceByOrder, addPaymentToBill}

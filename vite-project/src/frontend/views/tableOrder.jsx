@@ -44,8 +44,6 @@ function TableOrder({ navigator, params }) {
     const goToBill = async () => {
         try {
 
-            
-
             const parsedOrder = tableOrder.split("-")
             
             await closeOrder(parsedOrder[0])

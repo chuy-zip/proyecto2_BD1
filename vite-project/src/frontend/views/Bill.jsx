@@ -72,6 +72,7 @@ function Bill({ navigator, params }){
                 setBill(initialOrders);
                 setLoading(false);
                 console.log(billNumber)
+                
             } catch (error) {
                 console.error("Error retrieving invoice:", error);
                 setError(error);
@@ -131,7 +132,7 @@ function Bill({ navigator, params }){
 
                 {paymentStyle === "regular" && (
                     // Here i use a hardcoded ID
-                    <SinglePayment billID={"102"} orderTotal={orderTotal} name={params.name}/>
+                    <SinglePayment billID={billNumber} orderTotal={orderTotal} name={params.name}/>
                 )}
 
 
