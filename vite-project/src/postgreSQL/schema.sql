@@ -33,13 +33,14 @@ CREATE TABLE IF NOT EXISTS calificacion_mesero (
     id_mesero INTEGER NOT NULL,
     amabilidad NUMERIC(1) NOT NULL,
     exactitud NUMERIC(1) NOT NULL,
+    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     CONSTRAINT CHK_amabilidad_calificacion CHECK (amabilidad>=0 AND amabilidad<=5),
     CONSTRAINT CHK_exactitud_calificacion CHECK (exactitud>=0 AND exactitud<=5)
 );
 
 CREATE TABLE IF NOT EXISTS queja(
     id SERIAL PRIMARY KEY,
-    fecha_hora TIMESTAMP DEFAULT NOW(), -- if there is not time and hour added in the entry, it takes the system timestamp
+    fecha_hora TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- if there is not time and hour added in the entry, it takes the system timestamp
     motivo TEXT NOT NULL,
     severidad NUMERIC(1) NOT NULL,
     id_empleado INTEGER,
@@ -65,7 +66,8 @@ CREATE TABLE IF NOT EXISTS orden (
     id SERIAL PRIMARY KEY,
     id_mesa INTEGER NOT NULL,
     estado VARCHAR(10) DEFAULT 'abierto' NOT NULL, -- abierto o cerrado
-    fecha DATE NOT NULL DEFAULT CURRENT_DATE -- yy-mm-dd format
+    fecha TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_DATE, -- yy-mm-dd format
+    cantidad_comensales NUMERIC(4) DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS contenido_orden (
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS contenido_orden (
     cantidad_producto NUMERIC(4) NOT NULL,
     id_producto INTEGER NOT NULL,
     completado BOOLEAN DEFAULT FALSE NOT NULL, 
-    tiempo TIMESTAMP DEFAULT NOW()
+    tiempo TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS factura (
@@ -82,7 +84,8 @@ CREATE TABLE IF NOT EXISTS factura (
     nit VARCHAR(15) NOT NULL,
     id_orden INTEGER NOT NULL,
     direccion TEXT,
-    total NUMERIC(10,2) DEFAULT 0
+    total NUMERIC(10,2) DEFAULT 0,
+    fecha TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS pago_factura (
