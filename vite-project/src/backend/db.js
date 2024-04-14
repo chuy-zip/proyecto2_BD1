@@ -784,21 +784,21 @@ export async function getProductComplaintsReport(startDate, endDate) {
 // Reporte 6
 export async function getWaiterEfficiencyReport() {
     try {
-      const query = {
-        text: `SELECT id_mesero,
+        const query = {
+            text: `SELECT id_mesero,
                     EXTRACT(MONTH FROM fecha_hora) AS mes,
                     ROUND(AVG(amabilidad), 2) AS promedio_amabilidad,
                     ROUND(AVG(exactitud), 2) AS promedio_exactitud
                 FROM calificacion_mesero
                 WHERE fecha_hora >= CURRENT_DATE - INTERVAL '6 months'
                 GROUP BY id_mesero, EXTRACT(MONTH FROM fecha_hora)
-                ORDER BY id_mesero, mes;`
-      };
-  
-      const result = await client.query(query);
-      return result.rows;
+                ORDER BY id_mesero, mes`
+        };
+    
+        const result = await client.query(query);
+        return result.rows;
     } catch (error) {
-      console.error('Error getting waiter efficiency report', error);
-      throw error;
+        console.error('Error getting waiter efficiency report', error);
+        throw error;
     }
-  }
+}
