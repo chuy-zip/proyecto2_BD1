@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS contenido_orden (
     id_orden INTEGER NOT NULL,
     cantidad_producto NUMERIC(4) NOT NULL,
     id_producto INTEGER NOT NULL,
-    completado BOOLEAN DEFAULT FALSE NOT NULL 
+    completado BOOLEAN DEFAULT FALSE NOT NULL, 
+    tiempo TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS factura (
