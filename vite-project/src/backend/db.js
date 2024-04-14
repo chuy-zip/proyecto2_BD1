@@ -291,18 +291,49 @@ export async function addRatingToWaiter(waiterId, amabilidad, exactitud) {
 }
 
 // queja
-export async function addEmployeeDishComplaint(employeeId, dishId, motivo, severidad) {
+// Función para agregar una queja de un empleado
+export async function addEmployeeComplaint(employeeId, motivo, severidad) {
     try {
         const query = {
-            text: 'INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES ($1, $2, $3, $4)',
-            values: [motivo, severidad, employeeId, dishId]
+            text: 'INSERT INTO queja (motivo, severidad, id_empleado) VALUES ($1, $2, $3)',
+            values: [motivo, severidad, employeeId]
         };
         const result = await client.query(query);
-    
         return result.rowCount === 1;
     } catch (error) {
-        console.error('Error adding employee and dish complaint', error);
+        console.error('Error adding employee complaint', error);
         throw error;
+    }
+}
+
+// Función para agregar una queja de un plato
+export async function addDishComplaint(dishId, motivo, severidad) {
+    try {
+        const query = {
+            text: 'INSERT INTO queja (motivo, severidad, id_producto) VALUES ($1, $2, $3)',
+            values: [motivo, severidad, dishId]
+        };
+        const result = await client.query(query);
+        return result.rowCount === 1;
+    } catch (error) {
+        console.error('Error adding dish complaint', error);
+        throw error;
+    }
+}
+
+// listar las quejas
+export async function getComplaints() {
+    try {
+        const query = {
+            text: 'SELECT * FROM queja'
+        }
+
+        const result = await client.query(query)
+        return result.rows;
+        
+    } catch (error) {
+        console.error('Error getting users', error)
+        throw error
     }
 }
 
