@@ -614,7 +614,7 @@ export async function getUnservedDishes() {
 export async function getUnservedDrinks() {
     try {
         const query = {
-            text: `SELECT o.id AS order_id, o.id_mesa, p.nombre AS producto, co.cantidad_producto
+            text: `SELECT o.id AS order_id, o.id_mesa, p.id AS prod_id, p.nombre AS producto, co.cantidad_producto
                 FROM contenido_orden co
                 JOIN producto p ON co.id_producto = p.id
                 JOIN orden o ON co.id_orden = o.id

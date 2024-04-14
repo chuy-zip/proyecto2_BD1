@@ -149,7 +149,7 @@ INSERT INTO producto (nombre, descripcion, precio, tipo) VALUES
 -- Insertar órdenes
 INSERT INTO orden (id_mesa, estado) VALUES
     (1, 'abierto'),
-    (2, 'cerrado');
+    (2, 'abierto');
 
 -- Insertar contenido de órdenes
 INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto, completado) VALUES

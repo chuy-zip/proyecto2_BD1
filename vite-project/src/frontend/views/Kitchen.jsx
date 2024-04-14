@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getOpenOrders } from "../../controller/kitbarController.js";
+import { getUnservedDishes } from "../../controller/kitbarController.js";
 import { markProductAsCompleted } from "../../controller/kitbarController.js";
 
 function Order({ orderKey, products }) {
@@ -51,7 +51,7 @@ function Kitchen({ navigator }) {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                let initialOrders = await getOpenOrders();
+                let initialOrders = await getUnservedDishes();
                 initialOrders = JSON.parse(initialOrders)
                 console.log(initialOrders);
                 setOrders(initialOrders);
