@@ -18,7 +18,8 @@ import {
     removeTableFromArea,
     listTablesInArea,
     addRatingToWaiter,
-    addEmployeeDishComplaint,
+    addDishComplaint,
+    addEmployeeComplaint,
     addProduct,
     deleteProduct,
     listAllProducts,
@@ -41,7 +42,8 @@ import {
     getAverageEatingTime,
     getEmployeeComplaintsReport,
     getProductComplaintsReport,
-    getWaiterEfficiencyReport
+    getWaiterEfficiencyReport,
+    getComplaints
   } from './db.js';
 
 const app = express()
@@ -287,46 +289,39 @@ app.post('/employee/:employeeId/dish/:dishId/complaint', async (req, res) => {
     const { employeeId, dishId } = req.params;
     const { motivo, severidad } = req.body;
     try {
-        const quejaAgregada = await addEmployeeDishComplaint(employeeId, dishId, motivo, severidad);
-        if (quejaAgregada) {
-            res.status(200).json({ message: 'Queja agregada exitosamente' });
+        if (employeeId === '0') {
+            // Llamar a la función para agregar una queja de un platillo
+            const quejaAgregada = await addDishComplaint(dishId, motivo, severidad);
+            if (quejaAgregada) {
+                res.status(200).json({ message: 'Queja agregada exitosamente' });
+            } else {
+                res.status(404).json({ error: 'No se pudo agregar la queja del platillo' });
+            }
+        } else if (dishId === '0') {
+            // Llamar a la función para agregar una queja de un empleado
+            const quejaAgregada = await addEmployeeComplaint(employeeId, motivo, severidad);
+            if (quejaAgregada) {
+                res.status(200).json({ message: 'Queja agregada exitosamente' });
+            } else {
+                res.status(404).json({ error: 'No se pudo agregar la queja del empleado' });
+            }
         } else {
-            res.status(404).json({ error: 'No se pudo agregar la queja del empleado respecto al platillo' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});// Endpoint para calificar a un mesero
-app.post('/waiter/:waiterId/rating', async (req, res) => {
-    const { waiterId } = req.params;
-    const { amabilidad, exactitud } = req.body;
-    try {
-        const calificacionAgregada = await addRatingToWaiter(waiterId, amabilidad, exactitud);
-        if (calificacionAgregada) {
-            res.status(200).json({ message: 'Calificación agregada exitosamente' });
-        } else {
-            res.status(404).json({ error: 'No se pudo agregar la calificación al mesero' });
+            // Enviar un error si ninguno de los parámetros es igual a 0
+            res.status(400).json({ error: 'Debe especificar un employeeId o un dishId igual a 0' });
         }
     } catch (error) {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
 
-// Endpoint para agregar una queja de un empleado respecto a un platillo
-app.post('/employee/:employeeId/dish/:dishId/complaint', async (req, res) => {
-    const { employeeId, dishId } = req.params;
-    const { motivo, severidad } = req.body;
+app.get('/complaints', async (req, res) => {
     try {
-        const quejaAgregada = await addEmployeeDishComplaint(employeeId, dishId, motivo, severidad);
-        if (quejaAgregada) {
-            res.status(200).json({ message: 'Queja agregada exitosamente' });
-        } else {
-            res.status(404).json({ error: 'No se pudo agregar la queja del empleado respecto al platillo' });
-        }
+        const complaints = await getComplaints()
+        res.status(200).json(complaints)
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Internal server error'})
     }
-});
+})
 
 // Endpoint para agregar un producto
 app.post('/products', async (req, res) => {
