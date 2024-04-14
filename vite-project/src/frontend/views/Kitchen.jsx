@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getUnservedDishes } from "../../controller/kitbarController.js";
-import { markProductAsCompleted } from "../../controller/kitbarController.js";
+import { getUnservedDishes, markProductAsCompleted } from "../../controller/kitbarController.js";
 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
@@ -57,7 +56,6 @@ function Kitchen({ navigator }) {
                 setOrders(initialOrders);
             } catch (error) {
                 console.error('Error fetching orders:', error);
-                // Handle error appropriately, e.g., show an error message to the user
             }
         };
     
