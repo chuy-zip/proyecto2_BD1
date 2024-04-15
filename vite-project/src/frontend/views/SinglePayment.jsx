@@ -3,14 +3,20 @@ import PaymentDropDown from "../components/PaymentDropDown";
 import { addPaymentToBill } from "../../controller/tableOrderController";
 
 function SinglePayment({billID, orderTotal, name}){
-    const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
-
+    const [selectedOption, setSelectedOption] = useState(""); 
     const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value); // Update the selected option when it changes
+        setSelectedOption(event.target.value); 
     };
 
     const addPayment = async () => {
+
+        if(!selectedOption){
+            alert("Por favor selecciona un método de pago")
+            return;
+        }
+        
         try {
+
             await addPaymentToBill(billID, selectedOption, orderTotal);
             console.log("Payment added successfully");
             

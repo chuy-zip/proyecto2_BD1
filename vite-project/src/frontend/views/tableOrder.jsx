@@ -39,21 +39,32 @@ function TableOrder({ navigator, params }) {
     const [nit, setNit] = useState("");
     const [address, setAddress] = useState("");
     const [loading, setLoading] = useState(true); 
-    const [error, setError] = useState(null); 
+    const [error, setError] = useState(null);
+    const [clientNameError, setClientNameError] = useState("");
+    const [nitError, setNitError] = useState("");
+    const [addressError, setAddressError] = useState("");
 
     const goToBill = async () => {
         try {
-
-            const parsedOrder = tableOrder.split("-")
             
-            await closeOrder(parsedOrder[0])
+            if (!clientName || !nit || !address) {
+                setClientNameError(clientName ? "" : "Nombre de cliente requerido");
+                setNitError(nit ? "" : "NIT requerido");
+                setAddressError(address ? "" : "Dirección requerida");
+                return;
+            }
+
+            
+            const parsedOrder = tableOrder.split("-");
+            await closeOrder(parsedOrder[0]);
             await submitBill(parsedOrder[0], nit, clientName, address);
-            const params = { 
-                'order': order,
-                'name': clientName,
-                'nit': nit,
-                'address': address
+            const params = {
+                order: order,
+                name: clientName,
+                nit: nit,
+                address: address,
             };
+            
             navigator("bill", params);
         } catch (error) {
             console.error("Error submitting bill:", error);
@@ -114,10 +125,15 @@ function TableOrder({ navigator, params }) {
             
             <Order orderKey={tableOrder} products={order[tableOrder]} />
 
-            <input className="tableOrderInput" type="text" placeholder='Cliente' value={clientName} onChange={clientChange} />
-            <input className="tableOrderInput" type="text" placeholder='Nit' value={nit} onChange={nitChange} />
-            <input className="tableOrderInput" type="text" placeholder='Direccion' value={address} onChange={addressChange} />
+            <input style={{width: '700px'}} className="tableOrderInput" type="text" placeholder='Cliente' value={clientName} onChange={clientChange} />
+            <input style={{width: '700px'}} className="tableOrderInput" type="text" placeholder='Nit' value={nit} onChange={nitChange} />
+            <input style={{width: '700px'}} className="tableOrderInput" type="text" placeholder='Direccion' value={address} onChange={addressChange} />
             
+            {/* Error messages for input fields */}
+            {clientNameError && <div style={{color:"white"}}>{clientNameError}</div>}
+            {nitError && <div style={{color:"white"}}>{nitError}</div>}
+            {addressError && <div style={{color:"white"}}>{addressError}</div>}
+
             <div className="buttonContainer">
                 <button 
                     className='orderCompleteButton' 

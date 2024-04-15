@@ -64,7 +64,7 @@ function Bill({ navigator, params }){
                     (total, dish) => total + dish.quantity * dish.price,
                     0
                 );
-                setOrderTotal(sum);
+                setOrderTotal(sum.toFixed(2));
 
                 const parsedOrdNum = initialOrdNum.split("-")
                 const invoice = await getInvoiceByOrder(parsedOrdNum[0]);
@@ -117,8 +117,7 @@ function Bill({ navigator, params }){
                     orderTotal={orderTotal}
                     />
                 
-                // When a button is pressed (or screen is redendered) it should get the bill So then ID can be passed //
-                // to the payment functions
+                
                 <div className="buttonContainer">
                     <button  
                         className='orderCompleteButton' 
