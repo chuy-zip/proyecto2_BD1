@@ -104,7 +104,8 @@ function Signup({navigator}) {
             </select>
             <input type="password" placeholder='Contraseña' value={password} onChange={handlePasswordChange} onKeyDown={enterPress} />
             <input type="password" placeholder='Verificar contraseña' value={verifyPassword} onChange={handleVerifyChange} onKeyDown={enterPress} />
-            <button onClick={signupButton}></button>
+            <button onClick={signupButton}>Registrarse</button>
+            <button className='forgetButtons' onClick={goToLogin}>Iniciar Sesión</button>
         </div>
     )
 }
