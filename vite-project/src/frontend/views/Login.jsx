@@ -58,8 +58,7 @@ function Login({ navigator }) {
             navigator("dashboard")
         }
 
-        apiLogin()
-        
+        apiLogin()  
     } 
 
     const enterPress = (event) => {
