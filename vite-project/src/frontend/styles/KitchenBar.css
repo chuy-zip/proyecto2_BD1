@@ -90,6 +90,10 @@ h3 span {
     color: black;
 }
 
+h4 span {
+    font-weight: normal;
+}
+
 .buttonContainer {
     display: flex;
     flex-direction: row;
@@ -109,5 +113,8 @@ h3 span {
     margin: auto;
     padding-top: 20px;
     padding-left: 25px;
+}
 
+.complaintBorders {
+    border-bottom: 2px dashed #000;
 }

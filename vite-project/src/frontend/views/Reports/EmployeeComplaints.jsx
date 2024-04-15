@@ -1,6 +1,40 @@
 import { useState, useEffect } from "react"
 import { getComplaintsByUser } from "../../../controller/complaintsController"
 
+function Complaint({date, severity, reason }){
+    let parsedDate = date.split("T")
+    let splitDate = parsedDate[0].split("-")
+
+    return (
+        <div className="complaintBorders">
+            <h4>Fecha: <span>{splitDate[2]}/{splitDate[1]}/{splitDate[0]}</span></h4>
+            
+            <h4>Severidad: <span> {severity}</span></h4>
+            <h4>Motivo: </h4>
+            <p>{reason}</p>
+
+        </div>
+        
+    )
+
+}
+
+function Complaints({complaintKey, complaints}){
+    const parsedString = complaintKey.split("-")
+
+    return (
+        <div className="order" style={{margin: 'auto'}}>
+            <h1><span>ID: {parsedString[0]} | Nombre: {parsedString[1]} | Rol: {parsedString[2]}</span></h1>
+
+            {complaints.map(( value, index) => (
+                <Complaint key={index} date={value.date} severity={value.severity} reason={value.reason}/>
+            ))}
+
+        </div>
+    )
+
+}
+
 function EmployeeComplaints(){
     const [complaints, setComplaints] = useState({})
     const [initialDate, setInitialDate] = useState("")
@@ -65,6 +99,10 @@ function EmployeeComplaints(){
                     style={{ margin: 'auto', marginTop: '20px' }} 
                     onClick={() => console.log(initialDate, endDate)}>Generar Reporte</button>
             </div>
+
+            {Object.keys(complaints).map( (key, index) => (
+                <Complaints key={index} complaintKey={key} complaints={complaints[key]}/>
+            ))}
 
         </div>
     )

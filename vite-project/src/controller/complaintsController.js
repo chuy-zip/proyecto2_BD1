@@ -18,7 +18,7 @@ async function getComplaintsByUser(startDate, endDate){
 
             groupedComplaints[key].push({
                 reason: value.motivo,
-                severity: value.severity,
+                severity: value.severidad,
                 date: value.fecha
             })
         })
