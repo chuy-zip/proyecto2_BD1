@@ -38,6 +38,10 @@ function Router(){
             setLoggedIn(true)
         }
     }, [localStorage.getItem("sessionState")])
+
+    useEffect(() => {
+        localStorage.getItem("userData")
+    })
     
     if (!loggedIn && page != "signup") {
         return <Login navigator={navegar} />
@@ -127,17 +131,18 @@ function Router(){
 
     return(
         <> 
-            
             {contenido}
 
-            <div className='button-containerDash'>
-                <button
-                    className="orderCompleteButton"
-                    style={{ margin: "auto", marginTop: "20px", width: '150px', zIndex:'2'}}
-                    onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
-                >DashBoard
-                </button>
-            </div>
+            {page != "signup" &&(
+                <div className='button-containerDash'>
+                    <button
+                        className="orderCompleteButton"
+                        style={{ margin: "auto", marginTop: "20px", width: '150px', zIndex:'2'}}
+                        onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
+                        >DashBoard
+                    </button>
+                </div>
+            )}
 
         </>
     )

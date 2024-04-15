@@ -3,7 +3,7 @@ import ImageCard from '../components/ImageCard'
 import logo from '../../imgs/dans_logo.png'
 import CryptoJS from 'crypto-js'
 
-function Login({navigator }) {
+function Login({ navigator }) {
 
     const apiUrl = "http://127.0.0.1:8080/users/login"
 
@@ -14,16 +14,16 @@ function Login({navigator }) {
         navigator("signup")
     }
 
-    const getName = (event) => {
+    const handleNameChange = (event) => {
         let email = event.target.value
-            setName(email)
-            console.log(email)
+        setName(email)
+        console.log(email)
     }
 
-    const getPassword = (event) => {
+    const handlePasswordChange = (event) => {
         let password = event.target.value
-            setPassword(password)
-            console.log(password)       
+        setPassword(password)
+        console.log(password)       
     }
 
     const loginButton = (event) => {
@@ -58,8 +58,7 @@ function Login({navigator }) {
             navigator("dashboard")
         }
 
-        apiLogin()
-        
+        apiLogin()  
     } 
 
     const enterPress = (event) => {
@@ -72,8 +71,8 @@ function Login({navigator }) {
         <div className='background'>
             <ImageCard source={logo} alternative={"Logo del restaurante"}/>
             <h1>Iniciar Sesión</h1>
-            <input type="text" placeholder='Nombre' value={name} onChange={getName} onKeyDown={enterPress}/>
-            <input type="password" placeholder='Contraseña' value={password} onChange={getPassword} onKeyDown={enterPress}/>
+            <input type="text" placeholder='Nombre' value={name} onChange={handleNameChange} onKeyDown={enterPress}/>
+            <input type="password" placeholder='Contraseña' value={password} onChange={handlePasswordChange} onKeyDown={enterPress}/>
             <button onClick={loginButton}>Confirmar</button>
             <div className='forgetBack'>
                 <button className='forgetButtons' onClick={goToSignup}>Registrarse</button>

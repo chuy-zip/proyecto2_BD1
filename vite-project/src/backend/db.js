@@ -727,7 +727,7 @@ export async function getMostOrderedProducts(startDate, endDate) { //se pasan st
 export async function getPeakOrderHours(startDate, endDate) {
     try {
         const query = {
-            text: `SELECT EXTRACT(HOUR FROM co.tiempo) AS horario, COUNT(EXTRACT(HOUR FROM co.tiempo)) AS cantidad
+            text: `SELECT EXTRACT(HOUR FROM tiempo) AS horario, COUNT(EXTRACT(HOUR FROM tiempo)) AS cantidad
                 FROM contenido_orden co
                 JOIN orden o ON o.id = co.id_orden
                 WHERE o.fecha BETWEEN SYMMETRIC to_date($1, 'YYYY-MM-DD') AND to_date($2, 'YYYY-MM-DD')
