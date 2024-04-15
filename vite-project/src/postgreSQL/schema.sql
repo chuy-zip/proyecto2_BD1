@@ -114,30 +114,41 @@ ALTER TABLE producto ADD CONSTRAINT fk_id_tipo FOREIGN KEY (tipo) REFERENCES tip
 -- Insertar tipos de producto
 INSERT INTO tipo_producto (nombre) VALUES
     ('Platillo'),
-    ('Bebida'),
-    ('Postre');
+    ('Bebida');
 
 -- Insertar usuarios
 INSERT INTO users (username, password, rol) VALUES
-    ('usuario1', 'password1', 'rol1'),
-    ('usuario2', 'password2', 'rol2'),
-    ('usuario3', 'password3', 'rol3');
+    ('Juan', 'password1', 'Mesero'),
+    ('Mario', 'password2', 'Mesero'),
+    ('Mari', 'password3', 'Mesero'),
+    ('Pedro', 'password343', 'Mesero'),
+    ('Azucena', 'asdax2', 'Bartender'),
+    ('Javier', 'password3786', 'Mesero'),
+    ('Luisa', 'sdfasd', 'Chef'),
+    ('Lucy', 'password111a', 'Mesero'),
+    ('Roberto', 'password3aaaaaa', 'Chef');
 
 -- Insertar áreas
 INSERT INTO area (nombre, fumadores) VALUES
-    ('Área 1', true),
-    ('Área 2', false);
+    ('area 1', true),
+    ('area 2', false);
 
 -- Insertar mesas
 INSERT INTO mesa (capacidad, movible) VALUES
     (4, true),
     (6, false),
-    (2, true);
+    (2, true),
+    (8, true),
+    (4, false),
+    (10, true);
+
 
 -- Insertar meseros
 INSERT INTO mesero (id_user, id_area_asignada) VALUES
     (1, 1),
-    (2, 2);
+    (2, 2),
+    (3, 1),
+    (1, 2);
 
 -- Insertar posiciones de mesas
 INSERT INTO posicion_mesas (id_mesa, id_area) VALUES
@@ -147,21 +158,37 @@ INSERT INTO posicion_mesas (id_mesa, id_area) VALUES
 
 -- Insertar productos
 INSERT INTO producto (nombre, descripcion, precio, tipo) VALUES
-    ('Platillo 1', 'Descripción del platillo 1', 10.99, 1),
-    ('Bebida 1', 'Descripción de la bebida 1', 5.99, 2),
-    ('Postre 1', 'Descripción del postre 1', 7.50, 3);
+    ('Pollo asado', 'Descripción del platillo 1', 10.99, 1),
+    ('Jugo de Naranja', 'Descripción de la bebida 1', 5.99, 2),
+    ('Ensalada César', 'Lechuga, pollo, crutones y aderezo cesar', 8.99, 1),
+    ('Coca-Cola', 'Refresco de cola', 3.50, 2),
+    ('Pizza Hawaiana', 'Pizza con piña y jamón', 12.50, 1);
 
--- Insertar órdenes
-INSERT INTO orden (id_mesa, estado) VALUES
-    (1, 'abierto'),
-    (2, 'abierto');
+-- Insertar órdenes no completas
+INSERT INTO orden (id_mesa, estado, cantidad_comensales) VALUES
+    (1, 'abierto', 2),
+    (2, 'abierto', 2),
+    (5, 'abierto', 3),
+    (6, 'abierto', 5);
+    
+
+--Insertar ordenes completas
+INSERT INTO orden (id_mesa, estado, fecha, cantidad_comensales) VALUES
+    (3, 'cerrado', '2024-04-14 18:30:00', 4),
+    (4, 'cerrado', '2024-04-15 20:15:00', 2);
+
 
 -- Insertar contenido de órdenes
 INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto, completado) VALUES
     (1, 2, 1, false),  -- Orden 1: 2 platillos 1
     (1, 3, 1, false),
     (1, 1, 2, false),  -- Orden 1: 1 bebida 1
-    (2, 3, 1, false);  -- Orden 2: 3 platillos 1
+    (2, 3, 1, false),  -- Orden 2: 3 platillos 1
+    (5, 2, 1, false),  -- 2 platillos 1 (Pollo asado)
+    (5, 1, 3, false),  -- 1 bebida 3 (Coca-Cola)
+    (6, 3, 1, false),  -- 3 platillos 1 (Pollo asado)
+    (6, 2, 4, false),  -- 2 bebidas 4 (Jugo de Naranja)
+    (6, 1, 5, false);  -- 1 platillo 5 (Pizza Hawaiana)
 
 -- Insertar facturas
 --INSERT INTO factura (nombre_cliente, nit, id_orden) VALUES
@@ -177,7 +204,11 @@ INSERT INTO contenido_orden (id_orden, cantidad_producto, id_producto, completad
 INSERT INTO calificacion_mesero (id_mesero, amabilidad, exactitud) VALUES
     (1, 4, 5),
     (2, 3, 4),
-    (3, 5, 4);
+    (3, 5, 4),
+    (1, 3, 4),
+    (2, 5, 5),
+    (3, 4, 3);
+
 insert into calificacion_mesero(id_mesero,amabilidad,exactitud, fecha_hora) values
 	(1, 3, 4, '2023-10-25 00:00:00'),
 	(2, 4, 5, '2023-11-25 00:00:00'),
@@ -186,9 +217,15 @@ insert into calificacion_mesero(id_mesero,amabilidad,exactitud, fecha_hora) valu
 
 -- Insertar quejas
 INSERT INTO queja (motivo, severidad, id_empleado, id_producto) VALUES
-    ('Servicio lento', 3, 1, 1),
-    ('Producto defectuoso', 2, 2, 2),
-    ('Mesa sucia', 4, 3, NULL);
+    ('Servicio lento', 3, 1, NULL),
+    ('Producto defectuoso', 2, NULL, 2),
+    ('Mesa sucia', 4, 3, NULL),
+    ('Limpieza deficiente', 3, 1, NULL),
+    ('Producto vencido', 4, NULL, 3),
+    ('Mesa rota', 2, 2, NULL);
+
 INSERT INTO queja(fecha_hora, motivo,severidad,id_empleado)VALUES 	
     ('2024-04-10 15:20:00', 'higiene', 4, 3),
-    ('2024-04-10 15:00:00', 'trajo comida equivocada y luego lo puso en otra mesa', 3, 2);
+    ('2024-04-10 15:00:00', 'trajo comida equivocada y luego lo puso en otra mesa', 3, 2),
+    ('2024-04-14 10:20:00', 'Ruido excesivo', 2, 3),
+    ('2024-04-15 11:00:00', 'Mal servicio', 3, 1);

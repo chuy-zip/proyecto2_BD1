@@ -39,10 +39,10 @@ function DividedPayment({params}){
     const addPayment = () => {
         if (clientName.trim() === "" || paymentAmount.trim() === "" || selectedOption.trim() === "") {
             // Check if any input is blank
-            alert("Please fill in all fields.");
+            alert("Por favor completa todos los campos.");
             return;
         }
-        
+
         setPayments(prevPayments => ({
             ...prevPayments,
             [paymentID]: {

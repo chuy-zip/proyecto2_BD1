@@ -22,7 +22,7 @@ import FamouseDishes from '../views/Reports/FamousDishes'
 import Complaints from '../views/Complaints'
 
 function Router(){
-    const [page, setPage] = useState("dashboard")
+    const [page, setPage] = useState("login")
     const [params, setParams] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 
