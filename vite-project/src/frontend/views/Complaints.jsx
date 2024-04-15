@@ -15,12 +15,12 @@ function Complaints(){
 
     const handlePersonalComplaint = () => {
         setComplaintType("personal")
-        setProductID(null)
+        setProductID(0)
     }
 
     const handleProductComplaint = () => {
         setComplaintType("product")
-        setPersonalID(null)
+        setPersonalID(0)
     }
 
     const reasonChange = (event) => {
