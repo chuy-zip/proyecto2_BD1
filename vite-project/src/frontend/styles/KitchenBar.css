@@ -15,7 +15,8 @@
     flex-wrap: nowrap;
     border-radius: 1vw;
     height: 90%;
-    width: 100%;
+    width: 90%;
+    margin: auto;
     overflow-x: scroll;
     overflow-y: hidden;
     align-items: flex-start;
