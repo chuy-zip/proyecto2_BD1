@@ -8,6 +8,8 @@ function Complaints(){
     const [severity, setSeverity] = useState(0);
     const [personalID, setPersonalID] = useState("")
     const [productID, setProductID] = useState("")
+    const [error, setError] = useState(null);
+
     
     const clientChange = (event) => {
         setClientName(event.target.value);
@@ -35,15 +37,28 @@ function Complaints(){
         setProductID(event.target.value);
     };
 
-    const sendComplaint = async (event) => {
-        console.log(complaintType, clientName, reason, severity,"prod:", productID,"personal:" ,personalID)
-        await addComplaint(personalID, productID, reason, severity)
-    }
+    const sendComplaint = async () => {
+        try {
+
+            if (!clientName || !reason || !severity) {
+                alert('Por favor, complete todos los campos.')
+                throw new Error('Por favor, complete todos los campos.');
+                
+            }
+
+            console.log(complaintType, clientName, reason, severity, "prod:", productID, "personal:", personalID);
+            await addComplaint(personalID, productID, reason, severity);
+        } catch (error) {
+            console.error("Eror doing complaint:", error);
+        }
+    };
 
     return (
     
-        <div style={{width:'100%', height: '100%'}}> 
-            <h1 className='viewTittle' style={{textAlign:'center', paddingLeft:'30px'}}>Seleccione un tipo de queja</h1>
+        <div style={{width:'70%', height: '100%'}} className="order"> 
+            <h1 
+                className='viewTittle' 
+                style={{textAlign:'center', paddingLeft:'30px', paddingTop:'30px', color:'black'}}> Seleccione un tipo de queja</h1>
             <div 
                 className="buttonContainer"
                 style={{justifyContent: 'center'}}>
@@ -80,18 +95,18 @@ function Complaints(){
                 style={{width:'43%'}}/>
             <br/>
 
-            <h2 style={{color:'white', marginTop:'30px'}}>Gravedad (Siendo 5 muy grave)</h2>
+            <h2 style={{color:'black', marginTop:'30px'}}>Gravedad (Siendo 5 muy grave)</h2>
 
             <label>                    
                 
                 {[1, 2, 3, 4, 5].map((rating) => (
-                    <label key={rating} style={{ display: 'inline-block', paddingRight:'20px' }}>
+                    <label key={rating} style={{ display: 'inline-block', paddingRight:'20px', color:'black', }}>
                         <input 
                             type="radio" 
                             name="accuracy" 
                             value={rating}
                             onChange={(e) => setSeverity(e.target.value)}/>
-                                <div style={{paddingLeft:'15px',color:'white'}}>{rating}</div>
+                                <div style={{paddingLeft:'25px',color:'black',}}>{rating}</div>
                     </label>
                 ))}
             </label>
@@ -122,7 +137,7 @@ function Complaints(){
             
             <button 
                 className="orderCompleteButton"
-                style={{width:'25%', marginLeft:'23px'}}
+                style={{width:'25%', marginBottom:'30px'}}
                 type="submit" 
                 onClick={sendComplaint}>Enviar</button>
         
