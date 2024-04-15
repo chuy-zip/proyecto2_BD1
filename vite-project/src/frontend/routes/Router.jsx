@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import CryptoJS from 'crypto-js'
 import Dashboard from '../views/Dashboard'
 import Report from '../views/Report'  
 import Login from '../views/Login'
@@ -21,7 +22,7 @@ import FamouseDishes from '../views/Reports/FamousDishes'
 import Complaints from '../views/Complaints'
 
 function Router(){
-    const [page, setPage] = useState("x")
+    const [page, setPage] = useState("dashboard")
     const [params, setParams] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 
@@ -37,6 +38,10 @@ function Router(){
             setLoggedIn(true)
         }
     }, [localStorage.getItem("sessionState")])
+
+    useEffect(() => {
+        localStorage.getItem("userData")
+    })
     
     if (!loggedIn && page != "signup") {
         return <Login navigator={navegar} />
@@ -126,17 +131,18 @@ function Router(){
 
     return(
         <> 
-            
             {contenido}
 
-            <div className='button-containerDash'>
-                <button
-                    className="orderCompleteButton"
-                    style={{ margin: "auto", marginTop: "20px", width: '150px', zIndex:'2'}}
-                    onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
-                >DashBoard
-                </button>
-            </div>
+            {page != "signup" &&(
+                <div className='button-containerDash'>
+                    <button
+                        className="orderCompleteButton"
+                        style={{ margin: "auto", marginTop: "20px", width: '150px', zIndex:'2'}}
+                        onClick={() => setPage("dashboard")} // Wrap setPage in an arrow function
+                        >DashBoard
+                    </button>
+                </div>
+            )}
 
         </>
     )

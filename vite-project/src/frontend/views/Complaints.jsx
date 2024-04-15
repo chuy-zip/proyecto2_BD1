@@ -1,4 +1,6 @@
-import { useState, useEffect, useTransition } from "react";
+import { useState } from "react";
+import { addComplaint } from "../../controller/dashController";
+
 function Complaints(){
     const [complaintType, setComplaintType] = useState("")
     const [clientName, setClientName] = useState("");
@@ -6,19 +8,19 @@ function Complaints(){
     const [severity, setSeverity] = useState(0);
     const [personalID, setPersonalID] = useState("")
     const [productID, setProductID] = useState("")
-
+    
     const clientChange = (event) => {
         setClientName(event.target.value);
     };
 
     const handlePersonalComplaint = () => {
         setComplaintType("personal")
-        setProductID("")
+        setProductID(0)
     }
 
     const handleProductComplaint = () => {
         setComplaintType("product")
-        setPersonalID("")
+        setPersonalID(0)
     }
 
     const reasonChange = (event) => {
@@ -32,6 +34,11 @@ function Complaints(){
     const productIDChange = (event) => {
         setProductID(event.target.value);
     };
+
+    const sendComplaint = async (event) => {
+        console.log(complaintType, clientName, reason, severity,"prod:", productID,"personal:" ,personalID)
+        await addComplaint(personalID, productID, reason, severity)
+    }
 
     return (
     
@@ -117,7 +124,7 @@ function Complaints(){
                 className="orderCompleteButton"
                 style={{width:'25%', marginLeft:'23px'}}
                 type="submit" 
-                onClick={()=>console.log(complaintType, clientName, reason, severity,"prod:", productID,"personal:" ,personalID)}>Enviar</button>
+                onClick={sendComplaint}>Enviar</button>
         
         </div>
     )
