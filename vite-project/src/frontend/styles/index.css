@@ -57,6 +57,7 @@ input:hover {
 
 button {
   border-radius: 8px;
+  z-index: 0;
   margin: 5% 0 0 0;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -98,6 +99,8 @@ header {
 
 footer {
   position: fixed;
+  display: flex;
+  flex-direction: row;
   bottom: 0;
   width: 100%;
   height: 10%;

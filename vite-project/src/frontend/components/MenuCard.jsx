@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function MenuCard({ key, name, description, price, addDishes }) {
+function MenuCard({ key, id, name, description, price, addDishes }) {
     const [quantity, setQuantity] = useState(1);
 
     const handleQuantityChange = (event) => {
@@ -8,7 +8,7 @@ function MenuCard({ key, name, description, price, addDishes }) {
     }
 
     const handleAddDish = () => {
-        addDishes(quantity, { name, price, quantity });
+        addDishes(quantity, { id, name, price, quantity });
     }
 
     return (

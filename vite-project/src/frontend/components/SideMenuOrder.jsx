@@ -1,17 +1,12 @@
+import { useState, useEffect } from "react";
+
 function SideMenu({ name, price, quantity }) {
-    const actualOrder = []
-
-    actualOrder.push({ name })
+    const [actualQuantity, setQuantity] = useState(quantity)
     
-    return (
-            <div>
-                <p>{name}</p>
-                <div style={{display:"flex"}}>
-                    <p className="priceP">Q {price}</p>
-                    <p className="priceP">{quantity}</p>
-                </div>
-            </div>
-    )
-}
 
-export default SideMenu
+    
+
+    useEffect(() => {
+        setTotal(price * actualQuantity)
+    }, [actualQuantity])
+}

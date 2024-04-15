@@ -1,36 +1,56 @@
 import { useState, useEffect } from "react";
 import MenuCard from '../components/MenuCard'
 import getDishes from '../../controller/menuController'
-import SideMenu from "../components/SideMenuOrder";
 import '../styles/SideMenu.css'
+import createNewOrder from "../../controller/orderController";
+import addProduct from "../../controller/addOrderController";
 
-function Menu({navigator}) {
+function Menu({ navigator }) {
     const [dishes, setDishes] = useState([]);
-    const [orderNumber, setOrderNumber] = useState(0)
-    const [orderDishes, setOrderDishes] = useState(0)
-    const [sideMenuState, setMenuState] = useState(false)
-    const [dishesList, setDishesList] = useState([])
-    const [total, setTotal] = useState(0)
+    const [tableId, setTableId] = useState("");
+    const [orderDishes, setOrderDishes] = useState(0);
+    const [sideMenuState, setMenuState] = useState(false);
+    const [dishesList, setDishesList] = useState([]);
+    const [total, setTotal] = useState(0);
 
-const addDishes = (newDishes, dishObject) => {
-    setOrderDishes(orderDishes + newDishes)
-    setDishesList([...dishesList, dishObject])
-}
+    const addDishes = (newDishes, dishObject) => {
+        setOrderDishes(orderDishes + newDishes);
+        setDishesList([...dishesList, dishObject]);
+    }
 
+    const handleIdChange = (event) => {
+        setTableId(event.target.value);
+    }
 
-useEffect(() => {
-    console.log(dishesList);
-    const newTotal = dishesList.reduce((actual, dish) => actual + parseFloat(dish.price * dish.quantity), 0);
-    setTotal(newTotal);
-}, [dishesList]);
+    const createOrder = async () => {
+        if (tableId.trim() !== "") {
+            try {
+                const orderId = await createNewOrder(tableId);
+                for (const dish of dishesList) {
+                    await addProduct(dish.quantity, dish.id, orderId);
+                }
+                alert("Orden creada con éxito.");
+            } catch (error) {
+                console.error("Error al crear la orden:", error);
+                // alert("Ocurrió un error al crear la orden.");
+            }
+        } else {
+            alert("Ingresa el ID de la mesa.");
+        }
+    }
 
+    const removeOneDish = () => {
+        if (orderDishes > 0) {
+            setOrderDishes(orderDishes - 1);
+        }
+    }
 
     const openSideMenu = () => {
-        setMenuState(true)
+        setMenuState(true);
     }
 
     const closeSideMenu = () => {
-        setMenuState(false)
+        setMenuState(false);
     }
 
     useEffect(() => {
@@ -41,12 +61,18 @@ useEffect(() => {
         fetchDishes();
     }, []);
 
+    useEffect(() => {
+        const newTotal = dishesList.reduce((acc, dish) => acc + (dish.price * dish.quantity), 0);
+        setTotal(newTotal);
+    }, [dishesList]);
+
     return (
         <>
             <header>
+                <input type="text" placeholder="ID de la mesa" id="menuInput" value={tableId} onChange={handleIdChange}/>
                 <div id="orderHeaderDiv" onClick={openSideMenu}>
-                    <h1 style={{padding:"0 30% 0 0"}}>Orden #xxx</h1>
-                    <h1>{orderDishes}</h1>
+                    <h1 style={{padding:"0 30% 0 0"}}>Crear una Orden</h1>
+                    <h1>Productos: {orderDishes}</h1>
                 </div>
             </header>
             <div className="background" id="menuBack">
@@ -54,16 +80,28 @@ useEffect(() => {
                     <h1>Nuestros Platillos</h1>
                 </div>
                 <div id="mySidenav" className={`sidenav ${sideMenuState ? 'open' : ''}`}>
-                    <button onClick={closeSideMenu}>Cerrar</button>
-                    {dishesList.map((dish, index) => (
-                        <SideMenu key={index} name={dish.name} price={dish.price} quantity={dish.quantity} />
-                    ))}
-                    <footer>
-                        <p>Total {total}</p>
-                    </footer>
+                    <button className="menuButtons" onClick={closeSideMenu}>Cerrar</button>
+                    <button className="menuButtons" onClick={createOrder}>Crear Orden</button>
+                    <div style={{ borderBottom: "0.1vw solid white", paddingBottom: "5%" }}>
+                        {dishesList.map((dish, index) => (
+                            <div key={index}>
+                                <p>{dish.name}</p>
+                                <div style={{ display: "flex" }}>
+                                    <p className="priceP">Q {dish.price}</p>
+                                    <p className="priceP">{dish.quantity}</p>
+                                    <div style={{ marginLeft: "10%", display: "flex" }}>
+                                        <button className="menuButtons" onClick={removeOneDish}>Quitar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <footer>
+                            <p>Total {total}</p>
+                        </footer>
+                    </div>
                 </div>
                 {dishes.map((dish, index) => (
-                    <MenuCard key={index} name={dish.nombre} description={dish.descripcion} price={dish.precio} addDishes={addDishes}/>
+                    <MenuCard key={index} id ={dish.id} name={dish.nombre} description={dish.descripcion} price={dish.precio} addDishes={addDishes}/>
                 ))}
             </div>
         </>
