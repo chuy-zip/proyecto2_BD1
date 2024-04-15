@@ -703,7 +703,7 @@ export async function getInvoiceByOrderId(orderId) {
 export async function getMostOrderedProducts(startDate, endDate) { //se pasan strings formato YYYY-MM-DD
     try {
         const query = {
-            text: `SELECT co.id_producto, pr.nombre, COUNT(co.id_producto) AS cantP
+            text: `SELECT id_producto, nombre, COUNT(co.id_producto) AS cantP
                 FROM contenido_orden co
                 JOIN producto pr ON pr.id = co.id_producto
                 JOIN orden o ON o.id = co.id_orden

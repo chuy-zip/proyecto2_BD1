@@ -544,9 +544,9 @@ app.get('/reports/most-ordered-products', async (req, res) => {
     const { startDate, endDate } = req.query;
     try {
         // Verificar si startDate y endDate están presentes en la solicitud
-        if (!startDate || !endDate) {
-            return res.status(400).json({ error: 'Se deben proporcionar las fechas de inicio y fin en el formato YYYY-MM-DD' });
-        }
+        // if (!startDate || !endDate) {
+        //     return res.status(400).json({ error: 'Se deben proporcionar las fechas de inicio y fin en el formato YYYY-MM-DD' });
+        // }
 
         // Llamar a la función para obtener los productos más pedidos
         const mostOrderedProducts = await getMostOrderedProducts(startDate, endDate);

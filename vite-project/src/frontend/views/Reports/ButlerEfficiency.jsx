@@ -44,7 +44,7 @@ function ButlerEfficiency(){
             const reportContent = waiterEfficency.map((result, index) => {
                 return(
                     <div className="background" key={index}> 
-                        <h1>Reporte de la Efficiencia de los meseros</h1>
+                        <h1>Reporte de la Eficiencia de los meseros</h1>
                         <p>Mesero: {result.nameWaiter}</p>
                         <p>Mes: {result.mes}</p>
                         <p>Amabilidad: {result.promedio_amabilidad}</p>
@@ -58,7 +58,7 @@ function ButlerEfficiency(){
 
     return (
         <div className="background"> 
-            <h1>Reporte de platillos famosos</h1>
+            <h1>Reporte de eficiencia de meseros</h1>
             <form onSubmit={handleSubmit} style={{marginBottom: "3%"}}>
                 <label htmlFor="FirstDate">Primera Fecha</label>
                 <input type="date" id="FirstDate" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
