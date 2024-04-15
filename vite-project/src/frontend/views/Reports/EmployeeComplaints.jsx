@@ -32,7 +32,6 @@ function Complaints({complaintKey, complaints}){
 
         </div>
     )
-
 }
 
 function EmployeeComplaints(){
@@ -40,19 +39,15 @@ function EmployeeComplaints(){
     const [initialDate, setInitialDate] = useState("")
     const [endDate, setEndDate] = useState("")
 
-    useEffect ( () => {
-        const fetchComplaints = async () => {
-            try {
-                let initialComplaints = await getComplaintsByUser('2020-01-01','2025-12-31')
-                initialComplaints = JSON.parse(initialComplaints)
-                setComplaints(initialComplaints)
-            } catch (error) {
-                console.error('Error fetching complaints:', error);
-            }
+    const fetchComplaints = async () => {
+        try {
+            let initialComplaints = await getComplaintsByUser(initialDate, endDate)
+            initialComplaints = JSON.parse(initialComplaints)
+            setComplaints(initialComplaints)
+        } catch (error) {
+            console.error('Error fetching complaints:', error);
         }
-
-        fetchComplaints()
-    }, []);
+    }
 
     const initialDateChange = (event) => {
         setInitialDate(event.target.value)
@@ -68,7 +63,7 @@ function EmployeeComplaints(){
     
         <div 
             className="order"
-            style={{width:'75%'}}> 
+            style={{width:'70%'}}> 
             <h1> Reporte de quejas agrupadas por empleados </h1>
             
             <h3> Fecha inicial</h3>
@@ -97,7 +92,7 @@ function EmployeeComplaints(){
                 <button 
                     className='orderCompleteButton' 
                     style={{ margin: 'auto', marginTop: '20px' }} 
-                    onClick={() => console.log(initialDate, endDate)}>Generar Reporte</button>
+                    onClick={fetchComplaints}>Generar Reporte</button>
             </div>
 
             {Object.keys(complaints).map( (key, index) => (
