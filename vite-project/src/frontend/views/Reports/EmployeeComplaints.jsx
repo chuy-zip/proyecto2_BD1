@@ -63,7 +63,7 @@ function EmployeeComplaints(){
     
         <div 
             className="order"
-            style={{width:'70%'}}> 
+            style={{width:'70%', marginTop:'40px', marginBottom:'40px'}}> 
             <h1> Reporte de quejas agrupadas por empleados </h1>
             
             <h3> Fecha inicial</h3>
