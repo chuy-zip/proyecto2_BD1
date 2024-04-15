@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import ImageCard from '../components/ImageCard'
-import logo from '../../imgs/dans_logo.png'
+import logo from '../../imgs/Sabor.png'
 import CryptoJS from 'crypto-js'
 
 function Login({ navigator }) {
