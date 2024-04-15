@@ -104,3 +104,26 @@ footer {
   background-color: black;
   color: white;
 }
+
+select {
+  border-radius: 0.5vw;
+  padding: 0.6em 1.2em;
+  width: 10vw;
+  margin: 0.8vw;
+  border: 0.1vw solid var(--timberwolf);
+  box-sizing: border-box;
+  transition: 0.5s;
+  outline: none;
+
+  @media (min-width: 200px) {
+    width: 100%;
+  }
+}
+
+select:focus {
+  border: 0.1vw solid var(--kelly-green);
+}
+
+select:hover {
+  border: 0.1vw solid var(--kelly-green);
+}
