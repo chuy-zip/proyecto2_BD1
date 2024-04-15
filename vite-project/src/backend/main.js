@@ -44,7 +44,8 @@ import {
     getEmployeeComplaintsReport,
     getProductComplaintsReport,
     getWaiterEfficiencyReport,
-    getComplaints
+    getComplaints,
+    getPaymentsByInvoiceId
   } from './db.js';
 
 const app = express()
@@ -493,6 +494,25 @@ app.post('/invoices/:invoiceId/payments', async (req, res) => {
         await addPaymentToInvoice(invoiceId, formaPago, cantidadPago);
         res.status(200).json({ message: 'Pago registrado exitosamente' });
     } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener los pagos realizados a una factura y el saldo pendiente
+app.get('/invoices/:invoiceId/payments-done', async (req, res) => {
+    const { invoiceId } = req.params;
+    try {
+        if (!invoiceId) {
+            return res.status(400).json({ error: 'Se debe proporcionar el ID de la factura' });
+        }
+        const payments = await getPaymentsByInvoiceId(invoiceId);
+        if (payments.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron pagos para la factura especificada' });
+        }
+
+        res.status(200).json(payments);
+    } catch (error) {
+        console.error('Error en el endpoint de los pagos de la factura:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
