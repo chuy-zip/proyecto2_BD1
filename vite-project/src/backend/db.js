@@ -697,6 +697,30 @@ export async function getInvoiceByOrderId(orderId) {
     }
 }
 
+// funcion para verificar todos los pagos hechos a una factura y ver cuanto falta de esta
+export async function getPaymentsByInvoiceId(invoiceId) {
+    try {
+        const query = {
+            text: `
+                SELECT f.id AS factura_id, f.nombre_cliente, f.nit, f.direccion, f.total,
+                       pf.forma_pago, pf.cantidad_pago,
+                       (f.total - COALESCE(SUM(pf.cantidad_pago) OVER (ORDER BY pf.id), 0)) AS pendiente_pago
+                FROM factura f
+                LEFT JOIN pago_factura pf ON f.id = pf.id_factura
+                WHERE f.id = $1
+                ORDER BY pf.id
+            `,
+            values: [invoiceId]
+        };
+
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error fetching payments by invoice ID', error);
+        throw error;
+    }
+}
+
 //REPORTES
 //Reporte 1
 // Función para obtener los productos más pedidos dentro de un rango de fechas
