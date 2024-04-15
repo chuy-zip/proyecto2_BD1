@@ -2,7 +2,7 @@ async function getProductsWithOrder(order){
     try {
         await new Promise(resolve => setTimeout(resolve,2000))
 
-        let orderProducts = await fetch(`http://localhost:3000/orders/${order}`); // Corrected the string interpolation
+        let orderProducts = await fetch(`http://localhost:8080/orders/${order}`); // Corrected the string interpolation
         if (!orderProducts.ok){
             throw new Error("Failed to fetch data")
         }
@@ -35,7 +35,7 @@ async function getProductsWithOrder(order){
 
 async function closeOrder(orderId) {
     try {
-        const response = await fetch(`http://localhost:3000/orders/${orderId}/close`, {
+        const response = await fetch(`http://localhost:8080/orders/${orderId}/close`, {
             method: 'PUT',
         });
         if (!response.ok) {
@@ -58,7 +58,7 @@ async function submitBill(order, nit, name, address){
             "direccion": address 
         };
 
-        const response = await fetch('http://localhost:3000/invoices', {
+        const response = await fetch('http://localhost:8080/invoices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ async function submitBill(order, nit, name, address){
 
 async function getInvoiceByOrder(orderId) {
     try {
-        const response = await fetch(`http://localhost:3000/invoices/by-order/${orderId}`);
+        const response = await fetch(`http://localhost:8080/invoices/by-order/${orderId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch invoice');
         }
@@ -92,7 +92,7 @@ async function getInvoiceByOrder(orderId) {
 
 async function addPaymentToBill(invoiceId, formaPago, cantidadPago) {
     try {
-        const response = await fetch(`http://localhost:3000/invoices/${invoiceId}/payments`, {
+        const response = await fetch(`http://localhost:8080/invoices/${invoiceId}/payments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

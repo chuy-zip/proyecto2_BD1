@@ -5,7 +5,7 @@ async function addSurveyToWaiter(waiterId, amabilidad, exactitud) {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/waiter/${waiterId}/rating`, {
+        const response = await fetch(`http://localhost:8080/waiter/${waiterId}/rating`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ async function addComplaint(employeeId, dishId, motivo, severidad) {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/employee/${employeeId}/dish/${dishId}/complaint`, {
+        const response = await fetch(`http://localhost:8080/employee/${employeeId}/dish/${dishId}/complaint`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

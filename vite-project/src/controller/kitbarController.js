@@ -1,6 +1,6 @@
 async function getUnservedDishes() {
     try {
-        let response = await fetch('http://localhost:3000/kitchen/unserved-dishes');
+        let response = await fetch('http://localhost:8080/kitchen/unserved-dishes');
         if (!response.ok) {
             throw new Error('Failed to fetch open orders');
         }
@@ -35,7 +35,7 @@ async function getUnservedDishes() {
 
 async function getUnservedDrinks() {
     try {
-        let response = await fetch('http://localhost:3000/bar/unserved-drinks');
+        let response = await fetch('http://localhost:8080/bar/unserved-drinks');
         if (!response.ok) {
             throw new Error('Failed to fetch open orders');
         }
@@ -71,7 +71,7 @@ async function getUnservedDrinks() {
 
 async function markProductAsCompleted(orderId, productId) {
     try {
-        const response = await fetch(`http://localhost:3000/orders/${orderId}/products/${productId}/completed`, {
+        const response = await fetch(`http://localhost:8080/orders/${orderId}/products/${productId}/completed`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
