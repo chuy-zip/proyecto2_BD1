@@ -47,11 +47,11 @@ import {
   } from './db.js';
 
 const app = express()
-const port = 3000
+const port = 8080
 
 app.use(express.json())
 app.use(cors({
-    origin: '*',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type'],
 }))
