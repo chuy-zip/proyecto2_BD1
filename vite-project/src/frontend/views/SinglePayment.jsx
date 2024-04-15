@@ -1,11 +1,22 @@
 import { useState, useEffect } from "react";
 import PaymentDropDown from "../components/PaymentDropDown";
+import { addPaymentToBill } from "../../controller/tableOrderController";
 
 function SinglePayment({billID, orderTotal, name}){
     const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value); // Update the selected option when it changes
+    };
+
+    const addPayment = async () => {
+        try {
+            await addPaymentToBill(billID, selectedOption, orderTotal);
+            console.log("Payment added successfully");
+            
+        } catch (error) {
+            console.error("Error adding payment:", error);
+        }
     };
 
     
@@ -20,7 +31,7 @@ function SinglePayment({billID, orderTotal, name}){
                 <button 
                     className='orderCompleteButton' 
                     style={{ margin: 'auto', marginTop: '20px' }} 
-                    onClick={() => console.log(selectedOption, billID, orderTotal, name)}
+                    onClick={addPayment}
                 >
                     Hacer pago
                 </button>

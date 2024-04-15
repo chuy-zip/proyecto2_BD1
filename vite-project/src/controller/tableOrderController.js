@@ -1,76 +1,116 @@
-function getOrderProducts(){
-    const kit_orders = [
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "chicken",
-            "quantity": 5,
-            "price": 7.80
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "nuggets",
-            "quantity": 3,
-            "price": 5.50
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "fries",
-            "quantity": 2,
-            "price": 3.00
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "burger",
-            "quantity": 1,
-            "price": 6.50
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "soda",
-            "quantity": 2,
-            "price": 2.00
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "burger",
-            "quantity": 1,
-            "price": 6.50
-        },
-        {
-            "order_id": 123,
-            "table": 5,
-            "product": "soda",
-            "quantity": 2,
-            "price": 2.00
+async function getProductsWithOrder(order){
+    try {
+        await new Promise(resolve => setTimeout(resolve,2000))
+
+        let orderProducts = await fetch(`http://localhost:8080/orders/${order}`); // Corrected the string interpolation
+        if (!orderProducts.ok){
+            throw new Error("Failed to fetch data")
         }
-    ];
+        let json_list = await orderProducts.json();
 
+        const groupedOrders = {};
 
-    const groupedOrders = {};
+        json_list.forEach((value, index) => {
+            const key = `${value.order_id}-${value.id_mesa}`;
 
-    kit_orders.forEach((value, index) => {
-        const key = `${value.order_id}-${value.table}`;
+            if (!groupedOrders[key]) {
+                groupedOrders[key] = [];
+            }
 
-        if (!groupedOrders[key]) {
-            groupedOrders[key] = [];
-        }
-
-        groupedOrders[key].push({
-            product: value.product,
-            quantity: value.quantity,
-            price: value.price
+            groupedOrders[key].push({
+                product: value.producto, 
+                quantity: value.cantidad_producto, 
+                price: value.precio 
+            });
         });
-    });
 
-    console.log(JSON.stringify(groupedOrders));
+        console.log(JSON.stringify(groupedOrders));
 
-    return JSON.stringify(groupedOrders)
+        return JSON.stringify(groupedOrders)
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-export {getOrderProducts}
+async function closeOrder(orderId) {
+    try {
+        const response = await fetch(`http://localhost:8080/orders/${orderId}/close`, {
+            method: 'PUT',
+        });
+        if (!response.ok) {
+            throw new Error('Failed to close order');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error('Error closing order: ' + error.message);
+    }
+}
+
+
+async function submitBill(order, nit, name, address){
+    try {
+        const data = {
+            "nombreCliente": name,
+            "nit": nit,
+            "orderId": order,
+            "direccion": address 
+        };
+
+        const response = await fetch('http://localhost:8080/invoices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('There was an error on the response');
+        }
+
+        const responseData = await response.json();
+        console.log('Factura guardada:', responseData);
+    } catch (error) {
+        console.error('No se pudo crear la factura:', error);
+    }
+}
+
+async function getInvoiceByOrder(orderId) {
+    try {
+        const response = await fetch(`http://localhost:8080/invoices/by-order/${orderId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch invoice');
+        }
+        const invoice = await response.json();
+        return invoice;
+    } catch (error) {
+        throw new Error('Error fetching invoice: ' + error.message);
+    }
+}
+
+async function addPaymentToBill(invoiceId, formaPago, cantidadPago) {
+    try {
+        const response = await fetch(`http://localhost:8080/invoices/${invoiceId}/payments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ formaPago, cantidadPago })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add payment to invoice');
+        }
+
+        const data = await response.json();
+        console.log('Payment added successfully:', data.message);
+        return data;
+    } catch (error) {
+        console.error('Error adding payment to invoice:', error.message);
+        throw error;
+    }
+}
+
+export {getProductsWithOrder, submitBill, closeOrder, getInvoiceByOrder, addPaymentToBill}

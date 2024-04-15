@@ -15,7 +15,8 @@
     flex-wrap: nowrap;
     border-radius: 1vw;
     height: 90%;
-    width: 100%;
+    width: 90%;
+    margin: auto;
     overflow-x: scroll;
     overflow-y: hidden;
     align-items: flex-start;
@@ -89,6 +90,10 @@ h3 span {
     color: black;
 }
 
+h4 span {
+    font-weight: normal;
+}
+
 .buttonContainer {
     display: flex;
     flex-direction: row;
@@ -108,5 +113,8 @@ h3 span {
     margin: auto;
     padding-top: 20px;
     padding-left: 25px;
+}
 
+.complaintBorders {
+    border-bottom: 2px dashed #000;
 }

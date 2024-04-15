@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/KitchenBar.css';
-import { getDrinksOrders } from '../../controller/kitbarController.js';
+import { getUnservedDrinks, markProductAsCompleted } from '../../controller/kitbarController.js';
 
 function Order({ orderKey, products }) {
     const parsedString = orderKey.split("-");
@@ -48,13 +48,41 @@ function Bar({ navigator }) {
     }
 
     useEffect(() => {
+
+        const fetchOrders = async () => {
+            try {
+                let initialOrders = await getUnservedDrinks()
+                initialOrders = JSON.parse(initialOrders);
+                console.log(initialOrders);
+                setOrders(initialOrders);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        }
         
-        const initialOrders = JSON.parse(getDrinksOrders());
-        setOrders(initialOrders);
+        fetchOrders()
     }, []);
 
-    const handleCompleteDish = () => {
-        
+    const handleCompleteDish = async () => {
+
+        let orderkey = Object.keys(orders)[0]
+
+        let parsedKey = orderkey.split("-")
+
+        let products = Object.values(orders)[0]
+
+        console.log(orderkey)
+        console.log(products)
+
+        try {
+            for (const key of Object.keys(products)){
+                await markProductAsCompleted(parsedKey[0], products[key].prodID)
+                console.log("Succesfully updated dishes")
+            }
+        } catch (error) {
+            console.error("Error while marking dishes as complete")
+        }
+
         const updatedOrders = { ...orders };
         delete updatedOrders[Object.keys(updatedOrders)[0]]; 
         setOrders(updatedOrders);

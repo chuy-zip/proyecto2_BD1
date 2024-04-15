@@ -8,11 +8,14 @@ function SearchOrder({ navigator }) {
   };
 
   const goToTableOrder = () => {
-    const params = {
-      order: order,
-    };
-
-    navigator("tableOrder", params);
+    if (order.trim() !== "") {
+      const params = {
+        order: order,
+      };
+      navigator("tableOrder", params);
+    } else {
+      alert("Por favor ingrese un numero de orden.");
+    }
   };
 
   return (
@@ -23,17 +26,15 @@ function SearchOrder({ navigator }) {
         placeholder="Ingrese un numero de orden"
         value={order}
         onChange={orderChange}
-        style={{height: '10%'}}
+        style={{ height: "10%" }}
       />
-      
-        <button
-          className="orderCompleteButton"
-          style={{ margin: "auto", marginTop: "20px" }}
-          onClick={goToTableOrder}
-        >
-          Buscar
-        </button>
-      
+      <button
+        className="orderCompleteButton"
+        style={{ margin: "auto", marginTop: "20px" }}
+        onClick={goToTableOrder}
+      >
+        Buscar
+      </button>
     </div>
   );
 }
