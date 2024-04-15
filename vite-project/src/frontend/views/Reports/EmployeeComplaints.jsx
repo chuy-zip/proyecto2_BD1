@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { getComplaintsByUser } from "../../../controller/complaintsController"
 
 function Complaint({date, severity, reason }){
