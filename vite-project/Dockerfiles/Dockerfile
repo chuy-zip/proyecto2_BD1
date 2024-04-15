@@ -12,6 +12,8 @@ RUN npm install pg
 
 RUN npm install cors
 
+RUN npm install crypto-js
+
 COPY ./src ./src
 
 CMD ["npm", "start"]
