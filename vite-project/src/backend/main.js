@@ -31,6 +31,7 @@ import {
     listOpenOrders,
     addOrderContent,
     markProductCompleted,
+    getMostOrderedProducts,
     createInvoice,
     showInvoiceContentsAndTotal,
     addPaymentToInvoice,
@@ -534,6 +535,24 @@ app.get('/invoices/by-order/:orderId', async (req, res) => {
         const invoice = await getInvoiceByOrderId(orderId);
         res.status(200).json(invoice);
     } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Endpoint para obtener los productos más pedidos dentro de un rango de fechas (Reporte 1)
+app.get('/reports/most-ordered-products', async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        // Verificar si startDate y endDate están presentes en la solicitud
+        if (!startDate || !endDate) {
+            return res.status(400).json({ error: 'Se deben proporcionar las fechas de inicio y fin en el formato YYYY-MM-DD' });
+        }
+
+        // Llamar a la función para obtener los productos más pedidos
+        const mostOrderedProducts = await getMostOrderedProducts(startDate, endDate);
+        res.status(200).json(mostOrderedProducts);
+    } catch (error) {
+        console.error('Error en el endpoint de los productos más pedidos:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });

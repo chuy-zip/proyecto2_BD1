@@ -816,14 +816,16 @@ export async function getProductComplaintsReport(startDate, endDate) {
 export async function getWaiterEfficiencyReport() {
     try {
         const query = {
-            text: `SELECT id_mesero,
-                    EXTRACT(MONTH FROM fecha_hora) AS mes,
-                    ROUND(AVG(amabilidad), 2) AS promedio_amabilidad,
-                    ROUND(AVG(exactitud), 2) AS promedio_exactitud
-                FROM calificacion_mesero
-                WHERE fecha_hora >= CURRENT_DATE - INTERVAL '6 months'
-                GROUP BY id_mesero, EXTRACT(MONTH FROM fecha_hora)
-                ORDER BY id_mesero, mes`
+            text: `SELECT co.id_mesero,
+                    usr.username as nameWaiter,
+                    EXTRACT(MONTH FROM co.fecha_hora) AS mes,
+                    ROUND(AVG(co.amabilidad), 2) AS promedio_amabilidad,
+                    ROUND(AVG(co.exactitud), 2) AS promedio_exactitud
+                FROM calificacion_mesero co
+                JOIN users usr ON usr.id = co.id_mesero
+                WHERE co.fecha_hora >= CURRENT_DATE - INTERVAL '6 months'
+                GROUP BY co.id_mesero, EXTRACT(MONTH FROM fecha_hora), nameWaiter
+                ORDER BY co.id_mesero, mes`
         };
     
         const result = await client.query(query);
