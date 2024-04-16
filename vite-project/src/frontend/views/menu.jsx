@@ -26,13 +26,17 @@ function Menu({ navigator }) {
         if (tableId.trim() !== "") {
             try {
                 const orderId = await createNewOrder(tableId);
-                for (const dish of dishesList) {
-                    await addProduct(dish.quantity, dish.id, orderId);
+                console.log(orderId)
+                async function addProducts() {
+                    dishesList.reduce((dish) => {
+                        addProduct(parseInt(dish.quantity), parseInt(dish.id), parseInt(orderId));
+                    })
+
+                    alert("Orden creada con éxito.");
                 }
-                alert("Orden creada con éxito.");
             } catch (error) {
                 console.error("Error al crear la orden:", error);
-                // alert("Ocurrió un error al crear la orden.");
+                alert("Ocurrió un error al crear la orden.");
             }
         } else {
             alert("Ingresa el ID de la mesa.");
@@ -66,6 +70,7 @@ function Menu({ navigator }) {
         setTotal(newTotal);
     }, [dishesList]);
 
+    console.log(dishesList)
     return (
         <>
             <header>

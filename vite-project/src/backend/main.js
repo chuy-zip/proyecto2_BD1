@@ -442,7 +442,7 @@ app.post('/orders/:orderId/products', async (req, res) => {
     const { orderId } = req.params;
     const { cantidadProducto, productId } = req.body;
     try {
-        await addOrderContent(orderId, cantidadProducto, productId);
+        await addOrderContent(parseInt(orderId), cantidadProducto, productId);
         res.status(200).json({ message: 'Producto agregado a la orden exitosamente' });
     } catch (error) {
         res.status(500).json({ error: 'Error interno del servidor' });
