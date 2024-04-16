@@ -1,7 +1,6 @@
 async function createNewOrder(tableId) {
     const apiUrl = 'http://localhost:8080/orders'
 
-    async function createOrder(tableId) {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
@@ -22,16 +21,6 @@ async function createNewOrder(tableId) {
         console.log("Éxito")
 
         return orderId
-    }
-
-    try {
-        const newOrder = await createOrder(tableId)
-        return newOrder
-
-    } catch (error) {
-        console.log("Error:", error)
-        throw error
-    }
 }
 
 export default createNewOrder

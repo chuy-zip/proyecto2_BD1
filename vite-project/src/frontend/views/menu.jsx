@@ -27,13 +27,11 @@ function Menu({ navigator }) {
             try {
                 const orderId = await createNewOrder(tableId);
                 console.log(orderId)
-                async function addProducts() {
-                    dishesList.reduce((dish) => {
-                        addProduct(parseInt(dish.quantity), parseInt(dish.id), parseInt(orderId));
-                    })
 
-                    alert("Orden creada con éxito.");
-                }
+                dishesList.map((dish,index) => {
+                    addProduct(dish.quantity, dish.id, orderId.orderId);
+                })
+                alert("Orden creada con éxito.");
             } catch (error) {
                 console.error("Error al crear la orden:", error);
                 alert("Ocurrió un error al crear la orden.");

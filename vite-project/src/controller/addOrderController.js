@@ -1,7 +1,6 @@
 async function addProduct(quantity, productId, orderId) {
     const apiUrl = `http://localhost:8080/orders/${orderId}/products`
 
-    async function addNewProduct() {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
@@ -19,18 +18,6 @@ async function addProduct(quantity, productId, orderId) {
         }
 
         console.log("Éxito")
-
-        return
     }
-
-    try {
-        addNewProduct()
-        return
-
-    } catch (error) {
-        console.log("Error:", error)
-        throw error
-    }
-}
 
 export default addProduct
