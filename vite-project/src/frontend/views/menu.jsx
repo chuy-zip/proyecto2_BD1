@@ -93,7 +93,7 @@ function Menu({ navigator }) {
                                     <p className="priceP">Q {dish.price}</p>
                                     <p className="priceP">{dish.quantity}</p>
                                     <div style={{ marginLeft: "10%", display: "flex" }}>
-                                        <button className="menuButtons" onClick={removeOneDish}>Quitar</button>
+                                        {/* <button className="menuButtons" onClick={removeOneDish}>Quitar</button> */}
                                     </div>
                                 </div>
                             </div>
