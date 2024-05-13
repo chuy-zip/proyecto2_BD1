@@ -4,6 +4,7 @@ Proyecto 2 de base de datos 1. Desarrollo del sistema de un restaurante.
 
 ## Comandos que instalarán las dependencias requeridas
 
+- npm install
 - npm install express  
 - npm install pg
 - npm install cors

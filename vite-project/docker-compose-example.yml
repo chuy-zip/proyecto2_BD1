@@ -9,6 +9,7 @@ services:
       - "8080:8080"
     volumes:
       - .:/vite-project
+      - /vite-project/node_modules
     depends_on:
       - db
 
