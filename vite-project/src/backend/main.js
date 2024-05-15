@@ -83,7 +83,7 @@ app.post('/users/register', async (req, res) => {
 });
 
 app.post('/users/login', async (req, res) => {
-const { username, password } = req.body;
+    const { username, password } = req.body;
     try {
         const isValidUser = await verifyUser(username, password);
         if (isValidUser) {
